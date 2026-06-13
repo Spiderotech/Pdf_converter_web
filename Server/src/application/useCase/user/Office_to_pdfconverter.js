@@ -13,6 +13,8 @@ const ensureDownloadsDir = () => {
 const getOfficeCommand = () => process.env.LIBREOFFICE_PATH || 'libreoffice';
 
 const Office_to_pdfconverter = async (file) => {
+    let conversionInputPath;
+
     try {
         const { path: filePath, originalname: fileName } = file;
 
@@ -22,26 +24,48 @@ const Office_to_pdfconverter = async (file) => {
 
         ensureDownloadsDir();
 
-        await execFileAsync(getOfficeCommand(), [
+        const originalExtension = path.extname(fileName);
+        const inputBaseName = path.basename(fileName, originalExtension).replace(/[^a-zA-Z0-9-_]/g, '-');
+        conversionInputPath = path.join(path.dirname(filePath), `${inputBaseName}-${Date.now()}${originalExtension}`);
+        fs.copyFileSync(filePath, conversionInputPath);
+
+        const { stdout, stderr } = await execFileAsync(getOfficeCommand(), [
             '--headless',
             '--convert-to',
             'pdf',
             '--outdir',
             downloadsDir,
-            filePath,
+            conversionInputPath,
         ], { timeout: 120000 });
 
         const outputName = `${path.basename(fileName, path.extname(fileName))}.pdf`;
+        const generatedOutputPath = path.join(downloadsDir, `${path.basename(conversionInputPath, path.extname(conversionInputPath))}.pdf`);
         const convertedFilePath = path.join(downloadsDir, outputName);
 
-        if (!fs.existsSync(convertedFilePath)) {
+        if (stdout) {
+            console.log('LibreOffice stdout:', stdout);
+        }
+
+        if (stderr) {
+            console.warn('LibreOffice stderr:', stderr);
+        }
+
+        if (!fs.existsSync(generatedOutputPath)) {
             throw new Error('Converted PDF was not created');
+        }
+
+        if (generatedOutputPath !== convertedFilePath) {
+            fs.renameSync(generatedOutputPath, convertedFilePath);
         }
 
         return { convertedFilePath, url: `/downloads/${outputName}` };
     } catch (error) {
         console.error('Error in Office_to_pdfconverter:', error.message);
         throw new Error('Office to PDF conversion failed');
+    } finally {
+        if (conversionInputPath && fs.existsSync(conversionInputPath)) {
+            fs.unlinkSync(conversionInputPath);
+        }
     }
 };
 

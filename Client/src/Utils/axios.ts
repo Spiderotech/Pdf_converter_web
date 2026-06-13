@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const baseUrl = "http://localhost:3000/api/v1/user";
+export const baseUrl =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://pdfconverterweb-production.up.railway.app/api/v1/user";
 
 const instance = axios.create({
   baseURL: baseUrl,                  
@@ -10,4 +12,3 @@ const instance = axios.create({
 });
 
 export default instance;
-
