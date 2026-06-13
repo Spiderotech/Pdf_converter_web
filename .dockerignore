@@ -1,0 +1,10 @@
+.DS_Store
+.git
+Client/node_modules
+Client/dist
+Server/node_modules
+Server/.env
+Server/downloads
+Server/uploads
+node_modules
+npm-debug.log
