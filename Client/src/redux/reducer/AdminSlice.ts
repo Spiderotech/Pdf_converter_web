@@ -1,17 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-type RootState = {
-    admin: {
-      value: {
-        id: string | null;
-        email: string | null;
-        access_token: string;
-        refresh_token:string;
-      };
-    };
-  };
-
 const intialValue = {value:{id:null,
     email:null,
     access_token:"",
@@ -41,7 +29,6 @@ export const adminSlice=createSlice({
 })
 
 export const { login, logout } = adminSlice.actions
-
 
 
 

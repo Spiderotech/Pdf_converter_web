@@ -1,18 +1,26 @@
 import { PdfApi } from 'asposepdfcloud';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+const downloadsDir = path.resolve(process.cwd(), 'downloads');
 
-const clientId = '';
-const clientSecret = '';
-const pdfApi = new PdfApi(clientId, clientSecret);
+const ensureDownloadsDir = () => {
+    fs.mkdirSync(downloadsDir, { recursive: true });
+};
 
-// __dirname equivalent for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const getPdfApi = () => {
+    const clientId = process.env.ASPOSE_CLIENT_ID;
+    const clientSecret = process.env.ASPOSE_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+        throw new Error('Aspose credentials are missing. Set ASPOSE_CLIENT_ID and ASPOSE_CLIENT_SECRET in Server/.env');
+    }
+
+    return new PdfApi(clientId, clientSecret);
+};
 
 const Pdf_to_wordconverter = async (file) => {
     try {
+        const pdfApi = getPdfApi();
         const { path: filePath, originalname: fileName } = file;
 
         if (!fs.existsSync(filePath)) {
@@ -42,7 +50,8 @@ const Pdf_to_wordconverter = async (file) => {
         // Step 3: Download the converted file from Aspose storage
         console.log('Downloading converted file...');
         const fileData = await pdfApi.downloadFile(resultPath, storageName, '');
-        const convertedFilePath = path.join(__dirname, 'downloads', path.basename(resultPath));
+        ensureDownloadsDir();
+        const convertedFilePath = path.join(downloadsDir, path.basename(resultPath));
         
         fs.writeFileSync(convertedFilePath, fileData.body);
 

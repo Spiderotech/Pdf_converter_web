@@ -3,12 +3,12 @@ dotenv.config()
 
 export default {
 
-    port:"3000",
+    port: process.env.PORT || "3000",
     mongo: {
-        uri: ""
+        uri: process.env.MONGO_URI || ""
     },
-    ACESS_TOKEN_SCERET:"",
-    REFRESH_TOKEN_SECRET:"",
+    ACESS_TOKEN_SCERET: process.env.ACCESS_TOKEN_SECRET || "",
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || "",
     
 
 

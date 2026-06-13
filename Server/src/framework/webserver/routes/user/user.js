@@ -16,6 +16,11 @@ const authRouter=(express)=>{
     router.route('/googlecreateuser').post(controller.usergoogle)
     router.route('/pdfconverter').post(upload.single('file'), controller.pdfconverter); // Handle file upload for PDF to Word conversion
     router.route('/wordconverter').post(upload.single('file'), controller.wordconverter); // Handle file upload for Word to PDF conversion
+    router.route('/pptxtopdf').post(upload.single('file'), controller.pptxtopdfconverter);
+    router.route('/exceltopdf').post(upload.single('file'), controller.exceltopdfconverter);
+    router.route('/protectpdf').post(upload.single('file'), controller.protectpdf);
+    router.route('/unlockpdf').post(upload.single('file'), controller.unlockpdf);
+    router.route('/compresspdf').post(upload.single('file'), controller.compresspdf);
 
 
     return router;

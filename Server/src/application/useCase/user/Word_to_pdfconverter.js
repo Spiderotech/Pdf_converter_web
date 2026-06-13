@@ -1,18 +1,26 @@
 import { WordsApi, UploadFileRequest, ConvertDocumentRequest } from 'asposewordscloud';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+const downloadsDir = path.resolve(process.cwd(), 'downloads');
 
-const clientId = '';
-const clientSecret = '';
-const wordsApi = new WordsApi(clientId, clientSecret);
+const ensureDownloadsDir = () => {
+    fs.mkdirSync(downloadsDir, { recursive: true });
+};
 
-// __dirname equivalent for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const getWordsApi = () => {
+    const clientId = process.env.ASPOSE_CLIENT_ID;
+    const clientSecret = process.env.ASPOSE_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+        throw new Error('Aspose credentials are missing. Set ASPOSE_CLIENT_ID and ASPOSE_CLIENT_SECRET in Server/.env');
+    }
+
+    return new WordsApi(clientId, clientSecret);
+};
 
 const Pdf_to_WordConverter = async (file) => {
     try {
+        const wordsApi = getWordsApi();
         const { path: filePath, originalname: fileName } = file;
 
         if (!fs.existsSync(filePath)) {
@@ -51,7 +59,8 @@ const Pdf_to_WordConverter = async (file) => {
 
         // Step 3: Save the converted Word document
         const wordFileName = path.basename(fileName, path.extname(fileName)) + '.pdf';
-        const downloadPath = path.join(__dirname, 'downloads', wordFileName);
+        ensureDownloadsDir();
+        const downloadPath = path.join(downloadsDir, wordFileName);
         fs.writeFileSync(downloadPath, convertResponse.body);
 
         console.log('File converted and saved successfully:', downloadPath);

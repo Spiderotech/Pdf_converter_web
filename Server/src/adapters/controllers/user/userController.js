@@ -5,6 +5,10 @@ import Createusergoogle from "../../../application/useCase/user/Createusergoogle
 import Pdf_to_wordconverter from "../../../application/useCase/user/Pdf_to_wordconverter.js"
 import path from 'path';
 import Word_to_pdfconverter from "../../../application/useCase/user/Word_to_pdfconverter.js"
+import Office_to_pdfconverter from "../../../application/useCase/user/Office_to_pdfconverter.js";
+import Protect_pdf from "../../../application/useCase/user/Protect_pdf.js";
+import Unlock_pdf from "../../../application/useCase/user/Unlock_pdf.js";
+import Compress_pdf from "../../../application/useCase/user/Compress_pdf.js";
 
 const userController = (userauthRepositoryInf, userauthRepositoryImp, userauthServiceInt, userauthServiceImp) => {
 
@@ -106,6 +110,79 @@ const userController = (userauthRepositoryInf, userauthRepositoryImp, userauthSe
 
 
     }
+
+    const pptxtopdfconverter = (req, res) => {
+        const file = req.file;
+
+        Office_to_pdfconverter(file)
+            .then((response) => {
+                const fullFilePath = path.resolve(response.convertedFilePath);
+                res.download(fullFilePath);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('PPTX to PDF conversion failed');
+            });
+    }
+
+    const exceltopdfconverter = (req, res) => {
+        const file = req.file;
+
+        Office_to_pdfconverter(file)
+            .then((response) => {
+                const fullFilePath = path.resolve(response.convertedFilePath);
+                res.download(fullFilePath);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Excel to PDF conversion failed');
+            });
+    }
+
+    const protectpdf = (req, res) => {
+        const file = req.file;
+        const { password } = req.body;
+
+        Protect_pdf(file, password)
+            .then((response) => {
+                const fullFilePath = path.resolve(response.convertedFilePath);
+                res.download(fullFilePath);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('PDF protection failed');
+            });
+    }
+
+    const unlockpdf = (req, res) => {
+        const file = req.file;
+        const { password } = req.body;
+
+        Unlock_pdf(file, password)
+            .then((response) => {
+                const fullFilePath = path.resolve(response.convertedFilePath);
+                res.download(fullFilePath);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('PDF unlock failed');
+            });
+    }
+
+    const compresspdf = (req, res) => {
+        const file = req.file;
+        const { quality } = req.body;
+
+        Compress_pdf(file, quality)
+            .then((response) => {
+                const fullFilePath = path.resolve(response.convertedFilePath);
+                res.download(fullFilePath);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('PDF compression failed');
+            });
+    }
  
 
 
@@ -116,7 +193,12 @@ const userController = (userauthRepositoryInf, userauthRepositoryImp, userauthSe
         googlelogin,
         usergoogle,
         pdfconverter,
-        wordconverter
+        wordconverter,
+        pptxtopdfconverter,
+        exceltopdfconverter,
+        protectpdf,
+        unlockpdf,
+        compresspdf
 
         
 

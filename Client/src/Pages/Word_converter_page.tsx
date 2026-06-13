@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../Components/Header'
 import Footer from '../Components/Footer'
 import Wordconverter_feature from '../Components/Wordconverter_feature'
@@ -7,13 +6,13 @@ import WordConverter from '../Components/Word_converter'
 
 const Word_converter_page = () => {
   return (
-   <>
-   <Header/>
-   <WordConverter/>
-   <Wordconverter_feature/>
-   <Howto_convert_word/>
-   <Footer/>
-   </>
+    <>
+      <Header />
+      <WordConverter />
+      <Wordconverter_feature />
+      <Howto_convert_word />
+      <Footer />
+    </>
   )
 }
 

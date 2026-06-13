@@ -1,40 +1,36 @@
-import React from 'react'
+const plannedTools = [
+  'Compress PDF',
+  'Merge PDF',
+  'Split PDF',
+  'Sign PDF',
+  'Edit PDF',
+  'PPTX to PDF',
+  'XLSX to CSV',
+  'Protect PDF',
+];
 
 const Pricing = () => {
-    return (
-        <div className="xl:mx-auto xl:container py-20 2xl:px-0 px-6  mb-40">
-            <div className="lg:flex items-center">
-                <div className=" lg:w-1/2 w-full">
-                    <h1 role="heading" className="md:text-5xl text-3xl font-bold leading-10 mt-3 text-gray-800">
-                        Our pricing plan
-                    </h1>
-                    <p role="contentinfo" className="text-base leading-5 mt-5 text-gray-600">
-                        We’re working on a suit of tools to make managing complex systems easier, for everyone for free. we can’t wait to hear what you think
-                    </p>
-                   
-                </div>
-                <div className="xl:w-1/2 lg:w-7/12 relative w-full lg:mt-0 mt-12 md:px-8" role="list">
-                    <img src="https://i.ibb.co/0n6DSS3/bgimg.png" className="absolute w-full -ml-12 mt-24" alt="background circle images" />
-                    <div role="listitem" className="bg-white cursor-pointer shadow rounded-lg p-8 relative z-30">
-                        <div className="md:flex items-center justify-between">
-                            <h2 className="text-2xl font-semibold leading-6 text-gray-800">PDF to Word</h2>
-                            <p className="text-2xl font-semibold md:mt-0 mt-4 leading-6 text-gray-800">FREE</p>
-                        </div>
-                        <p className="md:w-80 text-base leading-6 mt-4 text-gray-600">Full access to all features and no credit card required</p>
-                    </div>
-                    <div role="listitem" className="bg-white cursor-pointer shadow rounded-lg p-8 relative z-30 mt-7">
-                        <div className="md:flex items-center justify-between">
-                            <h2 className="text-2xl font-semibold leading-6 text-gray-800">Word to PDF</h2>
-                            <p className="text-2xl md:mt-0 mt-4 font-semibold leading-6 text-gray-800">
-                            FREE
-                            </p>
-                        </div>
-                        <p className="md:w-80 text-base leading-6 mt-4 text-gray-600">Unlimited products features and dedicated support channels</p>
-                    </div>
-                </div>
-            </div>
+  return (
+    <section className="bg-slate-50 py-16 sm:py-20">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Roadmap</p>
+          <h2 className="mt-3 text-3xl font-bold text-slate-950 sm:text-4xl">More tools are planned for the public launch</h2>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            The first update should keep the site free to use, fast to load, and simple enough for AdSense review.
+          </p>
         </div>
-    )
-}
 
-export default Pricing
+        <div className="grid gap-3 sm:grid-cols-2">
+          {plannedTools.map((tool) => (
+            <div key={tool} className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+              {tool}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Pricing;
