@@ -19,6 +19,9 @@ import Xlsx_to_csv_page from './Pages/Xlsx_to_csv_page';
 import Excel_pdf_page from './Pages/Excel_pdf_page';
 import Unlock_pdf_page from './Pages/Unlock_pdf_page';
 import Protect_pdf_page from './Pages/Protect_pdf_page';
+import About_page from './Pages/About_page';
+import Contact_page from './Pages/Contact_page';
+import Faq_page from './Pages/Faq_page';
 
 type RootState = {
   user: {
@@ -64,6 +67,9 @@ function App() {
         <Route path="protect-pdf" element={<Protect_pdf_page />} />
         <Route path="privacy" element={<Privacy_policypage />} />
         <Route path="terms&conditions" element={<Termsconditionpage />} />
+        <Route path="about" element={<About_page />} />
+        <Route path="contact" element={<Contact_page />} />
+        <Route path="faq" element={<Faq_page />} />
         <Route
           path="account"
           element={

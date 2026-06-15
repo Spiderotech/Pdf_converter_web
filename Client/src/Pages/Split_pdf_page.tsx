@@ -1,14 +1,5 @@
-import { FiScissors } from 'react-icons/fi';
-import BrowserPdfToolPage from '../Components/tools/BrowserPdfToolPage';
+import SplitPdfToolPage from '../Components/tools/SplitPdfToolPage';
 
-const Split_pdf_page = () => (
-  <BrowserPdfToolPage
-    mode="split"
-    title="Split PDF"
-    eyebrow="PDF split"
-    description="Extract selected pages from a PDF using simple page ranges."
-    icon={FiScissors}
-  />
-);
+const Split_pdf_page = () => <SplitPdfToolPage />;
 
 export default Split_pdf_page;

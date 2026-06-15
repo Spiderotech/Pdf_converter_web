@@ -1,118 +1,127 @@
+import { useMemo, useState } from 'react';
 import { To, useNavigate } from 'react-router-dom';
-import {
-  FiArchive,
-  FiCopy,
-  FiEdit3,
-  FiFileText,
-  FiGrid,
-  FiLock,
-  FiMonitor,
-  FiScissors,
-  FiShield,
-  FiUnlock,
-} from 'react-icons/fi';
+import { FiArrowRight, FiGrid, FiSearch, FiX } from 'react-icons/fi';
+import compressPdfIcon from '../assets/hero-icons/compress-pdf.png';
+import editPdfIcon from '../assets/hero-icons/edit-pdf.png';
+import excelPdfIcon from '../assets/hero-icons/excel-pdf.png';
+import mergePdfIcon from '../assets/hero-icons/merge-pdf.png';
+import pdfWordIcon from '../assets/hero-icons/pdf-word.png';
+import pptPdfIcon from '../assets/hero-icons/ppt-pdf.png';
+import secureIcon from '../assets/hero-icons/lock-pdf.png';
+import signPdfIcon from '../assets/hero-icons/sign-pdf.png';
+import splitPdfIcon from '../assets/hero-icons/split-pdf.png';
+import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.png';
+import wordPdfIcon from '../assets/hero-icons/word-pdf.png';
+import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.png';
 
 const tools = [
   {
-    name: 'PDF to Word',
-    description: 'Convert PDF files into editable Word documents.',
-    path: '/pdf-to-word',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiFileText,
-  },
-  {
-    name: 'Word to PDF',
-    description: 'Create a clean PDF from DOC or DOCX files.',
-    path: '/word-to-pdf',
-    label: 'DOCX',
-    accent: 'text-blue-600 bg-blue-50 border-blue-100',
-    icon: FiFileText,
-  },
-  {
-    name: 'Compress PDF',
-    description: 'Reduce PDF file size for easier sharing.',
-    path: '/compress-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiArchive,
-  },
-  {
     name: 'Merge PDF',
-    description: 'Combine multiple PDF files into one document.',
+    description: 'Combine multiple PDF files into a single PDF',
     path: '/merge-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiCopy,
+    icon: mergePdfIcon,
+    category: 'Edit',
   },
   {
     name: 'Split PDF',
-    description: 'Extract pages or create smaller PDF files.',
+    description: 'Extract pages or split PDF files into multiple PDFs',
     path: '/split-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiScissors,
+    icon: splitPdfIcon,
+    category: 'Edit',
   },
   {
-    name: 'Sign PDF',
-    description: 'Add a visual signature to a PDF document.',
-    path: '/sign-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiEdit3,
-  },
-  {
-    name: 'Edit PDF',
-    description: 'Add text, images, and simple marks to a PDF.',
-    path: '/edit-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiEdit3,
-  },
-  {
-    name: 'PPTX to PDF',
-    description: 'Convert presentation files into PDF documents.',
-    path: '/pptx-to-pdf',
-    label: 'PPTX',
-    accent: 'text-orange-600 bg-orange-50 border-orange-100',
-    icon: FiMonitor,
+    name: 'PDF to Word',
+    description: 'Convert PDF files to editable Word documents',
+    path: '/pdf-to-word',
+    icon: pdfWordIcon,
+    category: 'Convert',
   },
   {
     name: 'XLSX to CSV',
-    description: 'Export spreadsheet data into CSV format.',
+    description: 'Convert PDF tables to Excel spreadsheets',
     path: '/xlsx-to-csv',
-    label: 'XLSX',
-    accent: 'text-green-600 bg-green-50 border-green-100',
-    icon: FiGrid,
+    icon: xlsxCsvIcon,
+    category: 'Convert',
+  },
+  {
+    name: 'Word to PDF',
+    description: 'Convert Word documents to PDF files',
+    path: '/word-to-pdf',
+    icon: wordPdfIcon,
+    category: 'Convert',
   },
   {
     name: 'Excel to PDF',
-    description: 'Convert spreadsheets into PDF documents.',
+    description: 'Convert Excel spreadsheets to PDF files',
     path: '/excel-to-pdf',
-    label: 'XLSX',
-    accent: 'text-green-600 bg-green-50 border-green-100',
-    icon: FiFileText,
+    icon: excelPdfIcon,
+    category: 'Convert',
+  },
+  {
+    name: 'PPT to PDF',
+    description: 'Convert PowerPoint presentations to PDF files',
+    path: '/pptx-to-pdf',
+    icon: pptPdfIcon,
+    category: 'Convert',
+  },
+  {
+    name: 'Compress PDF',
+    description: 'Reduce PDF file size without losing quality',
+    path: '/compress-pdf',
+    icon: compressPdfIcon,
+    category: 'Other',
+  },
+  {
+    name: 'Edit PDF',
+    description: 'Add text, images, shapes or freehand annotations',
+    path: '/edit-pdf',
+    icon: editPdfIcon,
+    category: 'Edit',
+  },
+  {
+    name: 'Sign PDF',
+    description: 'Add your signature to PDF documents',
+    path: '/sign-pdf',
+    icon: signPdfIcon,
+    category: 'Edit',
+  },
+  {
+    name: 'Lock PDF',
+    description: 'Password protect your PDF files',
+    path: '/protect-pdf',
+    icon: secureIcon,
+    category: 'Security',
   },
   {
     name: 'Unlock PDF',
-    description: 'Unlock protected PDFs with the correct password.',
+    description: 'Remove password protection from PDF files',
     path: '/unlock-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiUnlock,
-  },
-  {
-    name: 'Protect PDF',
-    description: 'Add password protection to sensitive PDF files.',
-    path: '/protect-pdf',
-    label: 'PDF',
-    accent: 'text-red-600 bg-red-50 border-red-100',
-    icon: FiLock,
+    icon: unlockPdfIcon,
+    category: 'Security',
   },
 ];
 
+const categories = ['All', 'Convert', 'Edit', 'Security', 'Other'];
+
 const Tools = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filteredTools = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    return tools.filter((tool) => {
+      const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
+      const matchesSearch =
+        !normalizedQuery ||
+        tool.name.toLowerCase().includes(normalizedQuery) ||
+        tool.description.toLowerCase().includes(normalizedQuery) ||
+        tool.category.toLowerCase().includes(normalizedQuery);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
 
   const handleNavigation = (path: To | string) => {
     if (path !== '#') {
@@ -121,47 +130,105 @@ const Tools = () => {
   };
 
   return (
-    <section id="tools" className="bg-white py-16 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Popular tools</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-950 sm:text-4xl">Choose the document task you need</h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            Open the active converters or review the prepared screens for upcoming document tools.
-          </p>
-        </div>
+    <section id="tools" className="relative overflow-hidden bg-[#f7f5ef] pb-16 pt-14 sm:pb-20 sm:pt-16">
+      <div className="absolute -left-28 bottom-20 h-56 w-56 rounded-full bg-stone-300/35 blur-3xl" />
+      <div className="absolute -right-24 top-28 h-72 w-72 rounded-full bg-amber-200/35 blur-3xl" />
+      <div className="absolute right-8 top-28 hidden grid-cols-2 gap-3 lg:grid">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <span key={index} className="h-2.5 w-2.5 rounded-full bg-stone-300" />
+        ))}
+      </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {tools.map((tool) => {
-            const Icon = tool.icon;
-            return (
+      <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+        <div className=" pt-10">
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
+            <div>
+              <h2 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Popular Tools</h2>
+              <p className="mt-4 max-w-3xl text-base font-medium leading-7 text-slate-600">
+                Discover powerful tools to work with your PDF files. Fast, easy and 100% free.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-[340px_auto]">
+              <label className="relative block">
+                <span className="sr-only">Search tools</span>
+                <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="search"
+                  placeholder="Search tools..."
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  className="h-14 w-full rounded-xl border border-stone-200 bg-white/90 pl-12 pr-11 text-sm font-semibold text-slate-700 shadow-sm outline-none ring-stone-200 transition placeholder:text-slate-400 focus:border-amber-300 focus:ring-4"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-stone-100 hover:text-slate-950"
+                    aria-label="Clear tool search"
+                    title="Clear search"
+                  >
+                    <FiX className="h-5 w-5" />
+                  </button>
+                )}
+              </label>
+
+              <div className="flex min-h-14 items-center gap-1 overflow-x-auto rounded-xl border border-stone-200 bg-white/90 p-1 shadow-sm">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => setActiveCategory(category)}
+                    aria-pressed={activeCategory === category}
+                    className={`inline-flex h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-bold transition ${
+                      activeCategory === category
+                        ? 'bg-slate-950 text-white shadow-sm'
+                        : 'text-slate-500 hover:bg-stone-100 hover:text-slate-950'
+                    }`}
+                  >
+                    {category === 'All' && <FiGrid className="h-5 w-5" />}
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {filteredTools.map((tool) => (
               <button
                 key={tool.name}
                 type="button"
                 onClick={() => handleNavigation(tool.path)}
-                className="group rounded-lg border border-slate-200 bg-white p-5 text-left transition hover:border-blue-200 hover:shadow-sm disabled:cursor-default"
+                className="group flex min-h-[128px] items-center gap-5 rounded-xl border border-stone-200 bg-white/95 p-5 text-left shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-xl hover:shadow-slate-200"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <span className={`flex h-11 w-11 items-center justify-center rounded-md border ${tool.accent}`}>
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="rounded border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-500">
-                    {tool.label}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-slate-950">{tool.name}</h3>
-                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-600">{tool.description}</p>
-                <p className="mt-4 text-sm font-semibold text-blue-600">Open screen</p>
+                <img src={tool.icon} alt="" aria-hidden="true" className="h-20 w-20 shrink-0 object-contain drop-shadow-lg" />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xl font-black tracking-tight text-slate-950">{tool.name}</span>
+                  <span className="mt-2 block text-sm font-medium leading-6 text-slate-600">{tool.description}</span>
+                </span>
+                <FiArrowRight className="h-5 w-5 shrink-0 text-[#9a6514] transition group-hover:translate-x-1" />
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-8 flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-          <FiShield className="mt-0.5 h-5 w-5 flex-none text-green-600" />
-          <p>
-            Files should be processed temporarily and deleted after conversion. Avoid uploading files you are not allowed to process.
-          </p>
+          {filteredTools.length === 0 && (
+            <div className="mt-10 flex min-h-52 flex-col items-center justify-center border-y border-stone-200 py-10 text-center">
+              <FiSearch className="h-9 w-9 text-stone-400" aria-hidden="true" />
+              <h3 className="mt-4 text-xl font-black text-slate-950">No tools found</h3>
+              <p className="mt-2 text-sm font-medium text-slate-600">Try another search or choose a different category.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setActiveCategory('All');
+                }}
+                className="mt-5 text-sm font-bold text-[#9a6514] transition hover:text-slate-950"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

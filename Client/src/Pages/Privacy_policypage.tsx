@@ -1,50 +1,36 @@
-import Header from '../Components/Header'
-import Footer from '../Components/Footer'
+import {
+  FiEyeOff,
+  FiFile,
+  FiGlobe,
+  FiMail,
+  FiShield,
+  FiTrash2,
+  FiUser,
+  FiUsers,
+  FiVolume2,
+} from 'react-icons/fi';
+import LegalInfoPage, { LegalSection } from '../Components/LegalInfoPage';
 
-const sections = [
-  {
-    title: 'File processing',
-    text: 'Files uploaded to the tools are used only for the selected document task, such as conversion or preparation. The production version should delete temporary files after processing is complete.',
-  },
-  {
-    title: 'Account data',
-    text: 'The public launch is planned without mandatory login. If accounts are enabled later, the privacy policy should be updated to explain what user data is collected and why.',
-  },
-  {
-    title: 'Analytics and ads',
-    text: 'The website may use analytics or advertising services after launch. Any active service should be listed here before the site is published.',
-  },
-  {
-    title: 'Contact',
-    text: 'Users should be able to contact the website owner for privacy questions through the contact page or support email.',
-  },
+const sections: LegalSection[] = [
+  { title: "Information We Don't Collect", text: 'Our public document tools can be used without creating an account. We do not intentionally collect personal information merely because you process a file.', icon: FiEyeOff },
+  { title: 'How We Use Your Files', text: 'Uploaded files are used only to perform the document task you request, such as conversion, compression, protection, or editing.', icon: FiFile },
+  { title: 'Data Security', text: 'We use secure connections and reasonable technical safeguards while files are uploaded, processed, and returned.', icon: FiShield },
+  { title: 'Data Deletion', text: 'Temporary processing files are intended to be deleted after the requested operation is completed.', icon: FiTrash2 },
+  { title: 'Third-Party Services', text: 'Hosting and infrastructure providers may process limited technical data required to operate the service. We do not sell uploaded documents.', icon: FiGlobe },
+  { title: 'Your Rights', text: 'You may contact us to ask about personal information associated with an account or support request and request correction or deletion where applicable.', icon: FiUser },
+  { title: "Children's Privacy", text: 'The service is not designed to collect information from children. Minors should use the tools only with appropriate supervision.', icon: FiUsers },
+  { title: 'Changes to This Policy', text: 'We may update this policy as our tools or legal obligations change. The revision date on this page will be updated.', icon: FiVolume2 },
+  { title: 'Contact Us', text: 'For privacy questions, contact our support team through the Contact Us page.', icon: FiMail },
 ];
 
-const Privacy_policypage = () => {
-  return (
-    <>
-      <Header />
-      <main className="bg-slate-50">
-        <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Legal</p>
-          <h1 className="mt-3 text-4xl font-bold text-slate-950">Privacy Policy</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            This page explains the intended privacy approach for the document tools website. Review and adapt it before production launch.
-          </p>
+const Privacy_policypage = () => (
+  <LegalInfoPage
+    type="privacy"
+    eyebrow="Your Privacy, Our Priority"
+    title="Privacy Policy"
+    description="This policy explains how FileBrother handles information and files when you use our document tools."
+    sections={sections}
+  />
+);
 
-          <div className="mt-10 space-y-4">
-            {sections.map((section) => (
-              <section key={section.title} className="rounded-lg border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-slate-950">{section.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{section.text}</p>
-              </section>
-            ))}
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
-
-export default Privacy_policypage
+export default Privacy_policypage;

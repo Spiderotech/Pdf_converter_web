@@ -1,6 +1,75 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
-import axios from "../Utils/axios";
-import { FiAlertCircle, FiCheckCircle, FiDownload, FiFileText, FiRefreshCw, FiUploadCloud } from 'react-icons/fi';
+import axios from '../Utils/axios';
+import {
+  FiAlertCircle,
+  FiArrowRight,
+  FiCheckCircle,
+  FiChevronRight,
+  FiDownload,
+  FiRefreshCw,
+  FiUpload,
+} from 'react-icons/fi';
+import wordIcon from '../assets/hero-icons/word-pdf.png';
+import pdfIcon from '../assets/hero-icons/pdf-word.png';
+import shareablePdfIcon from '../assets/converter-icons/shareable-pdf.png';
+import docxSupportIcon from '../assets/converter-icons/docx-support.png';
+import pdfPreviewIcon from '../assets/converter-icons/pdf-preview.png';
+import secureFileHandlingIcon from '../assets/converter-icons/secure-file-handling.png';
+import uploadWordIcon from '../assets/converter-icons/upload-word.png';
+import convertToPdfIcon from '../assets/converter-icons/convert-to-pdf.png';
+import downloadPdfIcon from '../assets/converter-icons/download-pdf.png';
+import ConversionLoadingOverlay from './ConversionLoadingOverlay';
+
+const features = [
+  {
+    title: 'Shareable PDFs',
+    description: 'Create PDF files that are easier to send, print, and archive.',
+    icon: shareablePdfIcon,
+    color: 'bg-rose-50 text-rose-500',
+  },
+  {
+    title: 'DOC & DOCX Support',
+    description: 'Upload common Microsoft Word formats from your device.',
+    icon: docxSupportIcon,
+    color: 'bg-emerald-50 text-emerald-600',
+  },
+  {
+    title: 'Preview Before Saving',
+    description: 'Review the generated PDF in your browser before downloading.',
+    icon: pdfPreviewIcon,
+    color: 'bg-violet-50 text-violet-600',
+  },
+  {
+    title: 'Clear File Handling',
+    description: 'We handle your files securely and delete them after conversion.',
+    icon: secureFileHandlingIcon,
+    color: 'bg-blue-50 text-blue-600',
+  },
+];
+
+const steps = [
+  {
+    title: 'Upload Word File',
+    description: 'Choose or drag and drop your DOC or DOCX file into the upload area.',
+    icon: uploadWordIcon,
+    color: 'bg-blue-50 text-blue-600',
+    badge: 'bg-blue-600',
+  },
+  {
+    title: 'We Convert It',
+    description: 'Our tool converts your Word document into PDF format in seconds.',
+    icon: convertToPdfIcon,
+    color: 'bg-emerald-50 text-emerald-600',
+    badge: 'bg-emerald-500',
+  },
+  {
+    title: 'Download PDF',
+    description: 'Preview the PDF and download it to your device instantly.',
+    icon: downloadPdfIcon,
+    color: 'bg-violet-50 text-violet-600',
+    badge: 'bg-violet-600',
+  },
+];
 
 const WordConverter = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -12,9 +81,21 @@ const WordConverter = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const convertFile = async (file: File) => {
+    const extension = file.name.toLowerCase().split('.').pop();
+    if (extension !== 'doc' && extension !== 'docx') {
+      setError('Please choose a DOC or DOCX file.');
+      return;
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      setError('The Word document must be 25 MB or smaller.');
+      return;
+    }
+
     setSelectedFile(file);
     setError('');
     setIsConverted(false);
+    setDownloadUrl('');
 
     const formData = new FormData();
     formData.append('file', file);
@@ -22,15 +103,12 @@ const WordConverter = () => {
     try {
       setIsLoading(true);
       const response = await axios.post('/wordconverter', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
         responseType: 'blob',
       });
 
       const blob = new Blob([response.data], { type: 'application/pdf' });
-      const url = window.URL.createObjectURL(blob);
-      setDownloadUrl(url);
+      setDownloadUrl(window.URL.createObjectURL(blob));
       setIsConverted(true);
     } catch (conversionError) {
       console.error('Error uploading file:', conversionError);
@@ -42,26 +120,9 @@ const WordConverter = () => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
     if (file) {
       convertFile(file);
     }
-  };
-
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsDragging(false);
   };
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
@@ -87,109 +148,170 @@ const WordConverter = () => {
   };
 
   return (
-    <main className="bg-slate-50">
-      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Word to PDF</p>
-          <h1 className="mt-3 text-4xl font-bold text-slate-950 sm:text-5xl">Convert Word to PDF</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">
-            Upload a DOC or DOCX file and download a clean PDF for sharing, printing, or archiving.
-          </p>
-        </div>
+    <main className="bg-[#f7faff]">
+      <ConversionLoadingOverlay isVisible={isLoading} title="Converting Word to PDF" />
+      <section className="relative overflow-hidden py-12 sm:py-16">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_8%,rgba(219,234,254,0.7),transparent_28%),radial-gradient(circle_at_15%_78%,rgba(224,231,255,0.45),transparent_25%)]" />
 
-        <div
-          className={`mt-10 rounded-lg border-2 border-dashed bg-white p-6 text-center transition sm:p-10 ${
-            isDragging ? 'border-blue-500 bg-blue-50' : 'border-slate-300'
-          }`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          {!isConverted && (
-            <>
-              <input
-                type="file"
-                accept=".doc,.docx"
-                onChange={handleFileChange}
-                className="hidden"
-                ref={fileInputRef}
-              />
-
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                {isLoading ? <FiRefreshCw className="h-6 w-6 animate-spin" /> : <FiUploadCloud className="h-6 w-6" />}
-              </div>
-
-              <h2 className="mt-5 text-lg font-semibold text-slate-950">
-                {isLoading ? 'Processing your document...' : selectedFile ? selectedFile.name : 'Choose a Word file'}
-              </h2>
-              <p className="mt-2 text-sm text-slate-500">
-                Supports DOC and DOCX files. Recommended maximum size: 25 MB.
-              </p>
-
-              <button
-                type="button"
-                onClick={handleButtonClick}
-                disabled={isLoading}
-                className="mt-6 inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
-              >
-                {isLoading ? 'Converting...' : 'Choose file'}
-              </button>
-
-              <p className="mt-3 text-sm text-slate-500">or drop your Word document here</p>
-            </>
-          )}
-
-          {isConverted && (
+        <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-green-50 text-green-600">
-                <FiCheckCircle className="h-7 w-7" />
-              </div>
-              <h2 className="mt-5 text-lg font-semibold text-slate-950">Your PDF is ready</h2>
-              <p className="mt-2 text-sm text-slate-500">
-                {selectedFile?.name ? `Converted from ${selectedFile.name}` : 'The file was converted successfully.'}
+              <p className="text-sm font-extrabold uppercase text-blue-600">Word to PDF</p>
+              <h1 className="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                Convert Word to
+                <span className="block text-blue-600">shareable PDF</span>
+              </h1>
+              <p className="mt-5 max-w-xl text-base font-medium leading-7 text-slate-600 sm:text-lg">
+                Upload a DOC or DOCX file and download a high-quality PDF perfect for sharing, printing, or archiving.
               </p>
 
-              {downloadUrl && (
-                <div className="mx-auto mt-6 max-w-2xl overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
-                  <iframe
-                    src={downloadUrl}
-                    title="Converted PDF preview"
-                    className="h-80 w-full"
-                  />
-                </div>
-              )}
-
-              <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                <a
-                  href={downloadUrl}
-                  download="converted.pdf"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-green-600 px-5 py-3 text-sm font-semibold text-white hover:bg-green-700"
-                >
-                  <FiDownload className="h-4 w-4" />
-                  Download PDF
-                </a>
-                <button
-                  type="button"
-                  onClick={handleStartOver}
-                  className="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-100"
-                >
-                  Start over
-                </button>
+              <div className="mt-7 flex flex-wrap gap-3">
+                {['DOC & DOCX support', 'High quality PDF', 'Secure & private'].map((label) => (
+                  <span key={label} className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm">
+                    {label}
+                  </span>
+                ))}
               </div>
             </div>
-          )}
+
+            <div className="rounded-lg border border-blue-100 bg-white p-4 shadow-[0_18px_50px_rgba(37,99,235,0.09)]">
+              <div
+                className={`flex min-h-[285px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-5 py-8 text-center transition ${
+                  isDragging ? 'border-blue-600 bg-blue-50' : 'border-blue-300 bg-white'
+                }`}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setIsDragging(true);
+                }}
+                onDragLeave={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setIsDragging(false);
+                }}
+                onDrop={handleDrop}
+              >
+                <input ref={fileInputRef} type="file" accept=".doc,.docx" onChange={handleFileChange} className="hidden" />
+
+                {isConverted ? (
+                  <>
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-500">
+                      <FiCheckCircle className="h-9 w-9" />
+                    </span>
+                    <h2 className="mt-4 text-xl font-extrabold text-slate-950">Your PDF is ready</h2>
+                    <p className="mt-2 max-w-md truncate text-sm font-medium text-slate-500">
+                      Converted from {selectedFile?.name}
+                    </p>
+
+                    <div className="mt-5 w-full max-w-xl overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+                      <iframe src={downloadUrl} title="Converted PDF preview" className="h-64 w-full" />
+                    </div>
+
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                      <a
+                        href={downloadUrl}
+                        download="converted.pdf"
+                        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700"
+                      >
+                        <FiDownload className="h-5 w-5" />
+                        Download PDF
+                      </a>
+                      <button
+                        type="button"
+                        onClick={handleStartOver}
+                        className="h-11 rounded-lg border border-slate-200 bg-white px-5 text-sm font-bold text-slate-700 hover:bg-slate-50"
+                      >
+                        Convert another
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <img src={wordIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
+                      <FiArrowRight className="h-8 w-8 text-blue-600" />
+                      <img src={pdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
+                    </div>
+                    <h2 className="mt-3 text-xl font-extrabold text-slate-950">
+                      {isLoading ? 'Converting your Word file...' : selectedFile ? selectedFile.name : 'Drop your Word file here'}
+                    </h2>
+                    <p className="mt-2 text-sm font-medium text-slate-500">
+                      {isLoading ? 'Please keep this page open.' : 'or choose a file to get started'}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isLoading}
+                      className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-7 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-400"
+                    >
+                      {isLoading ? <FiRefreshCw className="h-5 w-5 animate-spin" /> : <FiUpload className="h-5 w-5" />}
+                      {isLoading ? 'Converting...' : 'Choose Word file'}
+                    </button>
+                    <p className="mt-4 text-xs font-medium text-slate-500">Supports DOC and DOCX. Max file size: 25 MB</p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
 
           {error && (
-            <div className="mt-6 flex items-start gap-3 rounded-md border border-red-200 bg-red-50 p-4 text-left text-sm text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 flex-none" />
+            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+              <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
               <p>{error}</p>
             </div>
           )}
-        </div>
 
-        <div className="mt-5 flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">
-          <FiFileText className="mt-0.5 h-5 w-5 flex-none text-blue-600" />
-          <p>Files are processed for conversion only. Do not upload documents you are not allowed to process.</p>
+          <div className="mt-5 grid overflow-hidden rounded-lg border border-blue-100 bg-white shadow-[0_12px_30px_rgba(37,99,235,0.06)] sm:grid-cols-2 xl:grid-cols-4">
+            {features.map((feature, index) => {
+              return (
+                <div key={feature.title} className={`flex min-h-28 items-center gap-4 p-5 ${index > 0 ? 'border-t border-blue-100 sm:border-l sm:border-t-0' : ''}`}>
+                  <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-xl ${feature.color}`}>
+                    <img src={feature.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                  </span>
+                  <span>
+                    <strong className="block text-base font-extrabold text-slate-950">{feature.title}</strong>
+                    <span className="mt-2 block text-sm font-medium leading-6 text-slate-600">{feature.description}</span>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 grid gap-8 xl:grid-cols-[0.7fr_1.8fr] xl:items-center">
+            <div>
+              <p className="text-sm font-extrabold uppercase text-blue-600">How it works</p>
+              <h2 className="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">Convert in 3 easy steps</h2>
+              <p className="mt-4 max-w-md text-base font-medium leading-7 text-slate-600">
+                A quick and reliable way to turn your Word documents into professional PDFs.
+              </p>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-3">
+              {steps.map((step, index) => {
+                return (
+                  <div key={step.title} className="relative">
+                    <article className="flex min-h-40 items-center gap-5 rounded-lg border border-blue-100 bg-white p-6 shadow-[0_12px_30px_rgba(37,99,235,0.06)]">
+                      <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${step.color}`}>
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                      </span>
+                      <div>
+                        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>
+                          {index + 1}
+                        </span>
+                        <h3 className="mt-3 text-base font-extrabold text-slate-950">{step.title}</h3>
+                        <p className="mt-2 text-sm font-medium leading-6 text-slate-600">{step.description}</p>
+                      </div>
+                    </article>
+                    {index < steps.length - 1 && (
+                      <span className="absolute -right-7 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg shadow-blue-200 lg:flex">
+                        <FiChevronRight className="h-5 w-5" />
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
     </main>

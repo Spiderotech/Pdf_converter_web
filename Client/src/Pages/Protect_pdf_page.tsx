@@ -1,18 +1,5 @@
-import { FiLock } from 'react-icons/fi';
-import ServerPdfToolPage from '../Components/tools/ServerPdfToolPage';
+import SecurityPdfToolPage from '../Components/tools/SecurityPdfToolPage';
 
-const Protect_pdf_page = () => (
-  <ServerPdfToolPage
-    title="Protect PDF"
-    eyebrow="PDF protection"
-    description="Add password protection to PDF files before sharing or archiving."
-    endpoint="/protectpdf"
-    accept=".pdf"
-    outputName="protected.pdf"
-    icon={FiLock}
-    needsPassword
-    passwordLabel="New PDF password"
-  />
-);
+const Protect_pdf_page = () => <SecurityPdfToolPage mode="protect" />;
 
 export default Protect_pdf_page;

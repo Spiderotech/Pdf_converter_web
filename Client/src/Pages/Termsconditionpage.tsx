@@ -1,50 +1,40 @@
-import Header from '../Components/Header'
-import Footer from '../Components/Footer'
+import {
+  FiAlertTriangle,
+  FiCheckCircle,
+  FiCopy,
+  FiFileText,
+  FiLayers,
+  FiLock,
+  FiMail,
+  FiPower,
+  FiRefreshCw,
+  FiUser,
+} from 'react-icons/fi';
+import { FiBookOpen } from 'react-icons/fi';
+import LegalInfoPage, { LegalSection } from '../Components/LegalInfoPage';
 
-const sections = [
-  {
-    title: 'Use of the tools',
-    text: 'Use the website only for files you own or are allowed to process. Do not upload illegal, harmful, or unauthorized documents.',
-  },
-  {
-    title: 'No guarantee of perfect conversion',
-    text: 'Document conversion can vary based on file quality, layout, fonts, and source formatting. Always review the downloaded result before relying on it.',
-  },
-  {
-    title: 'Temporary processing',
-    text: 'Files should be processed temporarily for the selected tool. Permanent file storage should not be enabled unless the website clearly explains it.',
-  },
-  {
-    title: 'Service changes',
-    text: 'Tools, limits, supported file types, and hosting providers may change as the website is updated.',
-  },
+const sections: LegalSection[] = [
+  { title: 'Acceptance of Terms', text: 'By accessing or using FileBrother and its tools, you agree to these Terms and Conditions. If you do not agree, do not use the service.', icon: FiFileText },
+  { title: 'Description of Services', text: 'We provide online tools for converting, editing, compressing, signing, protecting, and otherwise processing supported document formats.', icon: FiLayers },
+  { title: 'User Accounts', text: 'Some features may require an account. You are responsible for maintaining accurate account information and protecting your credentials.', icon: FiUser },
+  { title: 'Acceptable Use', text: 'Use the service only for lawful files that you own or are authorized to process. Do not upload harmful, illegal, or infringing content.', icon: FiCheckCircle },
+  { title: 'File Handling & Privacy', text: 'Files are processed for the requested task. Review our Privacy Policy for details about temporary processing and data handling.', icon: FiLock },
+  { title: 'Intellectual Property', text: 'The FileBrother brand, interface, and original site content belong to us or our licensors. Your uploaded files remain yours.', icon: FiCopy },
+  { title: 'Limitation of Liability', text: 'Document processing results can vary. Review downloaded files before relying on them. To the extent permitted by law, the service is provided without guarantees of uninterrupted or error-free operation.', icon: FiAlertTriangle },
+  { title: 'Termination', text: 'We may restrict access when these terms are violated, the service is abused, or continued access creates security or legal risk.', icon: FiPower },
+  { title: 'Changes to Terms', text: 'We may revise these terms as the service changes. Continued use after an update means you accept the revised terms.', icon: FiRefreshCw },
+  { title: 'Governing Law', text: 'These terms are interpreted under applicable law. Mandatory consumer protections in your location remain unaffected.', icon: FiBookOpen },
+  { title: 'Contact Us', text: 'Questions about these terms can be sent through the Contact Us page.', icon: FiMail },
 ];
 
-const Termsconditionpage = () => {
-  return (
-    <>
-      <Header />
-      <main className="bg-slate-50">
-        <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Legal</p>
-          <h1 className="mt-3 text-4xl font-bold text-slate-950">Terms and Conditions</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            These draft terms are written for a public document tools website. Review with a qualified professional before launch.
-          </p>
+const Termsconditionpage = () => (
+  <LegalInfoPage
+    type="terms"
+    eyebrow="Legal Information"
+    title="Terms and Conditions"
+    description="Please read these terms carefully before using FileBrother tools and services."
+    sections={sections}
+  />
+);
 
-          <div className="mt-10 space-y-4">
-            {sections.map((section) => (
-              <section key={section.title} className="rounded-lg border border-slate-200 bg-white p-6">
-                <h2 className="text-lg font-semibold text-slate-950">{section.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{section.text}</p>
-              </section>
-            ))}
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
-
-export default Termsconditionpage
+export default Termsconditionpage;

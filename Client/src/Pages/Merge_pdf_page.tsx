@@ -1,14 +1,5 @@
-import { FiCopy } from 'react-icons/fi';
-import BrowserPdfToolPage from '../Components/tools/BrowserPdfToolPage';
+import MergePdfToolPage from '../Components/tools/MergePdfToolPage';
 
-const Merge_pdf_page = () => (
-  <BrowserPdfToolPage
-    mode="merge"
-    title="Merge PDF"
-    eyebrow="PDF merge"
-    description="Combine multiple PDF files into one ordered document without sending files to the backend."
-    icon={FiCopy}
-  />
-);
+const Merge_pdf_page = () => <MergePdfToolPage />;
 
 export default Merge_pdf_page;
