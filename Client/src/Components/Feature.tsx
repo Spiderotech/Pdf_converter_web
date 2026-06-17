@@ -44,15 +44,15 @@ const features = [
 
 const Feature = () => {
   return (
-    <section className="relative overflow-hidden border-t border-stone-200 bg-white py-16 sm:py-20">
+    <section className="relative overflow-hidden border-t border-stone-200 bg-white py-14 sm:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_15%,rgba(231,229,228,0.55),transparent_28%)]" />
 
-      <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+      <div className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
         <div className="max-w-3xl">
-          <p className="inline-flex rounded-full bg-stone-100 px-4 py-1.5 text-xs font-extrabold uppercase text-slate-700">
+          <p className="inline-flex border-l-4 border-[#b7791f] bg-stone-100 px-3 py-1.5 text-xs font-extrabold uppercase text-slate-700">
             Why use it
           </p>
-          <h2 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">
+          <h2 className="mt-4 text-3xl font-black leading-tight text-slate-950 sm:text-5xl">
             A smarter, cleaner way
             <span className="block text-[#9a6514]">to handle document tasks</span>
           </h2>
@@ -67,16 +67,16 @@ const Feature = () => {
             return (
               <article
                 key={feature.title}
-                className="group relative min-h-[286px] overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.11)]"
+                className="relative min-h-[260px] overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:min-h-[286px] sm:p-6"
               >
                 <div className={`absolute -bottom-16 -right-14 h-52 w-52 rounded-full blur-2xl ${feature.glowClass}`} />
                 <div className="relative flex items-start justify-between">
-                  <span className={`flex h-20 w-20 items-center justify-center rounded-2xl border shadow-lg ${feature.iconClass}`}>
+                  <span className={`flex h-16 w-16 items-center justify-center rounded-lg border shadow-sm sm:h-20 sm:w-20 ${feature.iconClass}`}>
                     <img
                       src={feature.icon}
                       alt=""
                       aria-hidden="true"
-                      className="h-[4.5rem] w-[4.5rem] object-contain drop-shadow-lg"
+                      className="h-14 w-14 object-contain drop-shadow-lg sm:h-[4.5rem] sm:w-[4.5rem]"
                     />
                   </span>
                   <span className={`text-3xl font-black ${feature.numberClass}`}>

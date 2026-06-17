@@ -55,15 +55,15 @@ const Contact_page = () => {
   return (
     <>
       <Header />
-      <main className="bg-[#f8f6f0] py-12 sm:py-16">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <main className="bg-[#f8f6f0] py-10 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-8">
           <section className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
               <p className="inline-flex items-center gap-2 rounded-lg bg-stone-100 px-4 py-2 text-sm font-extrabold uppercase text-[#9a6514]">
                 <FiHeadphones />
                 Contact Us
               </p>
-              <h1 className="mt-6 text-5xl font-black leading-tight text-slate-950">
+              <h1 className="mt-6 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">
                 We're here
                 <br />
                 to <span className="text-[#9a6514]">help</span>
@@ -71,24 +71,24 @@ const Contact_page = () => {
               <p className="mt-5 max-w-xl text-base font-medium leading-8 text-slate-600">
                 Need support, want to report a problem, or have an idea for a new tool? Choose the best contact option below.
               </p>
-              <div className="mt-7 flex flex-wrap gap-4 text-sm font-bold text-slate-700">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm">
+              <div className="mt-7 grid gap-3 text-sm font-bold text-slate-700 sm:grid-cols-2">
+                <span className="inline-flex items-center gap-2 border-l-4 border-[#b7791f] bg-white px-3 py-2 shadow-sm">
                   <FiShield className="text-[#9a6514]" />
                   Fast & reliable support
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm">
+                <span className="inline-flex items-center gap-2 border-l-4 border-[#b7791f] bg-white px-3 py-2 shadow-sm">
                   <FiLock className="text-[#9a6514]" />
                   Your privacy matters
                 </span>
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-stone-200 bg-white p-7 shadow-[0_25px_70px_rgba(15,23,42,0.12)]">
+            <div className="relative overflow-hidden rounded-lg border border-stone-200 bg-white p-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)] sm:p-7">
               <div className="absolute -right-14 -top-14 h-44 w-44 rounded-full bg-stone-100" />
               <div className="absolute -bottom-16 left-8 h-40 w-40 rounded-full bg-amber-100/70" />
               <div className="relative">
-                <span className="flex h-24 w-24 items-center justify-center rounded-3xl bg-stone-50 shadow-sm">
-                  <img src={emailIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain" />
+                <span className="flex h-20 w-20 items-center justify-center rounded-lg bg-stone-50 shadow-sm sm:h-24 sm:w-24">
+                  <img src={emailIcon} alt="" aria-hidden="true" className="h-20 w-20 object-contain sm:h-24 sm:w-24" />
                 </span>
                 <h2 className="mt-6 text-3xl font-black text-slate-950">Get in touch</h2>
                 <p className="mt-3 max-w-lg text-sm font-medium leading-7 text-slate-600">
@@ -100,10 +100,10 @@ const Contact_page = () => {
                     <a
                       key={title}
                       href={href}
-                      className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 hover:border-amber-200 hover:bg-stone-50"
+                      className="group flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50/70 p-3 hover:border-amber-200 hover:bg-stone-50 sm:items-center sm:gap-4 sm:p-4"
                     >
-                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm">
-                        <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+                      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm sm:h-16 sm:w-16">
+                        <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain sm:h-14 sm:w-14" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <strong className="block text-sm font-black text-slate-950">{title}</strong>
@@ -119,7 +119,7 @@ const Contact_page = () => {
           </section>
 
           <section className="mt-10 grid gap-5 lg:grid-cols-[1fr_0.85fr]">
-            <div className="rounded-[1.5rem] border border-stone-200 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.07)] sm:p-8">
+            <div className="rounded-lg border border-stone-200 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)] sm:p-8">
               <p className="text-sm font-extrabold uppercase text-[#9a6514]">Before you contact us</p>
               <h2 className="mt-3 text-3xl font-black text-slate-950">Helpful details to include</h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -137,12 +137,12 @@ const Contact_page = () => {
               </div>
             </div>
 
-            <aside className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm">
+            <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-xl font-extrabold text-slate-950">Support info</h2>
               <div className="mt-5 divide-y divide-slate-100">
                 {supportDetails.map(({ icon, title, text }) => (
                   <div key={title} className="flex gap-4 py-4">
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-stone-50">
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-stone-50">
                       <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
                     </span>
                     <span>
@@ -158,7 +158,7 @@ const Contact_page = () => {
           <section className="mt-8 grid gap-4 rounded-lg border border-slate-200 bg-white p-6 sm:grid-cols-2 lg:grid-cols-4">
             {supportLinks.map(({ icon, title, href }) => (
               <a key={title} href={href} className="flex items-center gap-4 p-3 text-sm font-bold text-slate-800 hover:text-[#9a6514]">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-stone-50">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-stone-50">
                   <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
                 </span>
                 {title}

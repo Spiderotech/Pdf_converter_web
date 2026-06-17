@@ -101,15 +101,15 @@ const ExcelPdfToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Converting Excel to PDF" />
-      <main className="relative overflow-hidden bg-[#f8fcf9] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#f8fcf9] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(220,252,231,0.65),transparent_25%),radial-gradient(circle_at_85%_72%,rgba(219,234,254,0.38),transparent_24%)]" />
 
-        <section className="relative mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12">
+        <section className="relative mx-auto max-w-[1500px] px-4 sm:px-8 lg:px-12">
           <div className="text-center">
             <p className="inline-flex items-center gap-2 text-sm font-extrabold uppercase text-green-600">
               Spreadsheet Conversion
             </p>
-            <h1 className="mt-4 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">
+            <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">
               Excel <span className="text-green-600">to PDF</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
@@ -134,7 +134,7 @@ const ExcelPdfToolPage = () => {
           <div className="mt-10 grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
             <div>
               <div
-                className={`flex min-h-[380px] flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-6 py-10 text-center shadow-[0_18px_50px_rgba(22,163,74,0.06)] transition ${
+                className={`flex min-h-[290px] flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-4 py-8 text-center shadow-[0_14px_34px_rgba(22,163,74,0.05)] transition sm:min-h-[380px] sm:px-6 sm:py-10 ${
                   isDragging ? 'border-green-600 bg-green-50' : 'border-green-400'
                 }`}
                 onDragOver={(event) => {
@@ -153,9 +153,9 @@ const ExcelPdfToolPage = () => {
 
                 <div className="relative">
                   <span className="absolute -inset-5 rounded-full bg-green-100/70 blur-2xl" />
-                  <img src={excelPdfHeroIcon} alt="" aria-hidden="true" className="relative h-44 w-full max-w-md object-contain drop-shadow-2xl" />
+                  <img src={excelPdfHeroIcon} alt="" aria-hidden="true" className="relative h-28 w-full max-w-md object-contain drop-shadow-2xl sm:h-44" />
                 </div>
-                <h2 className="mt-5 text-2xl font-extrabold text-slate-950">
+                <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
                   {isProcessing ? 'Converting your workbook...' : file ? file.name : 'Drag & drop your Excel file here'}
                 </h2>
                 <p className="mt-3 text-sm font-medium text-slate-500">{isProcessing ? 'Please keep this page open.' : 'or'}</p>
@@ -163,7 +163,7 @@ const ExcelPdfToolPage = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isProcessing}
-                  className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-green-600 px-9 text-sm font-extrabold text-white shadow-lg shadow-green-200 hover:bg-green-700 disabled:bg-green-300"
+                  className="mt-4 inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-lg bg-green-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-green-200 hover:bg-green-700 disabled:bg-green-300 sm:px-9"
                 >
                   <FiUpload className="h-5 w-5" />
                   {file ? 'Replace file' : 'Choose file'}
@@ -221,14 +221,14 @@ const ExcelPdfToolPage = () => {
               )}
             </div>
 
-            <aside className="rounded-lg border border-green-100 bg-white p-7 shadow-[0_18px_50px_rgba(22,163,74,0.07)] xl:sticky xl:top-20 xl:self-start">
+            <aside className="rounded-lg border border-green-100 bg-white p-5 shadow-[0_14px_34px_rgba(22,163,74,0.06)] sm:p-7 xl:sticky xl:top-20 xl:self-start">
               <h2 className="text-xl font-extrabold text-slate-950">How it works</h2>
               <div className="relative mt-8 space-y-10 before:absolute before:bottom-8 before:left-8 before:top-8 before:border-l-2 before:border-green-100">
                 {howItWorksSteps.map((step, index) => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
-                      <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-green-50">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                      <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-green-50 sm:h-16 sm:w-16">
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">

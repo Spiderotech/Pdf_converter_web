@@ -2,9 +2,28 @@ import { PdfApi } from 'asposepdfcloud';
 import fs from 'fs';
 import path from 'path';
 const downloadsDir = path.resolve(process.cwd(), 'downloads');
+const remoteFolder = 'PdfToWord';
+
+const conversionOptions = {
+    addReturnToLineEnd: false,
+    format: 'DocX',
+    imageResolutionX: 300,
+    imageResolutionY: 300,
+    maxDistanceBetweenTextLines: 2,
+    mode: 'Textbox',
+    recognizeBullets: true,
+    relativeHorizontalProximity: 2.5,
+};
 
 const ensureDownloadsDir = () => {
     fs.mkdirSync(downloadsDir, { recursive: true });
+};
+
+const getStorageName = () => process.env.ASPOSE_STORAGE_NAME || 'pdf converter storage';
+
+const sanitizeBaseName = (fileName) => {
+    const parsedName = path.basename(fileName, path.extname(fileName));
+    return parsedName.replace(/[^a-zA-Z0-9-_]/g, '-').replace(/-+/g, '-') || 'converted';
 };
 
 const getPdfApi = () => {
@@ -19,8 +38,12 @@ const getPdfApi = () => {
 };
 
 const Pdf_to_wordconverter = async (file) => {
+    let uploadedRemotePath;
+    let pdfApi;
+    let storageName;
+
     try {
-        const pdfApi = getPdfApi();
+        pdfApi = getPdfApi();
         const { path: filePath, originalname: fileName } = file;
 
         if (!fs.existsSync(filePath)) {
@@ -28,31 +51,39 @@ const Pdf_to_wordconverter = async (file) => {
         }
 
         const fileBuffer = fs.readFileSync(filePath);
-
-        const storageName = 'pdf converter storage'; // Specify the storage name if needed, otherwise leave as an empty string
-        const resultPath = `Converted/${path.basename(fileName, '.pdf')}.docx`;
+        storageName = getStorageName();
+        const outputName = `${sanitizeBaseName(fileName)}.docx`;
+        const remoteFileName = `${sanitizeBaseName(fileName)}-${Date.now()}${path.extname(fileName) || '.pdf'}`;
+        const remotePath = `${remoteFolder}/${remoteFileName}`;
+        uploadedRemotePath = remotePath;
 
         // Step 1: Upload the file to Aspose cloud storage
         console.log('Uploading file to Aspose storage...');
-        await pdfApi.uploadFile(fileName, Buffer.from(fileBuffer), storageName);
-        console.log('File uploaded successfully:', fileName);
+        await pdfApi.uploadFile(remotePath, fileBuffer, storageName);
+        console.log('File uploaded successfully:', remotePath);
 
-        // Step 2: Convert the PDF to Word document in storage
+        // Step 2: Convert the PDF to Word and download the converted buffer.
         console.log('Converting PDF to Word...');
-        await pdfApi.putPdfInStorageToDoc(
-            fileName,
-            resultPath,
-            '', '', '', '', '', '', '', '', '', // Empty optional parameters 
+        const fileData = await pdfApi.getPdfInStorageToDoc(
+            remoteFileName,
+            conversionOptions.addReturnToLineEnd,
+            conversionOptions.format,
+            conversionOptions.imageResolutionX,
+            conversionOptions.imageResolutionY,
+            conversionOptions.maxDistanceBetweenTextLines,
+            conversionOptions.mode,
+            conversionOptions.recognizeBullets,
+            conversionOptions.relativeHorizontalProximity,
+            remoteFolder,
             storageName
         );
-        console.log('File converted successfully:', resultPath); 
 
-        // Step 3: Download the converted file from Aspose storage
-        console.log('Downloading converted file...');
-        const fileData = await pdfApi.downloadFile(resultPath, storageName, '');
+        if (!fileData.body || fileData.body.length === 0) {
+            throw new Error('Converted Word document was empty');
+        }
+
         ensureDownloadsDir();
-        const convertedFilePath = path.join(downloadsDir, path.basename(resultPath));
-        
+        const convertedFilePath = path.join(downloadsDir, outputName);
         fs.writeFileSync(convertedFilePath, fileData.body);
 
         console.log('File downloaded successfully:', convertedFilePath);
@@ -63,6 +94,14 @@ const Pdf_to_wordconverter = async (file) => {
     } catch (error) {
         console.error('Error in Pdf_to_wordconverter:', error.message); 
         throw new Error('Conversion failed');
+    } finally {
+        if (pdfApi && uploadedRemotePath) {
+            try {
+                await pdfApi.deleteFile(uploadedRemotePath, storageName);
+            } catch (cleanupError) {
+                console.warn('Aspose cleanup failed:', cleanupError.message);
+            }
+        }
     }
 };
 

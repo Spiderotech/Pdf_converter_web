@@ -130,7 +130,7 @@ const Tools = () => {
   };
 
   return (
-    <section id="tools" className="relative overflow-hidden bg-[#f7f5ef] pb-16 pt-14 sm:pb-20 sm:pt-16">
+    <section id="tools" className="relative overflow-hidden bg-[#f7f5ef] pb-14 pt-12 sm:pb-20 sm:pt-16">
       <div className="absolute -left-28 bottom-20 h-56 w-56 rounded-full bg-stone-300/35 blur-3xl" />
       <div className="absolute -right-24 top-28 h-72 w-72 rounded-full bg-amber-200/35 blur-3xl" />
       <div className="absolute right-8 top-28 hidden grid-cols-2 gap-3 lg:grid">
@@ -139,17 +139,17 @@ const Tools = () => {
         ))}
       </div>
 
-      <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
-        <div className=" pt-10">
-          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
+      <div className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
+        <div className="pt-4 sm:pt-8 lg:pt-10">
+          <div className="grid gap-6 xl:grid-cols-[1fr_auto] xl:items-start">
             <div>
-              <h2 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Popular Tools</h2>
+              <h2 className="text-3xl font-black text-slate-950 sm:text-5xl">Popular Tools</h2>
               <p className="mt-4 max-w-3xl text-base font-medium leading-7 text-slate-600">
                 Discover powerful tools to work with your PDF files. Fast, easy and 100% free.
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-[340px_auto]">
+            <div className="grid gap-3 lg:grid-cols-[minmax(260px,340px)_auto]">
               <label className="relative block">
                 <span className="sr-only">Search tools</span>
                 <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
@@ -173,7 +173,7 @@ const Tools = () => {
                 )}
               </label>
 
-              <div className="flex min-h-14 items-center gap-1 overflow-x-auto rounded-xl border border-stone-200 bg-white/90 p-1 shadow-sm">
+              <div className="flex min-h-14 max-w-full items-center gap-1 overflow-x-auto rounded-xl border border-stone-200 bg-white/90 p-1 shadow-sm">
                 {categories.map((category) => (
                   <button
                     key={category}
@@ -194,17 +194,17 @@ const Tools = () => {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {filteredTools.map((tool) => (
               <button
                 key={tool.name}
                 type="button"
                 onClick={() => handleNavigation(tool.path)}
-                className="group flex min-h-[128px] items-center gap-5 rounded-xl border border-stone-200 bg-white/95 p-5 text-left shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-xl hover:shadow-slate-200"
+                className="group flex min-h-[118px] items-start gap-4 rounded-lg border border-stone-200 bg-white/95 p-4 text-left shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-xl hover:shadow-slate-200 sm:items-center sm:gap-5 sm:p-5"
               >
-                <img src={tool.icon} alt="" aria-hidden="true" className="h-20 w-20 shrink-0 object-contain drop-shadow-lg" />
+                <img src={tool.icon} alt="" aria-hidden="true" className="h-16 w-16 shrink-0 object-contain drop-shadow-lg sm:h-20 sm:w-20" />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-xl font-black tracking-tight text-slate-950">{tool.name}</span>
+                  <span className="block text-lg font-black text-slate-950 sm:text-xl">{tool.name}</span>
                   <span className="mt-2 block text-sm font-medium leading-6 text-slate-600">{tool.description}</span>
                 </span>
                 <FiArrowRight className="h-5 w-5 shrink-0 text-[#9a6514] transition group-hover:translate-x-1" />

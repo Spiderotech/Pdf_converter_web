@@ -54,7 +54,7 @@ const About_page = () => (
   <>
     <Header />
     <main className="overflow-hidden bg-[#fbf7ef] py-10 sm:py-14">
-      <section className="relative mx-auto max-w-7xl px-5 sm:px-8">
+      <section className="relative mx-auto max-w-7xl px-4 sm:px-8">
         <div className="absolute -left-36 top-10 h-80 w-80 rounded-full bg-stone-200/60 blur-3xl" />
         <div className="absolute -right-32 top-28 h-96 w-96 rounded-full bg-amber-100/70 blur-3xl" />
         <div className="absolute right-0 top-0 hidden h-40 w-40 rounded-full border-[26px] border-slate-300/45 lg:block" />
@@ -62,11 +62,11 @@ const About_page = () => (
 
         <div className="relative grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-amber-100 bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-wide text-[#9a6514] shadow-[0_14px_35px_rgba(120,83,27,0.08)]">
+            <p className="inline-flex items-center gap-2 border-l-4 border-[#b7791f] bg-white/90 px-3 py-2 text-xs font-black uppercase tracking-wide text-[#9a6514] shadow-sm">
               <FiUsers className="h-4 w-4" />
               About FileBrother
             </p>
-            <h1 className="mt-6 max-w-2xl text-5xl font-black leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-[4.7rem]">
+            <h1 className="mt-6 max-w-2xl text-4xl font-black leading-tight text-slate-950 sm:text-6xl lg:text-[4.7rem]">
               Premium PDF tools
               <span className="block">made <span className="bg-gradient-to-r from-[#7c4f12] to-[#c0841a] bg-clip-text text-transparent">simple.</span></span>
             </h1>
@@ -75,11 +75,11 @@ const About_page = () => (
               FileBrother helps people convert, compress, edit, sign, protect, and unlock documents through clean tools that feel quick, safe, and easy to understand.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a href="#what-we-do" className="inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-slate-950 px-7 text-sm font-black text-white shadow-xl shadow-slate-300 transition hover:-translate-y-0.5 hover:bg-slate-800">
+              <a href="#what-we-do" className="inline-flex h-14 items-center justify-center gap-3 rounded-lg bg-slate-950 px-7 text-sm font-black text-white shadow-xl shadow-slate-300 transition hover:-translate-y-0.5 hover:bg-slate-800">
                 Explore tools
                 <FiArrowRight className="h-5 w-5" />
               </a>
-              <a href="/contact" className="inline-flex h-14 items-center justify-center gap-3 rounded-2xl border border-stone-200 bg-white/88 px-7 text-sm font-black text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
+              <a href="/contact" className="inline-flex h-14 items-center justify-center gap-3 rounded-lg border border-stone-200 bg-white/88 px-7 text-sm font-black text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white">
                 Contact support
                 <FiHeadphones className="h-5 w-5 text-[#b7791f]" />
               </a>
@@ -95,7 +95,7 @@ const About_page = () => (
             </div>
           </div>
 
-          <div className="relative min-h-[420px]">
+          <div className="relative min-h-[260px] sm:min-h-[340px] lg:min-h-[420px]">
             <div className="absolute left-0 top-10 h-80 w-80 rounded-full border border-dashed border-[#c0841a]/30" />
             <img
               src={aboutHeroImage}
@@ -105,10 +105,10 @@ const About_page = () => (
           </div>
         </div>
 
-        <section className="relative mt-8 grid gap-0 overflow-hidden rounded-[1.75rem] border border-stone-100 bg-white/88 p-4 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:grid-cols-2 lg:grid-cols-4 lg:p-5">
+        <section className="relative mt-8 grid gap-0 overflow-hidden rounded-lg border border-stone-100 bg-white/88 p-3 shadow-[0_14px_36px_rgba(15,23,42,0.06)] backdrop-blur sm:grid-cols-2 lg:grid-cols-4 lg:p-5">
           {stats.map(({ icon, value, label, text }) => (
             <div key={label} className="flex items-center gap-4 border-stone-200 p-4 lg:border-r lg:last:border-r-0">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-stone-50 to-white shadow-sm">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-stone-50 to-white shadow-sm sm:h-16 sm:w-16">
                 <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
               </span>
               <span>
@@ -133,24 +133,22 @@ const About_page = () => (
             {capabilities.map(({ icon, title, text, tone }) => (
               <article
                 key={title}
-                className="group flex min-h-[310px] flex-col rounded-[1.5rem] border border-white/70 bg-white/90 p-7 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur transition hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)]"
+                className="flex min-h-[250px] flex-col rounded-lg border border-white/70 bg-white/90 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur sm:min-h-[286px] sm:p-6"
               >
-                <span className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-white to-stone-50 shadow-sm">
-                  <img src={icon} alt="" aria-hidden="true" className="h-[4.5rem] w-[4.5rem] object-contain transition group-hover:scale-105" />
+                <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-gradient-to-br from-white to-stone-50 shadow-sm sm:h-20 sm:w-20">
+                  <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]" />
                 </span>
                 <h3 className="mt-8 text-xl font-black text-slate-950">{title}</h3>
                 <p className="mt-4 text-sm font-semibold leading-7 text-slate-600">{text}</p>
-                <span className={`mt-auto flex h-12 w-12 items-center justify-center rounded-full ${tone}`}>
-                  <FiArrowRight className="h-5 w-5" />
-                </span>
+                <span className={`mt-auto block h-1.5 w-14 rounded-full ${tone}`} />
               </article>
             ))}
           </div>
         </section>
 
         <section className="relative mt-12 grid items-start gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/92 p-7 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:p-10">
-            <span className="absolute right-8 top-8 flex h-16 w-16 items-center justify-center rounded-full bg-white/80 shadow-sm">
+          <div className="relative overflow-hidden rounded-lg border border-white/70 bg-white/92 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.06)] backdrop-blur sm:p-10">
+            <span className="absolute right-5 top-5 hidden h-16 w-16 items-center justify-center rounded-lg bg-white/80 shadow-sm sm:flex">
               <img src={professionalSecureIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
             </span>
             <p className="text-sm font-black uppercase tracking-[0.2em] text-[#9a6514]">Why Users Trust Us</p>
@@ -174,9 +172,9 @@ const About_page = () => (
             {values.map(({ icon, title, text, lineTone, accent }) => (
               <article
                 key={title}
-                className="relative flex min-h-32 items-center gap-6 overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/92 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur"
+                className="relative flex min-h-32 items-start gap-4 overflow-hidden rounded-lg border border-white/70 bg-white/92 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur sm:items-center sm:gap-6 sm:p-6"
               >
-                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/75 shadow-sm">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white/75 shadow-sm sm:h-16 sm:w-16">
                   <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
                 </span>
                 <span className={`h-14 w-px ${lineTone}`} />
@@ -190,7 +188,7 @@ const About_page = () => (
           </div>
         </section>
 
-        <section className="relative mt-14 overflow-hidden rounded-[1.75rem] bg-gradient-to-r from-slate-950 via-slate-900 to-[#7c4f12] p-7 text-white shadow-[0_25px_70px_rgba(15,23,42,0.24)] sm:p-9">
+        <section className="relative mt-14 overflow-hidden rounded-lg bg-gradient-to-r from-slate-950 via-slate-900 to-[#7c4f12] p-5 text-white shadow-[0_18px_45px_rgba(15,23,42,0.22)] sm:p-9">
           <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
           <div className="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
             <div className="flex items-center gap-5">
@@ -203,11 +201,11 @@ const About_page = () => (
               </span>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a href="/contact" className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 text-sm font-black text-slate-950">
+              <a href="/contact" className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-white px-6 text-sm font-black text-slate-950">
                 Contact Support
                 <FiArrowRight />
               </a>
-              <a href="/faq" className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/30 px-6 text-sm font-black text-white hover:bg-white/10">
+              <a href="/faq" className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-white/30 px-6 text-sm font-black text-white hover:bg-white/10">
                 Visit FAQ
               </a>
             </div>

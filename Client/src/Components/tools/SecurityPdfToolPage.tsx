@@ -241,16 +241,16 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
         isVisible={isProcessing}
         title={isProtect ? 'Protecting your PDF' : 'Unlocking your PDF'}
       />
-      <main className={`relative overflow-hidden ${theme.background} py-12 sm:py-16`}>
+      <main className={`relative overflow-hidden ${theme.background} py-10 sm:py-16`}>
         <div className={`pointer-events-none absolute inset-0 ${theme.glow}`} />
-        <section className="relative mx-auto max-w-6xl px-5 sm:px-8">
+        <section className="relative mx-auto max-w-6xl px-4 sm:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
               <p className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-extrabold uppercase ${theme.eyebrow}`}>
                 <img src={heroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                 PDF {isProtect ? 'Protection' : 'Unlock'}
               </p>
-              <h1 className="mt-7 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">
+              <h1 className="mt-6 text-4xl font-black leading-tight text-slate-950 sm:mt-7 sm:text-6xl">
                 {isProtect ? 'Protect' : 'Unlock'} <span className={theme.accent}>PDF</span>
               </h1>
               <p className="mt-5 max-w-xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
@@ -259,7 +259,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                   : 'Remove password protection from PDFs when the correct password is provided.'}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 {featureItems.map(({ icon, text }) => (
                   <span key={text} className="inline-flex items-center gap-3 text-sm font-bold text-slate-700">
                     <span className={`flex h-12 w-12 items-center justify-center rounded-lg ${theme.iconBox}`}>
@@ -271,13 +271,13 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
               </div>
             </div>
 
-            <div className="relative flex min-h-72 items-center justify-center">
-              <div className={`absolute h-64 w-64 rounded-full opacity-80 ${isProtect ? 'bg-rose-100' : 'bg-violet-100'}`} />
+            <div className="relative flex min-h-56 items-center justify-center sm:min-h-72">
+              <div className={`absolute h-52 w-52 rounded-full opacity-80 sm:h-64 sm:w-64 ${isProtect ? 'bg-rose-100' : 'bg-violet-100'}`} />
               <img
                 src={heroIcon}
                 alt=""
                 aria-hidden="true"
-                className="relative h-64 w-64 object-contain drop-shadow-[0_25px_30px_rgba(15,23,42,0.15)] sm:h-72 sm:w-72"
+                className="relative h-52 w-52 object-contain drop-shadow-[0_25px_30px_rgba(15,23,42,0.15)] sm:h-72 sm:w-72"
               />
             </div>
           </div>
@@ -299,9 +299,9 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
               {howItWorksSteps.map((step, index) => {
                 return (
                   <div key={step.title} className="relative">
-                    <article className="flex min-h-44 flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
-                      <span className={`flex h-16 w-16 items-center justify-center rounded-full ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                    <article className="flex min-h-40 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-[0_10px_24px_rgba(15,23,42,0.05)] sm:min-h-44 sm:p-5">
+                      <span className={`flex h-14 w-14 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <span className={`mt-4 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>
                         {index + 1}
@@ -324,7 +324,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
 
           <section className="mt-10 rounded-lg border border-slate-200 bg-white/80 p-5 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-7">
             <div
-              className={`flex min-h-[340px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition ${
+              className={`flex min-h-[280px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[340px] sm:px-6 sm:py-10 ${
                 isDragging ? theme.activeDrop : theme.border
               }`}
               onDragOver={(event) => {
@@ -338,10 +338,10 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
               onDrop={handleDrop}
             >
               <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handleFileChange} className="hidden" />
-              <span className={`flex h-24 w-24 items-center justify-center rounded-full ${theme.iconBox}`}>
-                <img src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-20 w-20 object-contain" />
+              <span className={`flex h-20 w-20 items-center justify-center rounded-lg sm:h-24 sm:w-24 ${theme.iconBox}`}>
+                <img src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
               </span>
-              <h2 className="mt-5 max-w-full break-words text-2xl font-extrabold text-slate-950">
+              <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
                 {file ? file.name : isProtect ? 'Upload your PDF' : 'Drop your PDF here'}
               </h2>
               <p className="mt-3 text-sm font-medium text-slate-500">
@@ -351,7 +351,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isProcessing}
-                className={`mt-5 inline-flex h-14 items-center justify-center gap-3 rounded-lg px-9 text-base font-extrabold text-white shadow-lg transition disabled:cursor-not-allowed disabled:bg-slate-300 ${theme.button}`}
+                className={`mt-5 inline-flex h-12 w-full max-w-xs items-center justify-center gap-3 rounded-lg px-6 text-sm font-extrabold text-white shadow-lg transition disabled:cursor-not-allowed disabled:bg-slate-300 sm:h-14 sm:px-9 sm:text-base ${theme.button}`}
               >
                 <FiUpload className="h-5 w-5" />
                 {file ? 'Change file' : 'Choose file'}
@@ -361,7 +361,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           </section>
 
           {file && (
-            <div className="mt-6 flex items-center gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mt-6 flex items-start gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:items-center sm:p-5">
               <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg ${theme.iconBox}`}>
                 <img src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
               </span>
@@ -385,7 +385,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
 
           <section className="mt-7 grid gap-5 rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[minmax(250px,0.8fr)_minmax(0,1.2fr)] md:items-center">
             <div className="flex items-start gap-4">
-              <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${theme.iconBox}`}>
+              <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${theme.iconBox}`}>
                 <img src={securityPdfPasswordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
               </span>
               <div>
@@ -450,7 +450,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           <section className={`mt-7 rounded-lg border p-6 ${theme.softPanel}`}>
             <div className="grid items-center gap-6 md:grid-cols-[1.3fr_1fr]">
               <div className="flex items-start gap-4">
-                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white sm:h-16 sm:w-16">
                   <img src={actionIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
                 </span>
                 <div>
@@ -477,7 +477,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
             type="button"
             onClick={processPdf}
             disabled={!file || !password.trim() || isProcessing}
-            className={`mt-7 inline-flex h-16 w-full items-center justify-center gap-3 rounded-lg px-8 text-lg font-extrabold text-white shadow-lg transition disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none ${theme.button}`}
+            className={`mt-7 inline-flex h-14 w-full items-center justify-center gap-3 rounded-lg px-6 text-base font-extrabold text-white shadow-lg transition disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none sm:h-16 sm:px-8 sm:text-lg ${theme.button}`}
           >
             {isProcessing ? <FiRefreshCw className="h-6 w-6 animate-spin" /> : isProtect ? <FiLock className="h-6 w-6" /> : <FiUnlock className="h-6 w-6" />}
             {isProcessing ? 'Processing...' : title}

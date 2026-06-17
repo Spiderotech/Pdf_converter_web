@@ -64,7 +64,7 @@ const trustItems = [
 
 const Herosection = () => {
   return (
-    <section className="relative min-h-[calc(100svh-4.5rem)] overflow-hidden bg-[#faf8f3]">
+    <section className="relative overflow-hidden bg-[#faf8f3] lg:min-h-[calc(100svh-4.5rem)]">
       <img
         src={heroBackgroundImage}
         alt=""
@@ -72,12 +72,12 @@ const Herosection = () => {
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
       <div className="absolute inset-0 bg-[#faf8f3]/35" />
-      <div className="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-[1720px] flex-col justify-center px-5 py-2 sm:px-8 lg:px-10">
-        <div className="grid items-center gap-3 lg:grid-cols-[0.88fr_1.12fr]">
+      <div className="relative mx-auto flex max-w-[1720px] flex-col justify-center px-4 py-8 sm:px-8 sm:py-10 lg:min-h-[calc(100svh-4.5rem)] lg:px-10 lg:py-4">
+        <div className="grid items-center gap-7 lg:grid-cols-[0.88fr_1.12fr] lg:gap-3">
           <div className="relative">
             <div className="absolute -left-8 -top-8 hidden h-28 w-28 rounded-full bg-amber-200/35 blur-3xl lg:block" />
             <div className="relative">
-              <div className="inline-flex flex-wrap items-center gap-3 rounded-3xl border border-stone-100 bg-white/85 px-3.5 py-2 text-xs font-black text-slate-950 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur sm:text-sm">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-l-4 border-[#b7791f] bg-white/70 px-3 py-2 text-xs font-black text-slate-950 backdrop-blur sm:text-sm">
                 {trustBadges.map((badge, index) => {
                   return (
                     <span key={badge.label} className="inline-flex items-center gap-2">
@@ -91,31 +91,30 @@ const Herosection = () => {
                 })}
               </div>
 
-              <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[0.98] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-[3.35rem] xl:text-[3.65rem]">
+              <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-[3.35rem] xl:text-[3.65rem]">
                 All your PDF tasks,
                 <span className="block">done in <span className="bg-gradient-to-r from-[#7c4f12] to-[#c0841a] bg-clip-text text-transparent">one place.</span></span>
               </h1>
               <p className="mt-3 max-w-2xl text-sm font-extrabold leading-6 text-slate-500 xl:text-base xl:leading-7">
                 Convert, compress, edit, sign and secure documents with a polished workflow built for fast everyday work.
               </p>
-              <div className="mt-3 flex flex-wrap items-center gap-3 text-xs font-extrabold text-slate-600 xl:text-sm">
-                {trustItems.map(({ label, icon }, index) => (
+              <div className="mt-4 grid gap-3 text-xs font-extrabold text-slate-600 sm:grid-cols-3 xl:text-sm">
+                {trustItems.map(({ label, icon }) => (
                   <span key={label} className="inline-flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/80 shadow-sm ring-1 ring-stone-100">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/80 ring-1 ring-stone-100">
                       <HeroIconImage src={icon} className="h-8 w-8" />
                     </span>
                     {label}
-                    {index < trustItems.length - 1 && <span className="hidden h-8 w-px bg-stone-200 sm:block" />}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-4 grid max-w-4xl gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-5 grid max-w-4xl gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {featureCards.map((card) => {
                   return (
                     <div
                       key={card.title}
-                      className="flex min-h-20 items-center gap-3 rounded-2xl border border-white/70 bg-white/68 p-3 shadow-[0_14px_34px_rgba(15,23,42,0.06)] backdrop-blur"
+                      className="flex min-h-20 items-center gap-3 border-l-4 border-stone-200 bg-white/70 p-3 backdrop-blur"
                     >
                       <HeroIconImage src={card.icon} className="h-10 w-10 shrink-0" />
                       <span className="min-w-0">
@@ -167,30 +166,30 @@ const Herosection = () => {
                   <img
                     src={heroToolsImage}
                     alt="FileBrother document upload illustration"
-                    className="mx-auto h-72 w-full object-contain drop-shadow-3xl lg:h-[23rem] xl:h-[27rem] 2xl:h-[30rem]"
+                    className="mx-auto h-52 w-full object-contain drop-shadow-3xl sm:h-72 lg:h-[23rem] xl:h-[27rem] 2xl:h-[30rem]"
                   />
                 </div>
           </div>
         </div>
 
-        <div id="quick-tools" className="relative z-10 mt-3 rounded-[1.35rem] border border-stone-200 bg-white/92 p-2.5 shadow-2xl shadow-slate-200/70 backdrop-blur">
-          <div className="grid gap-3 lg:grid-cols-[210px_1fr_auto] lg:items-center">
+        <div id="quick-tools" className="relative z-10 mt-6 rounded-lg border border-stone-200 bg-white/92 p-3 shadow-xl shadow-slate-200/60 backdrop-blur lg:mt-3">
+          <div className="grid gap-4 lg:grid-cols-[210px_1fr_auto] lg:items-center">
             <div className="px-2">
               <h2 className="text-base font-black text-slate-950">Popular Tools</h2>
               <p className="mt-0.5 text-[11px] font-medium leading-4 text-slate-500">Quick access to the most used PDF tools</p>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-8">
               {popularTools.map((tool) => {
                 return (
-                  <a key={tool.title} href={tool.href} className="group rounded-2xl p-2 text-center hover:bg-stone-50">
+                  <a key={tool.title} href={tool.href} className="group rounded-lg border border-transparent p-2 text-center hover:border-stone-200 hover:bg-stone-50">
                     <HeroIconImage src={tool.icon} className="mx-auto h-10 w-10 transition group-hover:scale-105" />
                     <span className="mt-1 block text-[11px] font-bold text-slate-900 group-hover:text-[#9a6514]">{tool.title}</span>
                   </a>
                 );
               })}
             </div>
-            <a href="#tools" className="flex items-center justify-center gap-3 rounded-full bg-slate-950 px-5 py-3 text-center text-xs font-black text-white shadow-lg shadow-slate-200 hover:bg-slate-800">
-              View<br />All Tools
+            <a href="#tools" className="flex min-h-12 items-center justify-center gap-3 rounded-lg bg-slate-950 px-5 py-3 text-center text-xs font-black text-white shadow-lg shadow-slate-200 hover:bg-slate-800">
+              View All Tools
               <FiArrowRight className="h-6 w-6" />
             </a>
           </div>

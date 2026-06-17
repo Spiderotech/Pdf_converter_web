@@ -150,10 +150,10 @@ const WordConverter = () => {
   return (
     <main className="bg-[#f7faff]">
       <ConversionLoadingOverlay isVisible={isLoading} title="Converting Word to PDF" />
-      <section className="relative overflow-hidden py-12 sm:py-16">
+      <section className="relative overflow-hidden py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_8%,rgba(219,234,254,0.7),transparent_28%),radial-gradient(circle_at_15%_78%,rgba(224,231,255,0.45),transparent_25%)]" />
 
-        <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
               <p className="text-sm font-extrabold uppercase text-blue-600">Word to PDF</p>
@@ -165,18 +165,18 @@ const WordConverter = () => {
                 Upload a DOC or DOCX file and download a high-quality PDF perfect for sharing, printing, or archiving.
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {['DOC & DOCX support', 'High quality PDF', 'Secure & private'].map((label) => (
-                  <span key={label} className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm">
+                  <span key={label} className="border-l-4 border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm">
                     {label}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-lg border border-blue-100 bg-white p-4 shadow-[0_18px_50px_rgba(37,99,235,0.09)]">
+            <div className="rounded-lg border border-blue-100 bg-white p-3 shadow-[0_14px_34px_rgba(37,99,235,0.08)] sm:p-4">
               <div
-                className={`flex min-h-[285px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-5 py-8 text-center transition ${
+                className={`flex min-h-[260px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[285px] sm:px-5 ${
                   isDragging ? 'border-blue-600 bg-blue-50' : 'border-blue-300 bg-white'
                 }`}
                 onDragOver={(event) => {
@@ -228,9 +228,9 @@ const WordConverter = () => {
                 ) : (
                   <>
                     <div className="flex items-center gap-3">
-                      <img src={wordIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
-                      <FiArrowRight className="h-8 w-8 text-blue-600" />
-                      <img src={pdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
+                      <img src={wordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
+                      <FiArrowRight className="h-7 w-7 text-blue-600 sm:h-8 sm:w-8" />
+                      <img src={pdfIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
                     </div>
                     <h2 className="mt-3 text-xl font-extrabold text-slate-950">
                       {isLoading ? 'Converting your Word file...' : selectedFile ? selectedFile.name : 'Drop your Word file here'}
@@ -261,12 +261,12 @@ const WordConverter = () => {
             </div>
           )}
 
-          <div className="mt-5 grid overflow-hidden rounded-lg border border-blue-100 bg-white shadow-[0_12px_30px_rgba(37,99,235,0.06)] sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-5 grid overflow-hidden rounded-lg border border-blue-100 bg-white shadow-[0_10px_24px_rgba(37,99,235,0.05)] sm:grid-cols-2 xl:grid-cols-4">
             {features.map((feature, index) => {
               return (
-                <div key={feature.title} className={`flex min-h-28 items-center gap-4 p-5 ${index > 0 ? 'border-t border-blue-100 sm:border-l sm:border-t-0' : ''}`}>
-                  <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-xl ${feature.color}`}>
-                    <img src={feature.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                <div key={feature.title} className={`flex min-h-28 items-start gap-4 p-4 sm:items-center sm:p-5 ${index > 0 ? 'border-t border-blue-100 sm:border-l sm:border-t-0' : ''}`}>
+                  <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${feature.color}`}>
+                    <img src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                   </span>
                   <span>
                     <strong className="block text-base font-extrabold text-slate-950">{feature.title}</strong>
@@ -290,9 +290,9 @@ const WordConverter = () => {
               {steps.map((step, index) => {
                 return (
                   <div key={step.title} className="relative">
-                    <article className="flex min-h-40 items-center gap-5 rounded-lg border border-blue-100 bg-white p-6 shadow-[0_12px_30px_rgba(37,99,235,0.06)]">
-                      <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                    <article className="flex min-h-36 items-start gap-4 rounded-lg border border-blue-100 bg-white p-5 shadow-[0_10px_24px_rgba(37,99,235,0.05)] sm:min-h-40 sm:items-center sm:gap-5 sm:p-6">
+                      <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <div>
                         <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>

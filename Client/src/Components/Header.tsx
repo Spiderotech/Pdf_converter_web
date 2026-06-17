@@ -13,7 +13,6 @@ import {
   FiMenu,
   FiRefreshCw,
   FiShield,
-  FiStar,
   FiUploadCloud,
   FiX,
 } from 'react-icons/fi';
@@ -121,7 +120,7 @@ const Header = () => {
             className="relative mx-auto max-w-[1720px]"
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <div className="flex min-h-[78px] items-center justify-between gap-4 rounded-[1.75rem] border border-white/70 bg-white/82 px-4 py-3 shadow-[0_18px_50px_rgba(86,63,28,0.10)] ring-1 ring-stone-200/60 backdrop-blur-xl sm:px-6">
+            <div className="flex min-h-[68px] items-center justify-between gap-3 rounded-lg border border-white/70 bg-white/82 px-3 py-2.5 shadow-[0_14px_36px_rgba(86,63,28,0.09)] ring-1 ring-stone-200/60 backdrop-blur-xl sm:min-h-[78px] sm:px-6">
               <button
                 type="button"
                 onClick={() => handleNavigation('/')}
@@ -132,7 +131,7 @@ const Header = () => {
                   src={fileBrotherLogo}
                   alt=""
                   aria-hidden="true"
-                  className="h-14 w-14 shrink-0 object-contain drop-shadow-lg transition group-hover:-translate-y-0.5"
+                  className="h-12 w-12 shrink-0 object-contain drop-shadow-lg transition group-hover:-translate-y-0.5 sm:h-14 sm:w-14"
                 />
                 <span className="hidden sm:block">
                   <span className="block text-[1.35rem] font-black leading-6 tracking-[-0.04em] text-slate-950">FileBrother</span>
@@ -227,13 +226,13 @@ const Header = () => {
             )}
           </div>
 
-          <DisclosurePanel className="mt-3 rounded-[1.35rem] border border-white/70 bg-white/92 p-3 shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/60 backdrop-blur-xl xl:hidden">
+          <DisclosurePanel className="mt-3 rounded-lg border border-white/70 bg-white/92 p-3 shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/60 backdrop-blur-xl xl:hidden">
             <div className="space-y-2">
               {dropdownGroups.map((group) => {
                 const Icon = group.icon;
 
                 return (
-                  <details key={group.name} className="rounded-2xl border border-stone-200 bg-white/80">
+                  <details key={group.name} className="rounded-lg border border-stone-200 bg-white/80">
                     <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2.5 text-sm font-black text-slate-900">
                       <span className="inline-flex items-center gap-3">
                         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-50 text-[#a56a0d]">
@@ -271,25 +270,18 @@ const Header = () => {
                     key={item.href}
                     as="button"
                     onClick={() => handleNavigation(item.href)}
-                    className="inline-flex h-11 items-center justify-center rounded-2xl border border-stone-200 bg-white px-4 text-sm font-black text-slate-700"
+                    className="inline-flex h-11 items-center justify-center rounded-lg border border-stone-200 bg-white px-4 text-sm font-black text-slate-700"
                   >
                     {item.name}
                   </DisclosureButton>
                 ))}
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <button
-                  type="button"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-amber-100 bg-amber-50 px-4 text-sm font-black text-[#9a6514]"
-                >
-                  <FiStar className="h-5 w-5" />
-                  Go Premium
-                </button>
+              <div>
                 <DisclosureButton
                   as="button"
                   onClick={() => handleNavigation('/pdf-to-word')}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-slate-950 via-slate-900 to-[#8a5a12] px-4 text-sm font-black text-white"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-slate-950 via-slate-900 to-[#8a5a12] px-4 text-sm font-black text-white"
                 >
                   <FiUploadCloud className="h-5 w-5" />
                   Upload PDF

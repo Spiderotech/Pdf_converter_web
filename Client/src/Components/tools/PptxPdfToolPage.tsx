@@ -102,24 +102,24 @@ const PptxPdfToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Converting PPTX to PDF" />
-      <main className="relative overflow-hidden bg-[#f8faff] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#f8faff] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_10%,rgba(219,234,254,0.75),transparent_26%),radial-gradient(circle_at_14%_75%,rgba(224,231,255,0.45),transparent_24%)]" />
 
-        <section className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+        <section className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
           <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
               <p className="text-sm font-extrabold uppercase text-blue-600">Presentation Conversion</p>
-              <h1 className="mt-3 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">
+              <h1 className="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">
                 Convert <span className="text-blue-600">PPTX</span> to PDF
               </h1>
               <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
                 Convert PowerPoint presentations into high-quality PDF files for easy sharing, printing, and archiving.
               </p>
 
-              <div className="mt-7 grid max-w-3xl gap-5 sm:grid-cols-3">
+              <div className="mt-7 grid max-w-3xl gap-4 sm:grid-cols-3">
                 {trustItems.map(({ title, text, icon }) => (
                   <div key={title} className="flex gap-4">
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-blue-50">
                       <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-sm" />
                     </span>
                     <span>
@@ -141,10 +141,10 @@ const PptxPdfToolPage = () => {
 
           <div className="mt-9 grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
             <div>
-              <div className="rounded-lg border border-blue-100 bg-white p-5 shadow-[0_18px_50px_rgba(37,99,235,0.08)]">
+              <div className="rounded-lg border border-blue-100 bg-white p-3 shadow-[0_14px_34px_rgba(37,99,235,0.06)] sm:p-5">
                 <input ref={fileInputRef} type="file" accept=".ppt,.pptx" onChange={handleFileChange} className="hidden" />
                 <div
-                  className={`flex min-h-[360px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition ${
+                  className={`flex min-h-[280px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[360px] sm:px-6 sm:py-10 ${
                     isDragging ? 'border-blue-600 bg-blue-50' : 'border-blue-300'
                   }`}
                   onDragOver={(event) => {
@@ -159,14 +159,14 @@ const PptxPdfToolPage = () => {
                   }}
                   onDrop={handleDrop}
                 >
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-blue-50 text-blue-600 sm:h-20 sm:w-20">
                     {isProcessing ? (
-                      <FiRefreshCw className="h-10 w-10 animate-spin" />
+                      <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={pptxPdfUploadPptxIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain drop-shadow-md" />
+                      <img src={pptxPdfUploadPptxIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
-                  <h2 className="mt-5 text-2xl font-extrabold text-slate-950">
+                  <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
                     {isProcessing ? 'Converting your presentation...' : file ? file.name : 'Drag & drop your PowerPoint file here'}
                   </h2>
                   <p className="mt-3 text-sm font-medium text-slate-500">{isProcessing ? 'Please keep this page open.' : 'or'}</p>
@@ -174,7 +174,7 @@ const PptxPdfToolPage = () => {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
-                    className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700 disabled:bg-blue-300"
+                    className="mt-4 inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700 disabled:bg-blue-300 sm:px-8"
                   >
                     <FiUpload className="h-5 w-5" />
                     {file ? 'Replace file' : 'Choose file'}
@@ -233,14 +233,14 @@ const PptxPdfToolPage = () => {
               )}
             </div>
 
-            <aside className="rounded-lg border border-blue-100 bg-white p-7 shadow-[0_18px_50px_rgba(37,99,235,0.08)] xl:sticky xl:top-20 xl:self-start">
+            <aside className="rounded-lg border border-blue-100 bg-white p-5 shadow-[0_14px_34px_rgba(37,99,235,0.06)] sm:p-7 xl:sticky xl:top-20 xl:self-start">
               <h2 className="text-xl font-extrabold text-slate-950">How it works</h2>
               <div className="relative mt-8 space-y-10 before:absolute before:bottom-8 before:left-8 before:top-8 before:border-l-2 before:border-dashed before:border-blue-100">
                 {howItWorksSteps.map((step, index) => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
-                      <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-blue-50">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                      <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-blue-50 sm:h-16 sm:w-16">
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">

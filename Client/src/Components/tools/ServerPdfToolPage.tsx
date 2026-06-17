@@ -109,15 +109,15 @@ const ServerPdfToolPage = ({
     <>
       <Header />
       <main className="bg-slate-50">
-        <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">{eyebrow}</p>
-            <h1 className="mt-3 text-4xl font-bold text-slate-950 sm:text-5xl">{title}</h1>
+            <h1 className="mt-3 text-3xl font-bold text-slate-950 sm:text-5xl">{title}</h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">{description}</p>
           </div>
 
           <div
-            className={`mt-10 rounded-lg border-2 border-dashed bg-white p-6 text-center transition sm:p-10 ${
+            className={`mt-8 rounded-lg border-2 border-dashed bg-white p-4 text-center transition sm:mt-10 sm:p-10 ${
               isDragging ? 'border-blue-500 bg-blue-50' : 'border-slate-300'
             }`}
             onDragOver={(event) => {
@@ -183,7 +183,7 @@ const ServerPdfToolPage = ({
               type="button"
               onClick={handleProcess}
               disabled={isProcessing || !selectedFile}
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               {isProcessing && <FiRefreshCw className="h-4 w-4 animate-spin" />}
               {isProcessing ? 'Processing...' : title}
@@ -192,7 +192,7 @@ const ServerPdfToolPage = ({
               <a
                 href={downloadUrl}
                 download={outputName}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-green-600 px-5 py-3 text-sm font-semibold text-white hover:bg-green-700"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-green-600 px-5 py-3 text-sm font-semibold text-white hover:bg-green-700"
               >
                 <FiDownload className="h-4 w-4" />
                 Download PDF

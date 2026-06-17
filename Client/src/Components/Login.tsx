@@ -87,8 +87,8 @@ const Login = () => {
 
     return (
         <GoogleOAuthProvider clientId="125895211787-eq3ivugc3jn1qetk7qp8rt0smu21p4am.apps.googleusercontent.com">
-            <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
-                <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
+            <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-50 px-4 py-10 sm:px-6">
+                <div className="w-full max-w-md space-y-6 text-gray-600">
                     <div className="text-center">
                         {/* <img src="https://floatui.com/logo.svg" width={150} className="mx-auto" alt="Logo" /> */}
                         <div className="mt-5 space-y-2">
@@ -115,12 +115,14 @@ const Login = () => {
                                         {...register('password')}
                                         className={`w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border ${errors.password ? 'border-red-500' : 'focus:border-indigo-600'} shadow-sm rounded-lg`}
                                     />
-                                    <div
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                    <button
+                                        type="button"
+                                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500"
                                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                        aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
                                     >
                                         {isPasswordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
-                                    </div>
+                                    </button>
                                 </div>
                                 <p className="text-red-500 text-sm">{errors.password?.message}</p>
                             </div>

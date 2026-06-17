@@ -398,34 +398,34 @@ const SignPdfToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Adding your signature" />
-      <main className="relative overflow-hidden bg-[#fbf7ef] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#fbf7ef] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(254,243,199,0.5),transparent_28%),radial-gradient(circle_at_85%_65%,rgba(231,229,228,0.55),transparent_25%)]" />
-        <section className="relative mx-auto max-w-6xl px-5 sm:px-8">
+        <section className="relative mx-auto max-w-6xl px-4 sm:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
               <p className="inline-flex items-center gap-2 text-sm font-extrabold uppercase text-red-500">
                 <img src={signPdfHeroIcon} alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
                 PDF Signature
               </p>
-              <h1 className="mt-4 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">
+              <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">
                 Sign PDF
               </h1>
               <p className="mt-5 max-w-xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
                 Upload a PDF, add your signature, choose the page, and download a signed copy with a simple visual workflow.
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {['Upload or draw signature', 'Preview before signing', 'Private browser processing'].map((label) => (
-                  <span key={label} className="inline-flex items-center gap-2 rounded-full border border-red-100 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm">
+                  <span key={label} className="border-l-4 border-red-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm">
                     {label}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-lg border border-red-100 bg-white p-4 shadow-[0_18px_50px_rgba(239,68,68,0.08)]">
+            <div className="rounded-lg border border-red-100 bg-white p-3 shadow-[0_14px_34px_rgba(239,68,68,0.06)] sm:p-4">
               <div
-                className={`flex min-h-[315px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition ${isDraggingFile ? 'border-red-600 bg-red-50' : 'border-red-300 bg-white'
+                className={`flex min-h-[260px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[315px] sm:px-6 sm:py-10 ${isDraggingFile ? 'border-red-600 bg-red-50' : 'border-red-300 bg-white'
                   }`}
                 onDragOver={(event) => {
                   event.preventDefault();
@@ -438,8 +438,8 @@ const SignPdfToolPage = () => {
                 onDrop={handlePdfDrop}
               >
                 <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handlePdfChange} className="hidden" />
-                <span className="flex h-28 w-28 items-center justify-center rounded-full bg-red-50">
-                  <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain" />
+                <span className="flex h-20 w-20 items-center justify-center rounded-lg bg-red-50 sm:h-28 sm:w-28">
+                  <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-24 sm:w-24" />
                 </span>
                 <h2 className="mt-4 max-w-full break-words text-xl font-extrabold text-slate-950">
                   {file ? file.name : 'Upload your PDF file'}
@@ -448,7 +448,7 @@ const SignPdfToolPage = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-7 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700"
+                  className="mt-5 inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700 sm:px-7"
                 >
                   <FiUpload className="h-5 w-5" />
                   {file ? 'Change file' : 'Choose PDF file'}
@@ -471,9 +471,9 @@ const SignPdfToolPage = () => {
               {howItWorksSteps.map((step, index) => {
                 return (
                   <div key={step.title} className="relative">
-                    <article className="flex min-h-44 flex-col rounded-lg border border-red-100 bg-white p-5 shadow-[0_12px_30px_rgba(239,68,68,0.06)]">
-                      <span className={`flex h-16 w-16 items-center justify-center rounded-full ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                    <article className="flex min-h-40 flex-col rounded-lg border border-red-100 bg-white p-4 shadow-[0_10px_24px_rgba(239,68,68,0.05)] sm:min-h-44 sm:p-5">
+                      <span className={`flex h-14 w-14 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <span className={`mt-4 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>
                         {index + 1}
@@ -493,7 +493,7 @@ const SignPdfToolPage = () => {
           </div>
 
           {file && (
-            <div className="mt-6 flex items-center gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mt-6 flex items-start gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:items-center sm:p-5">
               <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain" />
               <div className="min-w-0 flex-1">
                 <strong className="block truncate text-sm text-slate-950">{file.name}</strong>
@@ -638,7 +638,7 @@ const SignPdfToolPage = () => {
                 Choose the page where your signature should appear, then click the document to place it.
               </p>
 
-              <div className="relative mt-5 min-h-[520px] overflow-auto rounded-lg bg-slate-100 p-4">
+              <div className="relative mt-5 min-h-[320px] overflow-auto rounded-lg bg-slate-100 p-3 sm:min-h-[520px] sm:p-4">
                 {!file && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                     <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain opacity-70" />
@@ -740,9 +740,9 @@ const SignPdfToolPage = () => {
           <div className="mt-8 grid overflow-hidden rounded-lg border border-red-100 bg-white shadow-[0_12px_30px_rgba(239,68,68,0.06)] md:grid-cols-3">
             {signFeatures.map((feature, index) => {
               return (
-                <div key={feature.title} className={`flex min-h-28 items-center gap-4 p-5 ${index > 0 ? 'border-t border-red-100 md:border-l md:border-t-0' : ''}`}>
-                  <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-xl ${feature.color}`}>
-                    <img src={feature.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                <div key={feature.title} className={`flex min-h-28 items-start gap-4 p-4 sm:items-center sm:p-5 ${index > 0 ? 'border-t border-red-100 md:border-l md:border-t-0' : ''}`}>
+                  <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${feature.color}`}>
+                    <img src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                   </span>
                   <span>
                     <strong className="block text-base font-extrabold text-slate-950">{feature.title}</strong>

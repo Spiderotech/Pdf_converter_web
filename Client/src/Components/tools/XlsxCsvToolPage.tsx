@@ -153,14 +153,14 @@ const XlsxCsvToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Preparing your CSV file" />
-      <main className="relative overflow-hidden bg-[#f8fcf9] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#f8fcf9] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_10%,rgba(220,252,231,0.72),transparent_27%),radial-gradient(circle_at_15%_72%,rgba(219,234,254,0.4),transparent_24%)]" />
 
-        <section className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+        <section className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.8fr]">
             <div>
               <p className="text-sm font-extrabold uppercase text-green-600">Spreadsheet Export</p>
-              <h1 className="mt-3 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">
+              <h1 className="mt-3 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">
                 Convert <span className="text-green-600">XLSX</span> to CSV
               </h1>
               <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
@@ -175,7 +175,7 @@ const XlsxCsvToolPage = () => {
                   src={xlsxCsvHeroIcon}
                   alt=""
                   aria-hidden="true"
-                  className="relative h-72 w-full max-w-[560px] object-contain drop-shadow-2xl sm:h-80"
+                  className="relative h-52 w-full max-w-[560px] object-contain drop-shadow-2xl sm:h-80"
                 />
               </div>
             </div>
@@ -183,10 +183,10 @@ const XlsxCsvToolPage = () => {
 
           <div className="mt-9 grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
             <div>
-              <div className="rounded-lg border border-green-100 bg-white p-5 shadow-[0_18px_50px_rgba(22,163,74,0.07)]">
+              <div className="rounded-lg border border-green-100 bg-white p-3 shadow-[0_14px_34px_rgba(22,163,74,0.06)] sm:p-5">
                 <input ref={fileInputRef} type="file" accept=".xls,.xlsx" onChange={handleFileChange} className="hidden" />
                 <div
-                  className={`flex min-h-[330px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition ${
+                  className={`flex min-h-[270px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[330px] sm:px-6 sm:py-10 ${
                     isDragging ? 'border-green-600 bg-green-50' : 'border-green-400'
                   }`}
                   onDragOver={(event) => {
@@ -201,14 +201,14 @@ const XlsxCsvToolPage = () => {
                   }}
                   onDrop={handleDrop}
                 >
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-green-50 text-green-600">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-green-50 text-green-600 sm:h-20 sm:w-20">
                     {isProcessing && !download ? (
-                      <FiRefreshCw className="h-10 w-10 animate-spin" />
+                      <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={xlsxUploadSpreadsheetIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain drop-shadow-md" />
+                      <img src={xlsxUploadSpreadsheetIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
-                  <h2 className="mt-5 text-xl font-extrabold text-slate-950">
+                  <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950">
                     {file ? file.name : 'Drag & drop your Excel file here'}
                   </h2>
                   <p className="mt-2 text-sm font-medium text-slate-500">{file ? `${sheetNames.length} sheet${sheetNames.length === 1 ? '' : 's'} detected` : 'or'}</p>
@@ -216,7 +216,7 @@ const XlsxCsvToolPage = () => {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
-                    className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-green-600 px-8 text-sm font-extrabold text-white shadow-lg shadow-green-200 hover:bg-green-700 disabled:bg-green-300"
+                    className="mt-4 inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-lg bg-green-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-green-200 hover:bg-green-700 disabled:bg-green-300 sm:px-8"
                   >
                     <FiUpload className="h-5 w-5" />
                     {file ? 'Replace Excel file' : 'Choose Excel file'}
@@ -300,14 +300,14 @@ const XlsxCsvToolPage = () => {
               )}
             </div>
 
-            <aside className="rounded-lg border border-green-100 bg-white p-7 shadow-[0_18px_50px_rgba(22,163,74,0.07)] xl:sticky xl:top-20 xl:self-start">
+            <aside className="rounded-lg border border-green-100 bg-white p-5 shadow-[0_14px_34px_rgba(22,163,74,0.06)] sm:p-7 xl:sticky xl:top-20 xl:self-start">
               <h2 className="text-xl font-extrabold text-slate-950">How it works</h2>
               <div className="relative mt-8 space-y-10 before:absolute before:bottom-8 before:left-8 before:top-8 before:border-l-2 before:border-dashed before:border-green-100">
                 {howItWorksSteps.map((step, index) => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
-                      <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-green-50">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                      <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-green-50 sm:h-16 sm:w-16">
+                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">

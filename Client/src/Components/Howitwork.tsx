@@ -31,15 +31,15 @@ const illustrations = [
 
 const Howitwork = () => {
   return (
-    <section id="how-it-works" className="relative overflow-hidden border-t border-stone-200 bg-[#f8f6f0] py-16 sm:py-20">
+    <section id="how-it-works" className="relative overflow-hidden border-t border-stone-200 bg-[#f8f6f0] py-14 sm:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(214,211,209,0.45),transparent_22%),radial-gradient(circle_at_88%_70%,rgba(254,243,199,0.55),transparent_24%)]" />
 
-      <div className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+      <div className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
         <div>
-          <p className="inline-flex rounded-full bg-stone-100 px-4 py-1.5 text-xs font-extrabold uppercase text-slate-700">
+          <p className="inline-flex border-l-4 border-[#b7791f] bg-stone-100 px-3 py-1.5 text-xs font-extrabold uppercase text-slate-700">
             How it works
           </p>
-          <h2 className="mt-3 text-4xl font-black text-slate-950 sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-black text-slate-950 sm:text-5xl">
             <span className="text-[#9a6514]">Three</span> simple steps
           </h2>
         </div>
@@ -50,15 +50,15 @@ const Howitwork = () => {
 
             return (
               <div key={step.title} className="relative">
-                <article className="grid min-h-[240px] gap-6 rounded-lg border border-stone-200 bg-white/90 p-6 shadow-[0_16px_35px_rgba(15,23,42,0.08)] sm:grid-cols-[minmax(0,1fr)_210px] sm:items-center lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_210px]">
+                <article className="grid min-h-[220px] gap-5 rounded-lg border border-stone-200 bg-white/90 p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:grid-cols-[minmax(0,1fr)_180px] sm:items-center sm:p-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_190px]">
                   <div>
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-950 text-base font-extrabold text-white shadow-lg shadow-slate-200">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 text-base font-extrabold text-white">
                       {index + 1}
                     </span>
                     <h3 className="mt-4 text-xl font-extrabold text-slate-950">{step.title}</h3>
                     <p className="mt-3 text-sm font-medium leading-6 text-slate-600">{step.description}</p>
                   </div>
-                  <div className="flex h-[190px] items-center justify-center">
+                  <div className="flex h-40 items-center justify-center sm:h-[180px]">
                     <img
                       src={illustration.src}
                       alt={illustration.alt}
@@ -77,9 +77,9 @@ const Howitwork = () => {
           })}
         </div>
 
-        <div className="mt-6 grid gap-5 rounded-lg border border-stone-200 bg-white px-6 py-5 shadow-[0_12px_30px_rgba(15,23,42,0.07)] md:grid-cols-[1.6fr_repeat(3,1fr)] md:items-center">
-          <div className="flex items-center gap-4">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white shadow-lg shadow-slate-200">
+        <div className="mt-6 grid gap-5 rounded-lg border border-stone-200 bg-white px-4 py-5 shadow-[0_10px_24px_rgba(15,23,42,0.05)] md:grid-cols-[1.6fr_repeat(3,1fr)] md:items-center sm:px-6">
+          <div className="flex items-start gap-4 sm:items-center">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-950 text-white sm:h-14 sm:w-14">
               <FiShield className="h-7 w-7" />
             </span>
             <span>
@@ -91,19 +91,19 @@ const Howitwork = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-stone-100 text-slate-700">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
               <FiLock className="h-5 w-5" />
             </span>
             <span className="text-sm font-semibold leading-6 text-slate-700">256-bit SSL<br />Encryption</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-stone-100 text-slate-700">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
               <FiTrash2 className="h-5 w-5" />
             </span>
             <span className="text-sm font-semibold leading-6 text-slate-700">Auto delete<br />After processing</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-stone-100 text-slate-700">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
               <FiShield className="h-5 w-5" />
             </span>
             <span className="text-sm font-semibold leading-6 text-slate-700">We never store<br />Your files</span>

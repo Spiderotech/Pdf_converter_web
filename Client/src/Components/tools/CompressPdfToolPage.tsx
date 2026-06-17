@@ -145,16 +145,16 @@ const CompressPdfToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Compressing your PDF" />
-      <main className="relative overflow-hidden bg-[#fbf7ef] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#fbf7ef] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(254,243,199,0.5),transparent_28%),radial-gradient(circle_at_85%_65%,rgba(231,229,228,0.55),transparent_25%)]" />
 
-        <section className="relative mx-auto max-w-5xl px-5 sm:px-8">
+        <section className="relative mx-auto max-w-5xl px-4 sm:px-8">
           <header className="text-center">
             <p className="inline-flex items-center gap-3 text-sm font-extrabold uppercase text-blue-600 sm:text-base">
               <img src={compressPdfHeroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
               PDF Compression
             </p>
-            <h1 className="mt-4 text-5xl font-black leading-tight text-slate-950 sm:text-6xl">Compress PDF</h1>
+            <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Compress PDF</h1>
             <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
               Reduce PDF file size using backend compression. Best results are usually on scanned or image-heavy PDFs.
             </p>
@@ -178,7 +178,7 @@ const CompressPdfToolPage = () => {
           </div>
 
           <div
-            className={`mt-10 flex min-h-[430px] flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-6 py-12 text-center shadow-[0_18px_55px_rgba(37,99,235,0.06)] transition ${
+            className={`mt-8 flex min-h-[300px] flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-4 py-8 text-center shadow-[0_14px_34px_rgba(37,99,235,0.05)] transition sm:mt-10 sm:min-h-[430px] sm:px-6 sm:py-12 ${
               isDragging ? 'border-blue-700 bg-blue-50' : 'border-blue-500'
             }`}
             onDragOver={(event) => {
@@ -195,9 +195,9 @@ const CompressPdfToolPage = () => {
           >
             <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handleFileChange} className="hidden" />
 
-            <img src={compressPdfUploadIcon} alt="" aria-hidden="true" className="h-32 w-32 object-contain sm:h-36 sm:w-36" />
+            <img src={compressPdfUploadIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain sm:h-36 sm:w-36" />
 
-            <h2 className="mt-7 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
+            <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:mt-7 sm:text-2xl">
               {isProcessing ? 'Compressing your PDF...' : file ? file.name : 'Drag & drop your PDF file here'}
             </h2>
             <div className="mt-4 flex items-center gap-4 text-sm font-medium text-slate-500">
@@ -209,7 +209,7 @@ const CompressPdfToolPage = () => {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isProcessing}
-              className="mt-5 inline-flex h-14 items-center justify-center gap-3 rounded-lg bg-blue-600 px-10 text-base font-extrabold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+              className="mt-5 inline-flex h-12 w-full max-w-xs items-center justify-center gap-3 rounded-lg bg-blue-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300 sm:h-14 sm:px-10 sm:text-base"
             >
               <FiUpload className="h-5 w-5" />
               {file ? 'Replace file' : 'Choose file'}
@@ -278,7 +278,7 @@ const CompressPdfToolPage = () => {
               type="button"
               onClick={compressPdf}
               disabled={!file || isProcessing}
-              className="inline-flex h-16 items-center justify-center gap-3 rounded-lg bg-blue-600 px-8 text-lg font-extrabold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-lg bg-blue-600 px-6 text-base font-extrabold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none sm:h-16 sm:px-8 sm:text-lg"
             >
               {isProcessing ? <FiRefreshCw className="h-5 w-5 animate-spin" /> : <FiArchive className="h-5 w-5" />}
               {isProcessing ? 'Compressing...' : 'Compress PDF'}
@@ -289,7 +289,7 @@ const CompressPdfToolPage = () => {
               <a
                 href={downloadUrl}
                 download="compressed.pdf"
-                className="inline-flex h-16 items-center justify-center gap-3 rounded-lg bg-green-600 px-8 text-base font-extrabold text-white hover:bg-green-700"
+                className="inline-flex h-14 items-center justify-center gap-3 rounded-lg bg-green-600 px-6 text-sm font-extrabold text-white hover:bg-green-700 sm:h-16 sm:px-8 sm:text-base"
               >
                 <FiDownload className="h-5 w-5" />
                 Download compressed PDF

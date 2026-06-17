@@ -192,20 +192,20 @@ const SplitPdfToolPage = () => {
     <>
       <Header />
       <ConversionLoadingOverlay isVisible={isProcessing} title="Splitting your PDF" />
-      <main className="relative overflow-hidden bg-[#fffafa] py-12 sm:py-16">
+      <main className="relative overflow-hidden bg-[#fffafa] py-10 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_8%,rgba(254,226,226,0.6),transparent_26%),radial-gradient(circle_at_12%_75%,rgba(219,234,254,0.45),transparent_25%)]" />
 
-        <section className="relative mx-auto max-w-[1720px] px-5 sm:px-8 lg:px-12">
+        <section className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
             <div>
               <p className="text-sm font-extrabold uppercase text-red-600">PDF Split</p>
-              <h1 className="mt-3 text-5xl font-black text-slate-950 sm:text-6xl">
+              <h1 className="mt-3 text-4xl font-black text-slate-950 sm:text-6xl">
                 Split <span className="text-red-600">PDF</span>
               </h1>
               <p className="mt-4 max-w-xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
                 Extract specific pages from your PDF using page ranges or individual page numbers.
               </p>
-              <div className="mt-7 flex flex-wrap gap-x-10 gap-y-4">
+              <div className="mt-7 grid gap-4 sm:grid-cols-3">
                 {trustItems.map(({ title, text, icon }) => (
                   <div key={title} className="flex items-center gap-3">
                     <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-md" />
@@ -225,7 +225,7 @@ const SplitPdfToolPage = () => {
                   src={splitHeroPagesIcon}
                   alt=""
                   aria-hidden="true"
-                  className="relative h-72 w-80 object-contain drop-shadow-2xl sm:h-80 sm:w-96"
+                  className="relative h-52 w-full max-w-xs object-contain drop-shadow-2xl sm:h-80 sm:max-w-sm"
                 />
               </div>
             </div>
@@ -233,10 +233,10 @@ const SplitPdfToolPage = () => {
 
           <div className="mt-8 grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
             <div>
-              <div className="rounded-lg border border-red-100 bg-white p-5 shadow-[0_18px_50px_rgba(220,38,38,0.07)]">
+              <div className="rounded-lg border border-red-100 bg-white p-3 shadow-[0_14px_34px_rgba(220,38,38,0.06)] sm:p-5">
                 <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handleFileChange} className="hidden" />
                 <div
-                  className={`flex min-h-[285px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-10 text-center transition ${
+                  className={`flex min-h-[250px] flex-col items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-center transition sm:min-h-[285px] sm:px-6 sm:py-10 ${
                     isDragging ? 'border-red-600 bg-red-50' : 'border-red-300'
                   }`}
                   onDragOver={(event) => {
@@ -251,14 +251,14 @@ const SplitPdfToolPage = () => {
                   }}
                   onDrop={handleDrop}
                 >
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-red-50 text-red-600">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-red-50 text-red-600 sm:h-20 sm:w-20">
                     {isReading ? (
-                      <FiRefreshCw className="h-10 w-10 animate-spin" />
+                      <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={splitUploadPdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain drop-shadow-md" />
+                      <img src={splitUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
-                  <h2 className="mt-5 text-xl font-extrabold text-slate-950">
+                  <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950">
                     {isReading ? 'Reading your PDF...' : file ? file.name : 'Drag & drop your PDF file here'}
                   </h2>
                   <p className="mt-2 text-sm font-medium text-slate-500">{file ? `${pageCount} pages detected` : 'or'}</p>
@@ -266,7 +266,7 @@ const SplitPdfToolPage = () => {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isReading}
-                    className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-red-600 px-8 text-sm font-extrabold text-white shadow-lg shadow-red-200 hover:bg-red-700 disabled:bg-red-300"
+                    className="mt-4 inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-lg bg-red-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-red-200 hover:bg-red-700 disabled:bg-red-300 sm:px-8"
                   >
                     <FiUpload className="h-5 w-5" />
                     {file ? 'Replace PDF file' : 'Choose PDF file'}
@@ -372,15 +372,15 @@ const SplitPdfToolPage = () => {
               )}
             </div>
 
-            <aside className="rounded-lg border border-red-100 bg-white p-7 shadow-[0_18px_50px_rgba(220,38,38,0.07)] xl:sticky xl:top-20 xl:self-start">
+            <aside className="rounded-lg border border-red-100 bg-white p-5 shadow-[0_14px_34px_rgba(220,38,38,0.06)] sm:p-7 xl:sticky xl:top-20 xl:self-start">
               <h2 className="text-xl font-extrabold text-slate-950">How it works</h2>
               <div className="mt-7 space-y-8">
                 {howItWorksSteps.map((step, index) => {
                   return (
                     <div key={step.title} className="flex gap-4">
                       <div className="relative">
-                        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
-                          <img src={step.icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain drop-shadow-md" />
+                        <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-red-50 sm:h-16 sm:w-16">
+                          <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         </span>
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </div>

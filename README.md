@@ -1,31 +1,36 @@
 # PDF Converter Web
 
-PDF Converter Web is a full-stack document conversion application. It provides a React web interface for user registration, login, PDF-to-Word conversion, and Word-to-PDF conversion. The backend is built with Node.js, Express, MongoDB, and Aspose Cloud SDKs for document conversion.
+PDF Converter Web is a full-stack document utility application. It combines a React/Vite frontend with an Express/MongoDB backend for authentication and server-side conversions. Some tools run entirely in the browser, while heavier conversion/security features use backend services and system tools.
 
 ## Repository
-
-Git repository:
 
 ```text
 git@github.com:Spiderotech/Pdf_converter_web.git
 ```
 
-Current hosting status:
+## Current Hosting Status
+
+The project now includes production-oriented backend hosting files:
+
+- `Dockerfile` installs Node 22, LibreOffice, qpdf, and Ghostscript for backend conversion features.
+- `nixpacks.toml` declares `nodejs_22`, `libreoffice`, `qpdf`, and `ghostscript` for Railway/Nixpacks deployments.
+- `Client/src/Utils/axios.ts` reads `VITE_API_BASE_URL` and falls back to:
 
 ```text
-Not hosted yet
+https://pdfconverterweb-production.up.railway.app/api/v1/user
 ```
+
+Set `VITE_API_BASE_URL` explicitly for each deployed frontend environment.
 
 ## Main Features
 
-- User registration with name, email, and password
-- User login with JWT access token generation
-- Google user registration/login flow
-- PDF to Word conversion
-- Word to PDF conversion
-- Drag-and-drop file upload UI
-- Account page protected by frontend authentication state
-- Privacy policy and terms pages
+- User registration, login, Google user creation/login, and persisted auth state
+- PDF to Word and Word to PDF conversion
+- PowerPoint to PDF and Excel to PDF conversion
+- PDF compression, password protection, and password unlock
+- Browser-based PDF merge, split, signing, and editing
+- Browser-based XLS/XLSX to CSV export
+- Homepage, reusable navigation, tool pages, loading overlay, account page, FAQ, contact, about, privacy, and terms pages
 
 ## Tech Stack
 
@@ -35,25 +40,31 @@ Frontend:
 - TypeScript
 - Vite
 - Tailwind CSS
-- React Router
-- Redux Toolkit
-- Redux Persist
+- React Router DOM
+- Redux Toolkit and Redux Persist
 - Axios
-- React Hook Form
-- Yup
+- React Hook Form and Yup
 - React OAuth Google
+- React Icons
+- `pdf-lib`
+- `pdfjs-dist`
+- `xlsx`
 
 Backend:
 
 - Node.js
 - Express
-- MongoDB
-- Mongoose
+- MongoDB and Mongoose
 - JWT
 - Bcrypt
 - Multer
 - Aspose PDF Cloud
 - Aspose Words Cloud
+- LibreOffice
+- qpdf
+- Ghostscript
+- `pdf-lib`
+- Dotenv
 - Morgan
 - CORS
 
@@ -61,116 +72,113 @@ Backend:
 
 ```text
 Pdf_converter_web/
-|-- Client/                  # React + Vite frontend
-|   |-- public/              # Static public files
+|-- Client/                         # React + Vite frontend
+|   |-- public/                     # Static public files
 |   |-- src/
-|   |   |-- assets/          # Images, icons, and visual assets
-|   |   |-- Components/      # Reusable UI components
-|   |   |-- Pages/           # Route-level page components
-|   |   |-- redux/           # Redux store and slices
-|   |   |-- Utils/           # Axios configuration
-|   |   |-- App.tsx          # Frontend routes
-|   |   +-- main.tsx         # React app entry point
-|   |-- package.json         # Frontend dependencies and scripts
-|   +-- vite.config.ts       # Vite configuration
-|-- Server/                  # Node.js + Express backend
+|   |   |-- assets/                 # Images, logos, icons, generated tool artwork
+|   |   |-- Components/             # Shared UI components
+|   |   |-- Components/tools/       # Dedicated tool implementations
+|   |   |-- Pages/                  # Route-level page components
+|   |   |-- redux/                  # Redux Toolkit store and slices
+|   |   |-- Utils/axios.ts          # API base URL configuration
+|   |   |-- App.tsx                 # Frontend routes
+|   |   +-- main.tsx                # React app entry point
+|   |-- .env.example                # Frontend env template
+|   |-- package.json
+|   +-- vite.config.ts
+|-- Server/                         # Node.js + Express backend
 |   |-- src/
-|   |   |-- adapters/        # Controllers
-|   |   |-- application/     # Use cases, repository interfaces, services
-|   |   |-- config/          # App configuration
-|   |   |-- entities/        # Domain entities
-|   |   +-- framework/       # Express, database, services, routes
-|   |-- uploads/             # Uploaded files from Multer
-|   |-- downloads/           # Converted output files
-|   |-- app.js               # Backend entry point
-|   +-- package.json         # Backend dependencies and scripts
-|-- README.md
-|-- PROJECT_DOCUMENTATION.md
-+-- HOSTING_DOCUMENTATION.md
+|   |   |-- adapters/               # Controllers
+|   |   |-- application/            # Use cases, repository interfaces, services
+|   |   |-- config/                 # Dotenv-backed config
+|   |   |-- entities/               # Domain helpers
+|   |   +-- framework/              # Express, database, services, routes
+|   |-- uploads/                    # Multer temporary uploads
+|   |-- downloads/                  # Generated output files
+|   |-- app.js
+|   +-- package.json
+|-- Dockerfile
+|-- nixpacks.toml
++-- README.md
 ```
 
 ## Local Setup
 
-### 1. Clone the Repository
-
-```bash
-git clone git@github.com:Spiderotech/Pdf_converter_web.git
-cd Pdf_converter_web
-```
-
-### 2. Install Frontend Dependencies
+Install dependencies:
 
 ```bash
 cd Client
 npm install
-```
 
-### 3. Install Backend Dependencies
-
-```bash
 cd ../Server
 npm install
 ```
 
-### 4. Configure Backend
+Create backend environment values:
 
-Update [Server/src/config/config.js](/Users/am/Desktop/Pdf_converter_web/Server/src/config/config.js) with:
-
-- MongoDB connection URI
-- JWT access token secret
-- JWT refresh token secret, if refresh tokens are later implemented
-- Aspose Cloud credentials in the converter use case files
-
-Current config shape:
-
-```js
-export default {
-  port: "3000",
-  mongo: {
-    uri: ""
-  },
-  ACESS_TOKEN_SCERET: "",
-  REFRESH_TOKEN_SECRET: ""
-}
+```text
+PORT=3000
+MONGO_URI=<mongodb-connection-string>
+ACCESS_TOKEN_SECRET=<jwt-access-secret>
+REFRESH_TOKEN_SECRET=<jwt-refresh-secret>
+ASPOSE_CLIENT_ID=<aspose-client-id>
+ASPOSE_CLIENT_SECRET=<aspose-client-secret>
+LIBREOFFICE_PATH=libreoffice
+QPDF_PATH=qpdf
+GHOSTSCRIPT_PATH=gs
+CLIENT_URL=<frontend-url>
 ```
 
-Important: secrets should be moved to environment variables before production hosting.
+Optional frontend environment values:
 
-### 5. Run Backend
+```text
+VITE_API_BASE_URL=http://localhost:3000/api/v1/user
+VITE_SHOW_TEST_ADS=true
+VITE_ADSENSE_CLIENT_ID=
+VITE_ADSENSE_SLOT_ID=
+```
+
+Run backend:
 
 ```bash
 cd Server
 npm start
 ```
 
-The backend runs on:
-
-```text
-http://localhost:3000
-```
-
-### 6. Run Frontend
+Run frontend:
 
 ```bash
 cd Client
 npm run dev
 ```
 
-The frontend usually runs on:
+The backend runs on `http://localhost:3000`, and Vite usually runs on `http://localhost:5173`.
+
+## Frontend Routes
 
 ```text
-http://localhost:5173
+/                  Homepage
+/login             Login page
+/register          Register page
+/pdf-to-word       PDF to Word converter
+/word-to-pdf       Word to PDF converter
+/compress-pdf      Compress PDF
+/merge-pdf         Merge PDFs in browser
+/split-pdf         Split PDF in browser
+/sign-pdf          Sign PDF in browser
+/edit-pdf          Edit PDF in browser
+/pptx-to-pdf       PowerPoint to PDF
+/excel-to-pdf      Excel to PDF
+/xlsx-to-csv       XLS/XLSX to CSV in browser
+/unlock-pdf        Unlock PDF
+/protect-pdf       Protect PDF
+/about             About page
+/contact           Contact page
+/faq               FAQ page
+/privacy           Privacy policy
+/terms&conditions  Terms and conditions
+/account           Protected account page
 ```
-
-## API Base URL
-
-The frontend currently uses:
-
-```ts
-http://localhost:3000/api/v1/user
-```
-
-This is configured in [Client/src/Utils/axios.ts](/Users/am/Desktop/Pdf_converter_web/Client/src/Utils/axios.ts).
 
 ## Backend API Routes
 
@@ -189,43 +197,57 @@ POST /googlelogin
 POST /googlecreateuser
 POST /pdfconverter
 POST /wordconverter
+POST /pptxtopdf
+POST /exceltopdf
+POST /protectpdf
+POST /unlockpdf
+POST /compresspdf
 ```
+
+## Tool Processing
+
+Server-backed tools:
+
+- PDF to Word: Aspose PDF Cloud
+- Word to PDF: Aspose Words Cloud
+- PPT/PPTX to PDF: LibreOffice headless
+- XLS/XLSX to PDF: LibreOffice headless
+- Protect PDF: qpdf
+- Unlock PDF: qpdf
+- Compress PDF: Ghostscript with `pdf-lib` fallback
+
+Browser-only tools:
+
+- Merge PDF
+- Split PDF
+- Sign PDF
+- Edit PDF
+- XLS/XLSX to CSV
 
 ## Build Commands
 
-Frontend production build:
+Frontend:
 
 ```bash
 cd Client
 npm run build
-```
-
-Frontend preview:
-
-```bash
-cd Client
 npm run preview
-```
-
-Frontend lint:
-
-```bash
-cd Client
 npm run lint
 ```
 
-Backend start:
+Backend:
 
 ```bash
 cd Server
 npm start
+npm run dev
 ```
 
-## Notes
+## Production Notes
 
-- The project is currently configured for local development.
-- The frontend API URL is hardcoded to localhost.
-- Backend secrets and Aspose credentials are currently empty in the codebase.
-- `uploads/` and `downloads/` store user-uploaded and converted files.
-- Before hosting, move sensitive config to environment variables and configure CORS for the deployed frontend domain.
-
+- Restrict CORS to deployed frontend domains before public launch.
+- Add Multer file size and MIME/type validation.
+- Clean temporary files from `uploads/` and `downloads/`.
+- Keep `.env` files, JWT secrets, MongoDB URI, and Aspose credentials out of Git.
+- Confirm LibreOffice, qpdf, and Ghostscript exist in the hosted backend runtime.
+- Verify all server-backed conversions from the deployed frontend after setting `VITE_API_BASE_URL`.
