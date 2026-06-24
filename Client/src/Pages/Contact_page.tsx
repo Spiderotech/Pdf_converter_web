@@ -5,12 +5,12 @@ import {
   FiLock,
   FiShield,
 } from 'react-icons/fi';
-import professionalClockIcon from '../assets/hero-icons/professional/clock.png';
-import professionalSecureIcon from '../assets/hero-icons/professional/secure.png';
-import professionalUsersIcon from '../assets/hero-icons/professional/users.png';
-import emailIcon from '../assets/support-icons/email.png';
-import feedbackIcon from '../assets/support-icons/feedback.png';
-import helpIcon from '../assets/support-icons/help.png';
+import professionalClockIcon from '../assets/hero-icons/professional/clock.webp';
+import professionalSecureIcon from '../assets/hero-icons/professional/secure.webp';
+import professionalUsersIcon from '../assets/hero-icons/professional/users.webp';
+import emailIcon from '../assets/support-icons/email.webp';
+import feedbackIcon from '../assets/support-icons/feedback.webp';
+import helpIcon from '../assets/support-icons/help.webp';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 

@@ -9,15 +9,15 @@ import {
   FiRefreshCw,
   FiUpload,
 } from 'react-icons/fi';
-import wordIcon from '../assets/hero-icons/word-pdf.png';
-import pdfIcon from '../assets/hero-icons/pdf-word.png';
-import shareablePdfIcon from '../assets/converter-icons/shareable-pdf.png';
-import docxSupportIcon from '../assets/converter-icons/docx-support.png';
-import pdfPreviewIcon from '../assets/converter-icons/pdf-preview.png';
-import secureFileHandlingIcon from '../assets/converter-icons/secure-file-handling.png';
-import uploadWordIcon from '../assets/converter-icons/upload-word.png';
-import convertToPdfIcon from '../assets/converter-icons/convert-to-pdf.png';
-import downloadPdfIcon from '../assets/converter-icons/download-pdf.png';
+import wordIcon from '../assets/hero-icons/word.webp';
+import pdfIcon from '../assets/hero-icons/pdf.webp';
+import shareablePdfIcon from '../assets/converter-icons/shareable-pdf.webp';
+import docxSupportIcon from '../assets/converter-icons/docx-support.webp';
+import pdfPreviewIcon from '../assets/converter-icons/pdf-preview.webp';
+import secureFileHandlingIcon from '../assets/converter-icons/secure-file-handling.webp';
+import uploadWordIcon from '../assets/converter-icons/upload-word.webp';
+import convertToPdfIcon from '../assets/converter-icons/convert-to-pdf.webp';
+import downloadPdfIcon from '../assets/converter-icons/download-pdf.webp';
 import ConversionLoadingOverlay from './ConversionLoadingOverlay';
 
 const features = [

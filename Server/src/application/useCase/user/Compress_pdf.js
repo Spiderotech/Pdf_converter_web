@@ -11,9 +11,9 @@ const ensureDownloadsDir = () => {
     fs.mkdirSync(downloadsDir, { recursive: true });
 };
 
-const getGhostscriptCommand = () => process.env.GHOSTSCRIPT_PATH || 'gs';
+const getQpdfCommand = () => process.env.QPDF_PATH || 'qpdf';
 
-const fallbackCompressWithPdfLib = async (filePath, outputPath) => {
+const compressWithPdfLib = async (filePath, outputPath) => {
     const sourceBytes = fs.readFileSync(filePath);
     const pdfDoc = await PDFDocument.load(sourceBytes);
     const bytes = await pdfDoc.save({ useObjectStreams: true });
@@ -21,6 +21,8 @@ const fallbackCompressWithPdfLib = async (filePath, outputPath) => {
 };
 
 const Compress_pdf = async (file, quality = 'ebook') => {
+    const temporaryFiles = [];
+
     try {
         const { path: filePath, originalname: fileName } = file;
 
@@ -32,34 +34,73 @@ const Compress_pdf = async (file, quality = 'ebook') => {
 
         const outputName = `${path.basename(fileName, path.extname(fileName))}-compressed.pdf`;
         const convertedFilePath = path.join(downloadsDir, outputName);
-        const qualityMap = {
-            screen: '/screen',
-            ebook: '/ebook',
-            printer: '/printer',
-            prepress: '/prepress',
+        const compressionLevelMap = {
+            printer: '3',
+            ebook: '6',
+            screen: '9',
         };
-        const pdfSettings = qualityMap[quality] || qualityMap.ebook;
+        const compressionLevel = compressionLevelMap[quality] || compressionLevelMap.ebook;
+        const uniqueSuffix = `${process.pid}-${Date.now()}`;
+        const qpdfCandidatePath = `${convertedFilePath}.${uniqueSuffix}.qpdf`;
+        const pdfLibCandidatePath = `${convertedFilePath}.${uniqueSuffix}.pdf-lib`;
+        const candidates = [filePath];
+
+        temporaryFiles.push(qpdfCandidatePath, pdfLibCandidatePath);
 
         try {
-            await execFileAsync(getGhostscriptCommand(), [
-                '-sDEVICE=pdfwrite',
-                '-dCompatibilityLevel=1.4',
-                `-dPDFSETTINGS=${pdfSettings}`,
-                '-dNOPAUSE',
-                '-dQUIET',
-                '-dBATCH',
-                `-sOutputFile=${convertedFilePath}`,
+            await execFileAsync(getQpdfCommand(), [
+                '--object-streams=generate',
+                '--stream-data=compress',
+                '--recompress-flate',
+                `--compression-level=${compressionLevel}`,
+                '--',
                 filePath,
+                qpdfCandidatePath,
             ], { timeout: 120000 });
-        } catch (ghostscriptError) {
-            console.warn('Ghostscript compression failed, using pdf-lib fallback:', ghostscriptError.message);
-            await fallbackCompressWithPdfLib(filePath, convertedFilePath);
+
+            if (fs.existsSync(qpdfCandidatePath)) {
+                candidates.push(qpdfCandidatePath);
+            }
+        } catch (qpdfError) {
+            console.warn('qpdf compression failed:', qpdfError.message);
+        }
+
+        try {
+            await compressWithPdfLib(filePath, pdfLibCandidatePath);
+
+            if (fs.existsSync(pdfLibCandidatePath)) {
+                candidates.push(pdfLibCandidatePath);
+            }
+        } catch (pdfLibError) {
+            console.warn('pdf-lib compression fallback failed:', pdfLibError.message);
+        }
+
+        const smallestCandidate = candidates.reduce((smallestPath, candidatePath) => {
+            return fs.statSync(candidatePath).size < fs.statSync(smallestPath).size
+                ? candidatePath
+                : smallestPath;
+        }, filePath);
+
+        if (smallestCandidate === filePath) {
+            fs.copyFileSync(filePath, convertedFilePath);
+        } else {
+            fs.renameSync(smallestCandidate, convertedFilePath);
+        }
+
+        if (!fs.existsSync(convertedFilePath)) {
+            throw new Error('Compressed PDF was not created');
         }
 
         return { convertedFilePath, url: `/downloads/${outputName}` };
     } catch (error) {
         console.error('Error in Compress_pdf:', error.message);
         throw new Error('PDF compression failed');
+    } finally {
+        for (const temporaryFile of temporaryFiles) {
+            if (fs.existsSync(temporaryFile)) {
+                fs.unlinkSync(temporaryFile);
+            }
+        }
     }
 };
 

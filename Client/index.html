@@ -19,7 +19,6 @@
     <meta name="application-name" content="FileBrother" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
-    <link rel="canonical" href="https://filebrother.com/" />
     <link rel="icon" type="image/png" href="/filebrother-logo.png" />
     <link rel="apple-touch-icon" href="/filebrother-logo.png" />
 
@@ -44,27 +43,29 @@
     <meta name="twitter:image" content="https://filebrother.com/filebrother-logo.png" />
     <meta name="twitter:image:alt" content="FileBrother logo" />
 
-    <script type="application/ld+json">
+    <script id="site-structured-data" type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "FileBrother",
-        "url": "https://filebrother.com/",
-        "description": "Free online tools to convert, merge, split, compress, edit, sign and protect PDF documents.",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "browserRequirements": "Requires a modern web browser",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "FileBrother",
-          "url": "https://filebrother.com/",
-          "logo": "https://filebrother.com/filebrother-logo.png"
-        }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://filebrother.com/#organization",
+            "name": "FileBrother",
+            "url": "https://filebrother.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://filebrother.com/filebrother-logo.png"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://filebrother.com/#website",
+            "name": "FileBrother",
+            "url": "https://filebrother.com/",
+            "publisher": { "@id": "https://filebrother.com/#organization" },
+            "inLanguage": "en"
+          }
+        ]
       }
     </script>
   </head>

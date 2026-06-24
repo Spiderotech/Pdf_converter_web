@@ -13,14 +13,14 @@ import {
   FiTrash2,
   FiUpload,
 } from 'react-icons/fi';
-import signPdfHeroIcon from '../../assets/converter-icons/sign-pdf-hero.png';
-import signPdfDownloadIcon from '../../assets/converter-icons/sign-pdf-download.png';
-import signPdfDrawSignatureIcon from '../../assets/converter-icons/sign-pdf-draw-signature.png';
-import signPdfPlaceSignatureIcon from '../../assets/converter-icons/sign-pdf-place-signature.png';
-import signPdfPrivateLockIcon from '../../assets/converter-icons/sign-pdf-private-lock.png';
-import signPdfReviewSignIcon from '../../assets/converter-icons/sign-pdf-review-sign.png';
-import signPdfUploadPdfIcon from '../../assets/converter-icons/sign-pdf-upload-pdf.png';
-import signPdfUploadSignatureIcon from '../../assets/converter-icons/sign-pdf-upload-signature.png';
+import signPdfHeroIcon from '../../assets/converter-icons/sign-pdf-hero.webp';
+import signPdfDownloadIcon from '../../assets/converter-icons/sign-pdf-download.webp';
+import signPdfDrawSignatureIcon from '../../assets/converter-icons/sign-pdf-draw-signature.webp';
+import signPdfPlaceSignatureIcon from '../../assets/converter-icons/sign-pdf-place-signature.webp';
+import signPdfPrivateLockIcon from '../../assets/converter-icons/sign-pdf-private-lock.webp';
+import signPdfReviewSignIcon from '../../assets/converter-icons/sign-pdf-review-sign.webp';
+import signPdfUploadPdfIcon from '../../assets/converter-icons/sign-pdf-upload-pdf.webp';
+import signPdfUploadSignatureIcon from '../../assets/converter-icons/sign-pdf-upload-signature.webp';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';

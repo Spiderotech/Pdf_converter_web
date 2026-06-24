@@ -8,15 +8,15 @@ import {
   FiUpload,
 } from 'react-icons/fi';
 import axios from '../../Utils/axios';
-import pptxPdfHeroIcon from '../../assets/converter-icons/pptx-pdf-hero.png';
-import pptxPdfSecurePrivateIcon from '../../assets/converter-icons/pptx-pdf-secure-private.png';
-import pptxPdfFastEasyIcon from '../../assets/converter-icons/pptx-pdf-fast-easy.png';
-import pptxPdfHighQualityIcon from '../../assets/converter-icons/pptx-pdf-high-quality.png';
-import pptxPdfUploadPptxIcon from '../../assets/converter-icons/pptx-pdf-upload-pptx.png';
-import pptxPdfConvertProcessIcon from '../../assets/converter-icons/pptx-pdf-convert-process.png';
-import pptxPdfDownloadPdfIcon from '../../assets/converter-icons/pptx-pdf-download-pdf.png';
-import pptxPdfPrivateLockIcon from '../../assets/converter-icons/pptx-pdf-private-lock.png';
-import pptxPdfProtectedFilesIcon from '../../assets/converter-icons/pptx-pdf-protected-files.png';
+import pptxPdfHeroIcon from '../../assets/converter-icons/pptx-pdf-hero.webp';
+import pptxPdfSecurePrivateIcon from '../../assets/converter-icons/pptx-pdf-secure-private.webp';
+import pptxPdfFastEasyIcon from '../../assets/converter-icons/pptx-pdf-fast-easy.webp';
+import pptxPdfHighQualityIcon from '../../assets/converter-icons/pptx-pdf-high-quality.webp';
+import pptxPdfUploadPptxIcon from '../../assets/converter-icons/pptx-pdf-upload-pptx.webp';
+import pptxPdfConvertProcessIcon from '../../assets/converter-icons/pptx-pdf-convert-process.webp';
+import pptxPdfDownloadPdfIcon from '../../assets/converter-icons/pptx-pdf-download-pdf.webp';
+import pptxPdfPrivateLockIcon from '../../assets/converter-icons/pptx-pdf-private-lock.webp';
+import pptxPdfProtectedFilesIcon from '../../assets/converter-icons/pptx-pdf-protected-files.webp';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';

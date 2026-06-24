@@ -27,8 +27,8 @@ const LegalInfoPage = ({ eyebrow, title, description, sections }: LegalInfoPageP
             <h1 className="mt-5 text-4xl font-black text-slate-950 sm:text-5xl">{title}</h1>
             <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-slate-600">{description}</p>
             <div className="mt-7 grid gap-3 border-t border-slate-200 pt-5 text-sm font-semibold text-slate-600 sm:grid-cols-2">
-              <span>Last updated: June 13, 2026</span>
-              <span>Effective: June 13, 2026</span>
+              <span>Last updated: June 17, 2026</span>
+              <span>Effective: June 17, 2026</span>
             </div>
           </section>
 

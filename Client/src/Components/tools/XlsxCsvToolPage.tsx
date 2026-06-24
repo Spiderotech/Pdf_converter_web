@@ -11,15 +11,15 @@ import {
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
-import xlsxCsvHeroIcon from '../../assets/converter-icons/xlsx-csv-hero.png';
-import xlsxUploadSpreadsheetIcon from '../../assets/converter-icons/xlsx-upload-spreadsheet.png';
-import xlsxChooseSheetIcon from '../../assets/converter-icons/xlsx-choose-sheet.png';
-import xlsxDownloadCsvIcon from '../../assets/converter-icons/xlsx-download-csv.png';
-import xlsxSecurePrivateIcon from '../../assets/converter-icons/xlsx-secure-private.png';
-import xlsxFastConversionIcon from '../../assets/converter-icons/xlsx-fast-conversion.png';
-import xlsxHighAccuracyIcon from '../../assets/converter-icons/xlsx-high-accuracy.png';
-import xlsxPrivateLockIcon from '../../assets/converter-icons/xlsx-private-lock.png';
-import xlsxDataPrivacyIcon from '../../assets/converter-icons/xlsx-data-privacy.png';
+import xlsxCsvHeroIcon from '../../assets/converter-icons/xlsx-csv-hero.webp';
+import xlsxUploadSpreadsheetIcon from '../../assets/converter-icons/xlsx-upload-spreadsheet.webp';
+import xlsxChooseSheetIcon from '../../assets/converter-icons/xlsx-choose-sheet.webp';
+import xlsxDownloadCsvIcon from '../../assets/converter-icons/xlsx-download-csv.webp';
+import xlsxSecurePrivateIcon from '../../assets/converter-icons/xlsx-secure-private.webp';
+import xlsxFastConversionIcon from '../../assets/converter-icons/xlsx-fast-conversion.webp';
+import xlsxHighAccuracyIcon from '../../assets/converter-icons/xlsx-high-accuracy.webp';
+import xlsxPrivateLockIcon from '../../assets/converter-icons/xlsx-private-lock.webp';
+import xlsxDataPrivacyIcon from '../../assets/converter-icons/xlsx-data-privacy.webp';
 
 type Workbook = import('xlsx').WorkBook;
 

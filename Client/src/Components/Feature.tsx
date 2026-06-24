@@ -1,7 +1,7 @@
-import fastIcon from '../assets/section-icons/feature-fast.png';
-import globeIcon from '../assets/section-icons/feature-globe.png';
-import securityIcon from '../assets/section-icons/feature-security.png';
-import expandIcon from '../assets/section-icons/feature-expand.png';
+import fastIcon from '../assets/section-icons/feature-fast.webp';
+import globeIcon from '../assets/section-icons/feature-globe.webp';
+import securityIcon from '../assets/section-icons/feature-security.webp';
+import expandIcon from '../assets/section-icons/feature-expand.webp';
 
 const features = [
   {
@@ -44,7 +44,7 @@ const features = [
 
 const Feature = () => {
   return (
-    <section className="relative overflow-hidden border-t border-stone-200 bg-white py-14 sm:py-20">
+    <section className="relative overflow-hidden border-t border-stone-200 bg-[#f7f5ef] py-14 sm:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_15%,rgba(231,229,228,0.55),transparent_28%)]" />
 
       <div className="relative mx-auto max-w-[1720px] px-4 sm:px-8 lg:px-12">

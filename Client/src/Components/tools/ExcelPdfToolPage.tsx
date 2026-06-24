@@ -8,14 +8,14 @@ import {
   FiUpload,
 } from 'react-icons/fi';
 import axios from '../../Utils/axios';
-import excelPdfHeroIcon from '../../assets/converter-icons/excel-pdf-hero.png';
-import excelPdfSecurePrivateIcon from '../../assets/converter-icons/excel-pdf-secure-private.png';
-import excelPdfFastConversionIcon from '../../assets/converter-icons/excel-pdf-fast-conversion.png';
-import excelPdfHighQualityIcon from '../../assets/converter-icons/excel-pdf-high-quality.png';
-import excelPdfUploadExcelIcon from '../../assets/converter-icons/excel-pdf-upload-excel.png';
-import excelPdfConvertProcessIcon from '../../assets/converter-icons/excel-pdf-convert-process.png';
-import excelPdfDownloadPdfIcon from '../../assets/converter-icons/excel-pdf-download-pdf.png';
-import excelPdfPrivateLockIcon from '../../assets/converter-icons/excel-pdf-private-lock.png';
+import excelPdfHeroIcon from '../../assets/converter-icons/excel-pdf-hero.webp';
+import excelPdfSecurePrivateIcon from '../../assets/converter-icons/excel-pdf-secure-private.webp';
+import excelPdfFastConversionIcon from '../../assets/converter-icons/excel-pdf-fast-conversion.webp';
+import excelPdfHighQualityIcon from '../../assets/converter-icons/excel-pdf-high-quality.webp';
+import excelPdfUploadExcelIcon from '../../assets/converter-icons/excel-pdf-upload-excel.webp';
+import excelPdfConvertProcessIcon from '../../assets/converter-icons/excel-pdf-convert-process.webp';
+import excelPdfDownloadPdfIcon from '../../assets/converter-icons/excel-pdf-download-pdf.webp';
+import excelPdfPrivateLockIcon from '../../assets/converter-icons/excel-pdf-private-lock.webp';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';

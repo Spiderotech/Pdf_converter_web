@@ -1,18 +1,18 @@
 import { useMemo, useState } from 'react';
-import { To, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FiArrowRight, FiGrid, FiSearch, FiX } from 'react-icons/fi';
-import compressPdfIcon from '../assets/hero-icons/compress-pdf.png';
-import editPdfIcon from '../assets/hero-icons/edit-pdf.png';
-import excelPdfIcon from '../assets/hero-icons/excel-pdf.png';
-import mergePdfIcon from '../assets/hero-icons/merge-pdf.png';
-import pdfWordIcon from '../assets/hero-icons/pdf-word.png';
-import pptPdfIcon from '../assets/hero-icons/ppt-pdf.png';
-import secureIcon from '../assets/hero-icons/lock-pdf.png';
-import signPdfIcon from '../assets/hero-icons/sign-pdf.png';
-import splitPdfIcon from '../assets/hero-icons/split-pdf.png';
-import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.png';
-import wordPdfIcon from '../assets/hero-icons/word-pdf.png';
-import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.png';
+import compressPdfIcon from '../assets/hero-icons/compress-pdf.webp';
+import editPdfIcon from '../assets/hero-icons/edit-pdf.webp';
+import excelPdfIcon from '../assets/hero-icons/excel-pdf.webp';
+import mergePdfIcon from '../assets/hero-icons/merge-pdf.webp';
+import pdfWordIcon from '../assets/hero-icons/pdf-word.webp';
+import pptPdfIcon from '../assets/hero-icons/ppt-pdf.webp';
+import secureIcon from '../assets/hero-icons/lock-pdf.webp';
+import signPdfIcon from '../assets/hero-icons/sign-pdf.webp';
+import splitPdfIcon from '../assets/hero-icons/split-pdf.webp';
+import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.webp';
+import wordPdfIcon from '../assets/hero-icons/word-pdf.webp';
+import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.webp';
 
 const tools = [
   {
@@ -104,7 +104,6 @@ const tools = [
 const categories = ['All', 'Convert', 'Edit', 'Security', 'Other'];
 
 const Tools = () => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -123,14 +122,8 @@ const Tools = () => {
     });
   }, [activeCategory, searchQuery]);
 
-  const handleNavigation = (path: To | string) => {
-    if (path !== '#') {
-      navigate(path as To);
-    }
-  };
-
   return (
-    <section id="tools" className="relative overflow-hidden bg-[#f7f5ef] pb-14 pt-12 sm:pb-20 sm:pt-16">
+    <section id="tools" className="relative overflow-hidden bg-[#f7f5ef] pb-14 pt-2 sm:pb-20 sm:pt-2">
       <div className="absolute -left-28 bottom-20 h-56 w-56 rounded-full bg-stone-300/35 blur-3xl" />
       <div className="absolute -right-24 top-28 h-72 w-72 rounded-full bg-amber-200/35 blur-3xl" />
       <div className="absolute right-8 top-28 hidden grid-cols-2 gap-3 lg:grid">
@@ -196,10 +189,9 @@ const Tools = () => {
 
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {filteredTools.map((tool) => (
-              <button
+              <Link
                 key={tool.name}
-                type="button"
-                onClick={() => handleNavigation(tool.path)}
+                to={tool.path}
                 className="group flex min-h-[118px] items-start gap-4 rounded-lg border border-stone-200 bg-white/95 p-4 text-left shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-xl hover:shadow-slate-200 sm:items-center sm:gap-5 sm:p-5"
               >
                 <img src={tool.icon} alt="" aria-hidden="true" className="h-16 w-16 shrink-0 object-contain drop-shadow-lg sm:h-20 sm:w-20" />
@@ -208,7 +200,7 @@ const Tools = () => {
                   <span className="mt-2 block text-sm font-medium leading-6 text-slate-600">{tool.description}</span>
                 </span>
                 <FiArrowRight className="h-5 w-5 shrink-0 text-[#9a6514] transition group-hover:translate-x-1" />
-              </button>
+              </Link>
             ))}
           </div>
 

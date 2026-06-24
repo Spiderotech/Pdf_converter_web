@@ -1,42 +1,26 @@
 import {
   FiArrowRight,
-  FiCheckCircle,
-  FiStar,
 } from 'react-icons/fi';
-import heroBackgroundImage from '../assets/filebrother-hero-background-professional.png';
-import heroToolsImage from '../assets/filebrother-hero-tools-professional.png';
-import professionalFastIcon from '../assets/hero-icons/professional/fast.png';
-import professionalSecureIcon from '../assets/hero-icons/professional/secure.png';
-import professionalDeleteIcon from '../assets/hero-icons/professional/delete.png';
-import professionalToolsIcon from '../assets/hero-icons/professional/tools.png';
-import professionalUsersIcon from '../assets/hero-icons/professional/users.png';
-import professionalClockIcon from '../assets/hero-icons/professional/clock.png';
-import professionalRatingIcon from '../assets/hero-icons/professional/rating.png';
-import mergePdfIcon from '../assets/hero-icons/merge-pdf.png';
-import splitPdfIcon from '../assets/hero-icons/split-pdf.png';
-import compressPdfIcon from '../assets/hero-icons/compress-pdf.png';
-import pdfWordIcon from '../assets/hero-icons/pdf-word.png';
-import wordPdfIcon from '../assets/hero-icons/word-pdf.png';
-import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.png';
-import signPdfIcon from '../assets/hero-icons/sign-pdf.png';
-import lockPdfIcon from '../assets/hero-icons/lock-pdf.png';
+import heroToolsImage from '../assets/filebrother-hero-tools-professional.webp';
+import professionalSecureIcon from '../assets/hero-icons/professional/secure.webp';
+import professionalToolsIcon from '../assets/hero-icons/professional/tools.webp';
+import professionalUsersIcon from '../assets/hero-icons/professional/users.webp';
+import professionalClockIcon from '../assets/hero-icons/professional/clock.webp';
+import professionalRatingIcon from '../assets/hero-icons/professional/rating.webp';
+import mergePdfIcon from '../assets/hero-icons/merge-pdf.webp';
+import splitPdfIcon from '../assets/hero-icons/split-pdf.webp';
+import compressPdfIcon from '../assets/hero-icons/compress-pdf.webp';
+import pdfWordIcon from '../assets/hero-icons/pdf-word.webp';
+import wordPdfIcon from '../assets/hero-icons/word-pdf.webp';
+import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.webp';
+import signPdfIcon from '../assets/hero-icons/sign-pdf.webp';
+import lockPdfIcon from '../assets/hero-icons/lock-pdf.webp';
 
 const HeroIconImage = ({ src, className }: { src: string; className: string }) => (
   <img src={src} alt="" aria-hidden="true" className={`${className} object-contain`} />
 );
 
-const trustBadges = [
-  { label: '100% Free', icon: professionalFastIcon },
-  { label: 'No Sign Up' },
-  { label: 'No Limits' },
-];
 
-const featureCards = [
-  { title: 'Fast & Easy', text: 'Instant results', icon: professionalFastIcon },
-  { title: 'Secure & Private', text: '256-bit encryption', icon: professionalSecureIcon },
-  { title: 'Auto Delete', text: 'Files deleted after 1h', icon: professionalDeleteIcon },
-  { title: 'Powerful Tools', text: 'All-in-one PDF solution', icon: professionalToolsIcon },
-];
 
 const stats = [
   { value: '5M+', label: 'Happy Users', icon: professionalUsersIcon },
@@ -64,33 +48,13 @@ const trustItems = [
 
 const Herosection = () => {
   return (
-    <section className="relative overflow-hidden bg-[#faf8f3] lg:min-h-[calc(100svh-4.5rem)]">
-      <img
-        src={heroBackgroundImage}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      />
-      <div className="absolute inset-0 bg-[#faf8f3]/35" />
+    <section className="relative overflow-hidden bg-[#f8f6f0] lg:min-h-[calc(100svh-4.5rem)]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(214,211,209,0.45),transparent_22%),radial-gradient(circle_at_88%_70%,rgba(254,243,199,0.55),transparent_24%)]" />
       <div className="relative mx-auto flex max-w-[1720px] flex-col justify-center px-4 py-8 sm:px-8 sm:py-10 lg:min-h-[calc(100svh-4.5rem)] lg:px-10 lg:py-4">
         <div className="grid items-center gap-7 lg:grid-cols-[0.88fr_1.12fr] lg:gap-3">
           <div className="relative">
             <div className="absolute -left-8 -top-8 hidden h-28 w-28 rounded-full bg-amber-200/35 blur-3xl lg:block" />
             <div className="relative">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-l-4 border-[#b7791f] bg-white/70 px-3 py-2 text-xs font-black text-slate-950 backdrop-blur sm:text-sm">
-                {trustBadges.map((badge, index) => {
-                  return (
-                    <span key={badge.label} className="inline-flex items-center gap-2">
-                      {badge.icon && (
-                        <HeroIconImage src={badge.icon} className="h-7 w-7" />
-                      )}
-                      {badge.label}
-                      {index < trustBadges.length - 1 && <span className="ml-1 text-[#b7791f]">•</span>}
-                    </span>
-                  );
-                })}
-              </div>
-
               <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-[3.35rem] xl:text-[3.65rem]">
                 All your PDF tasks,
                 <span className="block">done in <span className="bg-gradient-to-r from-[#7c4f12] to-[#c0841a] bg-clip-text text-transparent">one place.</span></span>
@@ -107,42 +71,6 @@ const Herosection = () => {
                     {label}
                   </span>
                 ))}
-              </div>
-
-              <div className="mt-5 grid max-w-4xl gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                {featureCards.map((card) => {
-                  return (
-                    <div
-                      key={card.title}
-                      className="flex min-h-20 items-center gap-3 border-l-4 border-stone-200 bg-white/70 p-3 backdrop-blur"
-                    >
-                      <HeroIconImage src={card.icon} className="h-10 w-10 shrink-0" />
-                      <span className="min-w-0">
-                        <span className="block text-[12px] font-black leading-4 text-slate-950">{card.title}</span>
-                        <span className="mt-1 block text-[11px] font-bold leading-4 text-slate-500">{card.text}</span>
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a
-                  href="#tools"
-                  className="inline-flex h-14 items-center justify-center gap-3 rounded-3xl bg-slate-950 px-5 text-base font-black text-white shadow-xl shadow-slate-300 transition hover:-translate-y-0.5 hover:bg-slate-800"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-amber-200">
-                    <FiStar className="h-5 w-5" />
-                  </span>
-                  Start for free
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-slate-950">
-                    <FiArrowRight className="h-4 w-4" />
-                  </span>
-                </a>
-                <span className="inline-flex items-center gap-2 text-sm font-extrabold text-slate-500">
-                  <FiCheckCircle className="h-5 w-5 text-green-600" />
-                  No install needed
-                </span>
               </div>
 
               <div className="mt-4 hidden max-w-4xl overflow-hidden rounded-3xl border border-stone-100 bg-white/82 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur sm:grid-cols-2 2xl:grid 2xl:grid-cols-4">

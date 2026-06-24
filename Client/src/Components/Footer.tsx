@@ -78,6 +78,7 @@ const Footer = () => {
                 {sectionTitle('Company')}
                 <ul className="mt-5 space-y-4 text-sm font-medium text-slate-600">
                   <li><a href="/about" className="hover:text-[#9a6514]">About Us</a></li>
+                  <li><a href="/blog" className="hover:text-[#9a6514]">File Guides</a></li>
                   <li><a href="/#tools" className="hover:text-[#9a6514]">Our Tools</a></li>
                   <li><a href="/contact" className="hover:text-[#9a6514]">Contact Us</a></li>
                  
@@ -92,7 +93,7 @@ const Footer = () => {
                 {sectionTitle('Support')}
                 <ul className="mt-5 space-y-4 text-sm font-medium text-slate-600">
                   <li><a href="/privacy" className="hover:text-[#9a6514]">Privacy Policy</a></li>
-                  <li><a href="/terms&conditions" className="hover:text-[#9a6514]">Terms & Conditions</a></li>
+                  <li><a href="/terms-and-conditions" className="hover:text-[#9a6514]">Terms & Conditions</a></li>
                   <li><a href="/faq" className="hover:text-[#9a6514]">FAQ</a></li>
                 </ul>
               </div>

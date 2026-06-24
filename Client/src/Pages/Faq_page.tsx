@@ -6,13 +6,13 @@ import {
   FiMail,
   FiSearch,
 } from 'react-icons/fi';
-import professionalDeleteIcon from '../assets/hero-icons/professional/delete.png';
-import professionalSecureIcon from '../assets/hero-icons/professional/secure.png';
-import professionalToolsIcon from '../assets/hero-icons/professional/tools.png';
-import professionalUsersIcon from '../assets/hero-icons/professional/users.png';
-import downloadIcon from '../assets/support-icons/download.png';
-import helpIcon from '../assets/support-icons/help.png';
-import uploadIcon from '../assets/support-icons/upload.png';
+import professionalDeleteIcon from '../assets/hero-icons/professional/delete.webp';
+import professionalSecureIcon from '../assets/hero-icons/professional/secure.webp';
+import professionalToolsIcon from '../assets/hero-icons/professional/tools.webp';
+import professionalUsersIcon from '../assets/hero-icons/professional/users.webp';
+import downloadIcon from '../assets/support-icons/download.webp';
+import helpIcon from '../assets/support-icons/help.webp';
+import uploadIcon from '../assets/support-icons/upload.webp';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 

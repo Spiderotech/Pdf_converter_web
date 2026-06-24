@@ -9,15 +9,15 @@ import {
   FiRefreshCw,
   FiUpload,
 } from 'react-icons/fi';
-import pdfIcon from '../assets/hero-icons/pdf-word.png';
-import wordIcon from '../assets/hero-icons/word-pdf.png';
-import editableOutputIcon from '../assets/converter-icons/editable-output.png';
-import simpleWorkflowIcon from '../assets/converter-icons/simple-workflow.png';
-import browserToolIcon from '../assets/converter-icons/browser-tool.png';
-import privateFilesIcon from '../assets/converter-icons/private-files.png';
-import uploadPdfIcon from '../assets/converter-icons/upload-pdf.png';
-import convertDocumentIcon from '../assets/converter-icons/convert-document.png';
-import downloadWordIcon from '../assets/converter-icons/download-word.png';
+import wordIcon from '../assets/hero-icons/word.webp';
+import pdfIcon from '../assets/hero-icons/pdf.webp';
+import editableOutputIcon from '../assets/converter-icons/editable-output.webp';
+import simpleWorkflowIcon from '../assets/converter-icons/simple-workflow.webp';
+import browserToolIcon from '../assets/converter-icons/browser-tool.webp';
+import privateFilesIcon from '../assets/converter-icons/private-files.webp';
+import uploadPdfIcon from '../assets/converter-icons/upload-pdf.webp';
+import convertDocumentIcon from '../assets/converter-icons/convert-document.webp';
+import downloadWordIcon from '../assets/converter-icons/download-word.webp';
 import ConversionLoadingOverlay from './ConversionLoadingOverlay';
 
 const features = [

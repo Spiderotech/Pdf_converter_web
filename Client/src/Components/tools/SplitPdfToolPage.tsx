@@ -13,15 +13,15 @@ import {
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
-import splitHeroPagesIcon from '../../assets/converter-icons/split-hero-pages.png';
-import splitSecureShieldIcon from '../../assets/converter-icons/split-secure-shield.png';
-import splitFastBoltIcon from '../../assets/converter-icons/split-fast-bolt.png';
-import splitBrowserToolIcon from '../../assets/converter-icons/split-browser-tool.png';
-import splitUploadPdfIcon from '../../assets/converter-icons/split-upload-pdf.png';
-import splitSelectPagesIcon from '../../assets/converter-icons/split-select-pages.png';
-import splitDownloadPagesIcon from '../../assets/converter-icons/split-download-pages.png';
-import splitPrivateLockIcon from '../../assets/converter-icons/split-private-lock.png';
-import splitPreviewPagesIcon from '../../assets/converter-icons/split-preview-pages.png';
+import splitHeroPagesIcon from '../../assets/converter-icons/split-hero-pages.webp';
+import splitSecureShieldIcon from '../../assets/converter-icons/split-secure-shield.webp';
+import splitFastBoltIcon from '../../assets/converter-icons/split-fast-bolt.webp';
+import splitBrowserToolIcon from '../../assets/converter-icons/split-browser-tool.webp';
+import splitUploadPdfIcon from '../../assets/converter-icons/split-upload-pdf.webp';
+import splitSelectPagesIcon from '../../assets/converter-icons/split-select-pages.webp';
+import splitDownloadPagesIcon from '../../assets/converter-icons/split-download-pages.webp';
+import splitPrivateLockIcon from '../../assets/converter-icons/split-private-lock.webp';
+import splitPreviewPagesIcon from '../../assets/converter-icons/split-preview-pages.webp';
 
 const trustItems = [
   { title: '100% Secure', text: 'Files stay private', icon: splitSecureShieldIcon },

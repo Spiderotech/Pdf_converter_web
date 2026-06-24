@@ -9,13 +9,13 @@ import {
   FiUpload,
 } from 'react-icons/fi';
 import axios from '../../Utils/axios';
-import compressPdfBetterSharingIcon from '../../assets/converter-icons/compress-pdf-better-sharing.png';
-import compressPdfHeroIcon from '../../assets/converter-icons/compress-pdf-hero.png';
-import compressPdfPrivateLockIcon from '../../assets/converter-icons/compress-pdf-private-lock.png';
-import compressPdfQualityIcon from '../../assets/converter-icons/compress-pdf-quality.png';
-import compressPdfSecurePrivateIcon from '../../assets/converter-icons/compress-pdf-secure-private.png';
-import compressPdfSmallerSizeIcon from '../../assets/converter-icons/compress-pdf-smaller-size.png';
-import compressPdfUploadIcon from '../../assets/converter-icons/compress-pdf-upload.png';
+import compressPdfBetterSharingIcon from '../../assets/converter-icons/compress-pdf-better-sharing.webp';
+import compressPdfHeroIcon from '../../assets/converter-icons/compress-pdf-hero.webp';
+import compressPdfPrivateLockIcon from '../../assets/converter-icons/compress-pdf-private-lock.webp';
+import compressPdfQualityIcon from '../../assets/converter-icons/compress-pdf-quality.webp';
+import compressPdfSecurePrivateIcon from '../../assets/converter-icons/compress-pdf-secure-private.webp';
+import compressPdfSmallerSizeIcon from '../../assets/converter-icons/compress-pdf-smaller-size.webp';
+import compressPdfUploadIcon from '../../assets/converter-icons/compress-pdf-upload.webp';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -32,26 +32,26 @@ const qualityOptions: Array<{
 }> = [
   {
     value: 'printer',
-    title: 'Low compression',
-    badge: 'Best quality',
-    description: 'Minimal reduction in file size.',
-    sizeLabel: 'Larger file size',
+    title: 'Fast lossless',
+    badge: 'Best speed',
+    description: 'Quick structural optimization without reducing image quality.',
+    sizeLabel: 'Faster processing',
     activeBars: 3,
   },
   {
     value: 'ebook',
-    title: 'Medium compression',
+    title: 'Balanced lossless',
     badge: 'Recommended',
-    description: 'Good balance between size and quality.',
-    sizeLabel: 'Medium file size',
+    description: 'Balanced processing effort with no quality loss.',
+    sizeLabel: 'Balanced processing',
     activeBars: 2,
   },
   {
     value: 'screen',
-    title: 'High compression',
+    title: 'Maximum lossless',
     badge: '',
-    description: 'Maximum reduction in file size.',
-    sizeLabel: 'Smaller file size',
+    description: 'Uses the highest lossless compression effort.',
+    sizeLabel: 'Maximum processing',
     activeBars: 1,
   },
 ];
@@ -156,7 +156,7 @@ const CompressPdfToolPage = () => {
             </p>
             <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Compress PDF</h1>
             <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg">
-              Reduce PDF file size using backend compression. Best results are usually on scanned or image-heavy PDFs.
+              Reduce PDF file size with lossless backend optimization. Image-heavy scans may see limited reduction because images are not downsampled.
             </p>
           </header>
 
@@ -222,8 +222,8 @@ const CompressPdfToolPage = () => {
           </div>
 
           <section className="mt-8 rounded-lg border border-blue-100 bg-white p-5 shadow-[0_15px_40px_rgba(30,64,175,0.06)] sm:p-7">
-            <h2 className="text-xl font-extrabold text-slate-950">Compression quality</h2>
-            <p className="mt-2 text-sm font-medium text-slate-600">Choose the right balance between file size and quality.</p>
+            <h2 className="text-xl font-extrabold text-slate-950">Compression level</h2>
+            <p className="mt-2 text-sm font-medium text-slate-600">Choose how much lossless compression effort to use.</p>
 
             <div className="mt-5 space-y-3">
               {qualityOptions.map((option) => {
@@ -269,7 +269,7 @@ const CompressPdfToolPage = () => {
 
             <div className="mt-5 flex items-start gap-3 rounded-lg bg-blue-50 px-5 py-4 text-sm font-medium text-slate-700">
               <img src={compressPdfQualityIcon} alt="" aria-hidden="true" className="h-8 w-8 shrink-0 object-contain" />
-              <p><span className="font-extrabold text-blue-600">Higher compression</span> may reduce image quality in some PDFs.</p>
+              <p><span className="font-extrabold text-blue-600">Lossless compression</span> preserves image quality and returns a file no larger than the original.</p>
             </div>
           </section>
 

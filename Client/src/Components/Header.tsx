@@ -16,18 +16,18 @@ import {
   FiUploadCloud,
   FiX,
 } from 'react-icons/fi';
-import compressPdfIcon from '../assets/hero-icons/compress-pdf.png';
-import editPdfIcon from '../assets/hero-icons/edit-pdf.png';
-import excelPdfIcon from '../assets/hero-icons/excel-pdf.png';
-import mergePdfIcon from '../assets/hero-icons/merge-pdf.png';
-import pdfWordIcon from '../assets/hero-icons/pdf-word.png';
-import pptPdfIcon from '../assets/hero-icons/ppt-pdf.png';
-import protectPdfIcon from '../assets/hero-icons/lock-pdf.png';
-import signPdfIcon from '../assets/hero-icons/sign-pdf.png';
-import splitPdfIcon from '../assets/hero-icons/split-pdf.png';
-import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.png';
-import wordPdfIcon from '../assets/hero-icons/word-pdf.png';
-import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.png';
+import compressPdfIcon from '../assets/hero-icons/compress-pdf.webp';
+import editPdfIcon from '../assets/hero-icons/edit-pdf.webp';
+import excelPdfIcon from '../assets/hero-icons/excel-pdf.webp';
+import mergePdfIcon from '../assets/hero-icons/merge-pdf.webp';
+import pdfWordIcon from '../assets/hero-icons/pdf-word.webp';
+import pptPdfIcon from '../assets/hero-icons/ppt-pdf.webp';
+import protectPdfIcon from '../assets/hero-icons/lock-pdf.webp';
+import signPdfIcon from '../assets/hero-icons/sign-pdf.webp';
+import splitPdfIcon from '../assets/hero-icons/split-pdf.webp';
+import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.webp';
+import wordPdfIcon from '../assets/hero-icons/word-pdf.webp';
+import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.webp';
 import fileBrotherLogo from '../assets/filebrother-logo.png';
 
 type ToolLink = {
@@ -91,6 +91,7 @@ const dropdownGroups: DropdownGroup[] = [
 ];
 
 const utilityLinks = [
+  { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
   { name: 'FAQ', href: '/faq' },
@@ -264,7 +265,7 @@ const Header = () => {
                 );
               })}
 
-              <div className="grid gap-2 sm:grid-cols-3">
+              <div className="grid gap-2 sm:grid-cols-4">
                 {utilityLinks.map((item) => (
                   <DisclosureButton
                     key={item.href}

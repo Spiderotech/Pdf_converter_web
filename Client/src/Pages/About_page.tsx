@@ -6,29 +6,36 @@ import {
   FiUsers,
   FiZap,
 } from 'react-icons/fi';
-import professionalFastIcon from '../assets/hero-icons/professional/fast.png';
-import professionalSecureIcon from '../assets/hero-icons/professional/secure.png';
-import professionalDeleteIcon from '../assets/hero-icons/professional/delete.png';
-import professionalToolsIcon from '../assets/hero-icons/professional/tools.png';
-import professionalUsersIcon from '../assets/hero-icons/professional/users.png';
-import professionalRatingIcon from '../assets/hero-icons/professional/rating.png';
-import aboutHeroImage from '../assets/abouthero.png';
+import professionalSecureIcon from '../assets/hero-icons/professional/secure.webp';
+import aboutCompressIcon from '../assets/about-icons/compress.webp';
+import aboutConvertIcon from '../assets/about-icons/convert.webp';
+import aboutCountriesIcon from '../assets/about-icons/countries-reached.webp';
+import aboutEditIcon from '../assets/about-icons/edit.webp';
+import aboutFastDefaultIcon from '../assets/about-icons/fast-default.webp';
+import aboutFilesProcessedIcon from '../assets/about-icons/files-processed.webp';
+import aboutHappyUsersIcon from '../assets/about-icons/happy-users.webp';
+import aboutPrivacyAwareIcon from '../assets/about-icons/privacy-aware.webp';
+import aboutSecureIcon from '../assets/about-icons/secure.webp';
+import aboutSignIcon from '../assets/about-icons/sign.webp';
+import aboutUptimeIcon from '../assets/about-icons/uptime.webp';
+import aboutUsefulPolishIcon from '../assets/about-icons/useful-polish.webp';
+import aboutHeroImage from '../assets/abouthero.webp';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 
 const stats = [
-  { icon: professionalUsersIcon, value: '500K+', label: 'Happy users', text: 'Trust FileBrother every day' },
-  { icon: professionalToolsIcon, value: '2M+', label: 'Files processed', text: 'Handled with speed and care' },
-  { icon: professionalRatingIcon, value: '100+', label: 'Countries reached', text: 'Loved by users worldwide' },
-  { icon: professionalSecureIcon, value: '99.9%', label: 'Reliable uptime', text: 'Always here when you need us' },
+  { icon: aboutHappyUsersIcon, value: '500K+', label: 'Happy users', text: 'Trust FileBrother every day' },
+  { icon: aboutFilesProcessedIcon, value: '2M+', label: 'Files processed', text: 'Handled with speed and care' },
+  { icon: aboutCountriesIcon, value: '100+', label: 'Countries reached', text: 'Loved by users worldwide' },
+  { icon: aboutUptimeIcon, value: '99.9%', label: 'Reliable uptime', text: 'Always here when you need us' },
 ];
 
 const capabilities = [
-  { icon: professionalToolsIcon, title: 'Convert', text: 'Convert between PDF, Word, Excel, PowerPoint, and CSV workflows.', tone: 'bg-orange-50 text-orange-600' },
-  { icon: professionalFastIcon, title: 'Compress', text: 'Reduce file size while keeping documents practical to share.', tone: 'bg-green-50 text-green-700' },
-  { icon: professionalRatingIcon, title: 'Sign', text: 'Add visual signatures to selected PDF pages with a clear preview.', tone: 'bg-violet-50 text-violet-700' },
-  { icon: professionalSecureIcon, title: 'Secure', text: 'Protect or unlock files with password-focused PDF tools.', tone: 'bg-red-50 text-red-600' },
-  { icon: professionalDeleteIcon, title: 'Edit', text: 'Add text, shapes, drawings, and images to PDFs in the browser.', tone: 'bg-blue-50 text-blue-700' },
+  { icon: aboutConvertIcon, title: 'Convert', text: 'Convert between PDF, Word, Excel, PowerPoint, and CSV workflows.', tone: 'bg-orange-50 text-orange-600' },
+  { icon: aboutCompressIcon, title: 'Compress', text: 'Reduce file size while keeping documents practical to share.', tone: 'bg-green-50 text-green-700' },
+  { icon: aboutSignIcon, title: 'Sign', text: 'Add visual signatures to selected PDF pages with a clear preview.', tone: 'bg-violet-50 text-violet-700' },
+  { icon: aboutSecureIcon, title: 'Secure', text: 'Protect or unlock files with password-focused PDF tools.', tone: 'bg-red-50 text-red-600' },
+  { icon: aboutEditIcon, title: 'Edit', text: 'Add text, shapes, drawings, and images to PDFs in the browser.', tone: 'bg-blue-50 text-blue-700' },
 ];
 
 const trustPoints = [
@@ -39,9 +46,9 @@ const trustPoints = [
 ];
 
 const values = [
-  { icon: professionalFastIcon, title: 'Fast by default', text: 'Every screen is designed to get users from upload to download quickly.', lineTone: 'bg-[#c0841a]', accent: 'bg-[radial-gradient(circle,_rgba(192,132,26,0.14)_1px,_transparent_1px)]' },
-  { icon: professionalSecureIcon, title: 'Privacy-aware', text: 'We keep privacy messaging clear and avoid unnecessary steps.', lineTone: 'bg-violet-300', accent: 'bg-[radial-gradient(circle,_rgba(124,58,237,0.14)_1px,_transparent_1px)]' },
-  { icon: professionalRatingIcon, title: 'Useful polish', text: 'The app balances friendly design with practical document workflows.', lineTone: 'bg-blue-300', accent: 'bg-[radial-gradient(circle,_rgba(37,99,235,0.12)_1px,_transparent_1px)]' },
+  { icon: aboutFastDefaultIcon, title: 'Fast by default', text: 'Every screen is designed to get users from upload to download quickly.', lineTone: 'bg-[#c0841a]', accent: 'bg-[radial-gradient(circle,_rgba(192,132,26,0.14)_1px,_transparent_1px)]' },
+  { icon: aboutPrivacyAwareIcon, title: 'Privacy-aware', text: 'We keep privacy messaging clear and avoid unnecessary steps.', lineTone: 'bg-violet-300', accent: 'bg-[radial-gradient(circle,_rgba(124,58,237,0.14)_1px,_transparent_1px)]' },
+  { icon: aboutUsefulPolishIcon, title: 'Useful polish', text: 'The app balances friendly design with practical document workflows.', lineTone: 'bg-blue-300', accent: 'bg-[radial-gradient(circle,_rgba(37,99,235,0.12)_1px,_transparent_1px)]' },
 ];
 
 const heroTrustItems = [

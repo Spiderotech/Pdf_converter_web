@@ -12,8 +12,8 @@ git@github.com:Spiderotech/Pdf_converter_web.git
 
 The project now includes production-oriented backend hosting files:
 
-- `Dockerfile` installs Node 22, LibreOffice, qpdf, and Ghostscript for backend conversion features.
-- `nixpacks.toml` declares `nodejs_22`, `libreoffice`, `qpdf`, and `ghostscript` for Railway/Nixpacks deployments.
+- `Dockerfile` installs Node 22, LibreOffice, and qpdf for backend conversion features.
+- `nixpacks.toml` declares `nodejs_22`, `libreoffice`, and `qpdf` for Railway/Nixpacks deployments.
 - `Client/src/Utils/axios.ts` reads `VITE_API_BASE_URL` and falls back to:
 
 ```text
@@ -62,7 +62,6 @@ Backend:
 - Aspose Words Cloud
 - LibreOffice
 - qpdf
-- Ghostscript
 - `pdf-lib`
 - Dotenv
 - Morgan
@@ -125,7 +124,6 @@ ASPOSE_CLIENT_ID=<aspose-client-id>
 ASPOSE_CLIENT_SECRET=<aspose-client-secret>
 LIBREOFFICE_PATH=libreoffice
 QPDF_PATH=qpdf
-GHOSTSCRIPT_PATH=gs
 CLIENT_URL=<frontend-url>
 ```
 
@@ -214,7 +212,7 @@ Server-backed tools:
 - XLS/XLSX to PDF: LibreOffice headless
 - Protect PDF: qpdf
 - Unlock PDF: qpdf
-- Compress PDF: Ghostscript with `pdf-lib` fallback
+- Compress PDF: qpdf with `pdf-lib` fallback
 
 Browser-only tools:
 
@@ -249,5 +247,5 @@ npm run dev
 - Add Multer file size and MIME/type validation.
 - Clean temporary files from `uploads/` and `downloads/`.
 - Keep `.env` files, JWT secrets, MongoDB URI, and Aspose credentials out of Git.
-- Confirm LibreOffice, qpdf, and Ghostscript exist in the hosted backend runtime.
+- Confirm LibreOffice and qpdf exist in the hosted backend runtime.
 - Verify all server-backed conversions from the deployed frontend after setting `VITE_API_BASE_URL`.

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { FiHome } from 'react-icons/fi';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import profile from "../assets/profile.png"
+import profile from "../assets/profile.webp"
 
 type RootState = {
   user: {

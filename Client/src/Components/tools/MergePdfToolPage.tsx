@@ -15,15 +15,15 @@ import {
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
-import mergeHeroPdfsIcon from '../../assets/converter-icons/merge-hero-pdfs.png';
-import mergePrivacyFolderIcon from '../../assets/converter-icons/merge-privacy-folder.png';
-import mergeUploadFilesIcon from '../../assets/converter-icons/merge-upload-files.png';
-import mergeReorderFilesIcon from '../../assets/converter-icons/merge-reorder-files.png';
-import mergeDownloadIcon from '../../assets/converter-icons/merge-download.png';
-import mergeEmptyFolderIcon from '../../assets/converter-icons/merge-empty-folder.png';
-import mergePrivateLockIcon from '../../assets/converter-icons/merge-private-lock.png';
-import mergeOfflineBoltIcon from '../../assets/converter-icons/merge-offline-bolt.png';
-import mergeSecureShieldIcon from '../../assets/converter-icons/merge-secure-shield.png';
+import mergeHeroPdfsIcon from '../../assets/converter-icons/merge-hero-pdfs.webp';
+import mergePrivacyFolderIcon from '../../assets/converter-icons/merge-privacy-folder.webp';
+import mergeUploadFilesIcon from '../../assets/converter-icons/merge-upload-files.webp';
+import mergeReorderFilesIcon from '../../assets/converter-icons/merge-reorder-files.webp';
+import mergeDownloadIcon from '../../assets/converter-icons/merge-download.webp';
+import mergeEmptyFolderIcon from '../../assets/converter-icons/merge-empty-folder.webp';
+import mergePrivateLockIcon from '../../assets/converter-icons/merge-private-lock.webp';
+import mergeOfflineBoltIcon from '../../assets/converter-icons/merge-offline-bolt.webp';
+import mergeSecureShieldIcon from '../../assets/converter-icons/merge-secure-shield.webp';
 
 type PdfFileItem = {
   id: string;

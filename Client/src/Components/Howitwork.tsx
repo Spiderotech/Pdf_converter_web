@@ -1,12 +1,9 @@
 import {
   FiChevronRight,
-  FiLock,
-  FiShield,
-  FiTrash2,
 } from 'react-icons/fi';
-import chooseToolIcon from '../assets/section-icons/step-choose.png';
-import uploadFileIcon from '../assets/section-icons/step-upload.png';
-import downloadResultIcon from '../assets/section-icons/step-download.png';
+import chooseToolIcon from '../assets/section-icons/step-choose.webp';
+import uploadFileIcon from '../assets/section-icons/step-upload.webp';
+import downloadResultIcon from '../assets/section-icons/step-download.webp';
 
 const steps = [
   {
@@ -49,8 +46,8 @@ const Howitwork = () => {
             const illustration = illustrations[index];
 
             return (
-              <div key={step.title} className="relative">
-                <article className="grid min-h-[220px] gap-5 rounded-lg border border-stone-200 bg-white/90 p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:grid-cols-[minmax(0,1fr)_180px] sm:items-center sm:p-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_190px]">
+              <div key={step.title} className="relative h-full">
+                <article className="grid h-full min-h-[220px] gap-5 rounded-lg border border-stone-200 bg-white/90 p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)] sm:grid-cols-[minmax(0,1fr)_180px] sm:items-center sm:p-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_190px]">
                   <div>
                     <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 text-base font-extrabold text-white">
                       {index + 1}
@@ -75,39 +72,6 @@ const Howitwork = () => {
               </div>
             );
           })}
-        </div>
-
-        <div className="mt-6 grid gap-5 rounded-lg border border-stone-200 bg-white px-4 py-5 shadow-[0_10px_24px_rgba(15,23,42,0.05)] md:grid-cols-[1.6fr_repeat(3,1fr)] md:items-center sm:px-6">
-          <div className="flex items-start gap-4 sm:items-center">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-slate-950 text-white sm:h-14 sm:w-14">
-              <FiShield className="h-7 w-7" />
-            </span>
-            <span>
-              <strong className="block text-base font-extrabold text-slate-950">Your files are safe with us</strong>
-              <span className="mt-1 block text-sm font-medium leading-6 text-slate-600">
-                Files are encrypted and automatically deleted after processing.
-              </span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
-              <FiLock className="h-5 w-5" />
-            </span>
-            <span className="text-sm font-semibold leading-6 text-slate-700">256-bit SSL<br />Encryption</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
-              <FiTrash2 className="h-5 w-5" />
-            </span>
-            <span className="text-sm font-semibold leading-6 text-slate-700">Auto delete<br />After processing</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-slate-700">
-              <FiShield className="h-5 w-5" />
-            </span>
-            <span className="text-sm font-semibold leading-6 text-slate-700">We never store<br />Your files</span>
-          </div>
         </div>
       </div>
     </section>

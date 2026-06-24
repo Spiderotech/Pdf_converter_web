@@ -13,15 +13,15 @@ import {
   FiUpload,
 } from 'react-icons/fi';
 import axios from '../../Utils/axios';
-import securityPdfDownloadIcon from '../../assets/converter-icons/security-pdf-download.png';
-import securityPdfEncryptIcon from '../../assets/converter-icons/security-pdf-encrypt.png';
-import securityPdfPasswordIcon from '../../assets/converter-icons/security-pdf-password.png';
-import securityPdfPrivateLockIcon from '../../assets/converter-icons/security-pdf-private-lock.png';
-import securityPdfProtectHeroIcon from '../../assets/converter-icons/security-pdf-protect-hero.png';
-import securityPdfSecureProcessIcon from '../../assets/converter-icons/security-pdf-secure-process.png';
-import securityPdfUnlockHeroIcon from '../../assets/converter-icons/security-pdf-unlock-hero.png';
-import securityPdfUnlockIcon from '../../assets/converter-icons/security-pdf-unlock.png';
-import securityPdfUploadIcon from '../../assets/converter-icons/security-pdf-upload.png';
+import securityPdfDownloadIcon from '../../assets/converter-icons/security-pdf-download.webp';
+import securityPdfEncryptIcon from '../../assets/converter-icons/security-pdf-encrypt.webp';
+import securityPdfPasswordIcon from '../../assets/converter-icons/security-pdf-password.webp';
+import securityPdfPrivateLockIcon from '../../assets/converter-icons/security-pdf-private-lock.webp';
+import securityPdfProtectHeroIcon from '../../assets/converter-icons/security-pdf-protect-hero.webp';
+import securityPdfSecureProcessIcon from '../../assets/converter-icons/security-pdf-secure-process.webp';
+import securityPdfUnlockHeroIcon from '../../assets/converter-icons/security-pdf-unlock-hero.webp';
+import securityPdfUnlockIcon from '../../assets/converter-icons/security-pdf-unlock.webp';
+import securityPdfUploadIcon from '../../assets/converter-icons/security-pdf-upload.webp';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -34,14 +34,14 @@ type SecurityPdfToolPageProps = {
 
 const themes = {
   unlock: {
-    accent: 'text-violet-600',
-    eyebrow: 'bg-violet-100 text-violet-700',
-    iconBox: 'bg-violet-100 text-violet-600',
-    border: 'border-violet-400',
-    activeDrop: 'border-violet-600 bg-violet-50',
-    button: 'bg-violet-600 hover:bg-violet-700 shadow-violet-200',
-    softPanel: 'border-violet-100 bg-violet-50/70',
-    focus: 'focus:border-violet-500 focus:ring-violet-100',
+    accent: 'text-emerald-600',
+    eyebrow: 'bg-emerald-100 text-emerald-700',
+    iconBox: 'bg-emerald-100 text-emerald-600',
+    border: 'border-emerald-400',
+    activeDrop: 'border-emerald-600 bg-emerald-50',
+    button: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-200',
+    softPanel: 'border-emerald-100 bg-emerald-50/70',
+    focus: 'focus:border-emerald-500 focus:ring-emerald-100',
     background: 'bg-[#fbf7ef]',
     glow: 'bg-[radial-gradient(circle_at_18%_12%,rgba(254,243,199,0.5),transparent_28%),radial-gradient(circle_at_85%_65%,rgba(231,229,228,0.55),transparent_25%)]',
   },
@@ -208,8 +208,8 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           title: 'Upload locked PDF',
           text: 'Choose the password-protected PDF you need to unlock.',
           icon: securityPdfUploadIcon,
-          color: 'bg-violet-50',
-          badge: 'bg-violet-600',
+          color: 'bg-emerald-50',
+          badge: 'bg-emerald-600',
         },
         {
           title: 'Enter password',
@@ -272,7 +272,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
             </div>
 
             <div className="relative flex min-h-56 items-center justify-center sm:min-h-72">
-              <div className={`absolute h-52 w-52 rounded-full opacity-80 sm:h-64 sm:w-64 ${isProtect ? 'bg-rose-100' : 'bg-violet-100'}`} />
+              <div className={`absolute h-52 w-52 rounded-full opacity-80 sm:h-64 sm:w-64 ${isProtect ? 'bg-rose-100' : 'bg-emerald-100'}`} />
               <img
                 src={heroIcon}
                 alt=""
@@ -311,7 +311,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                     </article>
                     {index < howItWorksSteps.length - 1 && (
                       <span className={`absolute -right-7 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-white shadow-lg lg:flex ${
-                        isProtect ? 'bg-rose-600 shadow-rose-200' : 'bg-violet-600 shadow-violet-200'
+                        isProtect ? 'bg-rose-600 shadow-rose-200' : 'bg-emerald-600 shadow-emerald-200'
                       }`}>
                         <FiArrowRight className="h-5 w-5" />
                       </span>
