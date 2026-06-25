@@ -1,8 +1,11 @@
-import { ConvertDocumentRequest, WordsApi } from 'asposewordscloud';
+import { execFile } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { promisify } from 'util';
 
+const execFileAsync = promisify(execFile);
 const downloadsDir = path.resolve(process.cwd(), 'downloads');
+const scriptsDir = path.resolve(process.cwd(), 'scripts');
 
 const ensureDownloadsDir = () => {
     fs.mkdirSync(downloadsDir, { recursive: true });
@@ -13,45 +16,44 @@ const sanitizeBaseName = (fileName) => {
     return parsedName.replace(/[^a-zA-Z0-9-_]/g, '-').replace(/-+/g, '-') || 'converted';
 };
 
-const getWordsApi = () => {
-    const clientId = process.env.ASPOSE_CLIENT_ID;
-    const clientSecret = process.env.ASPOSE_CLIENT_SECRET;
-
-    if (!clientId || !clientSecret) {
-        throw new Error('Aspose credentials are missing. Set ASPOSE_CLIENT_ID and ASPOSE_CLIENT_SECRET in Server/.env');
-    }
-
-    return new WordsApi(clientId, clientSecret);
-};
+const getPythonCommand = () => process.env.PYTHON_PDF_TOOLS_BIN || process.env.PYTHON_BIN || 'python3';
 
 const Pdf_to_wordconverter = async (file) => {
     try {
-        const wordsApi = getWordsApi();
         const { path: filePath, originalname: fileName } = file;
 
         if (!fs.existsSync(filePath)) {
             throw new Error('File not found');
         }
 
+        ensureDownloadsDir();
+
         const outputName = `${sanitizeBaseName(fileName)}.docx`;
         const convertedFilePath = path.join(downloadsDir, outputName);
+        const scriptPath = path.join(scriptsDir, 'pdf_to_docx.py');
 
-        console.log('Converting PDF to editable Word...');
-        const convertRequest = new ConvertDocumentRequest({
-            document: fs.createReadStream(filePath),
-            format: 'docx',
+        console.log('Converting PDF to editable Word locally...');
+
+        const { stdout, stderr } = await execFileAsync(getPythonCommand(), [
+            scriptPath,
+            filePath,
+            convertedFilePath,
+        ], {
+            timeout: Number(process.env.PDF_TO_DOCX_TIMEOUT_MS || 300000),
+            maxBuffer: 1024 * 1024 * 10,
         });
 
-        const convertResponse = await wordsApi.convertDocument(convertRequest);
-
-        if (!convertResponse.body || convertResponse.body.length === 0) {
-            throw new Error('Converted Word document was empty');
+        if (stdout) {
+            console.log('PDF to DOCX stdout:', stdout);
         }
 
-        ensureDownloadsDir();
-        fs.writeFileSync(convertedFilePath, convertResponse.body);
+        if (stderr) {
+            console.warn('PDF to DOCX stderr:', stderr);
+        }
 
-        console.log('File converted successfully:', convertedFilePath);
+        if (!fs.existsSync(convertedFilePath) || fs.statSync(convertedFilePath).size === 0) {
+            throw new Error('Converted Word document was not created');
+        }
 
         return { convertedFilePath, url: `/downloads/${outputName}` };
     } catch (error) {

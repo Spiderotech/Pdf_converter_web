@@ -73,7 +73,10 @@ Current backend:
 - Multer
 - MongoDB/Mongoose
 - JWT/Bcrypt authentication
-- Aspose PDF/Words Cloud SDKs
+- LibreOffice headless
+- Python `pdf2docx`
+- Tesseract OCR
+- qpdf
 
 Current working tools:
 
@@ -209,9 +212,9 @@ npm install pdf-lib pdf-parse multer xlsx mammoth docx sharp
 | Split PDF | Yes | Use `pdf-lib` |
 | Sign PDF | Yes | Use `pdf-lib` with image/drawn signature |
 | Edit PDF | Basic only | Use `pdfjs-dist` preview + `pdf-lib` overlays |
-| PDF to DOCX | Not reliably | Use Aspose/CloudConvert later |
-| DOCX to PDF | Not reliably on Railway without extra binaries | Use API later, or LibreOffice on VPS |
-| PPTX to PDF | Not reliably on Railway without extra binaries | Use API later, or LibreOffice on VPS |
+| PDF to DOCX | Reasonable for text PDFs | Use local Python `pdf2docx`; OCR scanned PDFs first with Tesseract |
+| DOCX to PDF | Yes with backend binaries | Use LibreOffice headless |
+| PPTX to PDF | Yes with backend binaries | Use LibreOffice headless; expect possible font/animation differences |
 | XLSX to CSV | Yes | Use `xlsx` |
 | Excel to PDF | Not reliably | Use API later, or LibreOffice on VPS |
 | PDF to Excel | Not reliably | Use API later |
@@ -277,7 +280,7 @@ Important for Railway:
 
 ### Phase 3 - Advanced Conversions
 
-Add API-based conversions only when needed:
+Add paid API-based conversions only if local quality is not enough:
 
 - PDF to DOCX
 - DOCX to PDF
@@ -285,7 +288,7 @@ Add API-based conversions only when needed:
 - Excel to PDF
 - PDF to Excel
 
-Possible paid services:
+Possible paid fallback services:
 
 - Aspose Cloud
 - CloudConvert
@@ -467,8 +470,10 @@ PORT=3000
 MONGO_URI=
 ACCESS_TOKEN_SECRET=
 REFRESH_TOKEN_SECRET=
-ASPOSE_CLIENT_ID=
-ASPOSE_CLIENT_SECRET=
+LIBREOFFICE_PATH=libreoffice
+PYTHON_PDF_TOOLS_BIN=python3
+PDF_TO_DOCX_OCR=auto
+QPDF_PATH=qpdf
 CORS_ORIGIN=http://localhost:5173
 ```
 
@@ -479,8 +484,10 @@ PORT
 MONGO_URI
 ACCESS_TOKEN_SECRET
 REFRESH_TOKEN_SECRET
-ASPOSE_CLIENT_ID
-ASPOSE_CLIENT_SECRET
+LIBREOFFICE_PATH
+PYTHON_PDF_TOOLS_BIN
+PDF_TO_DOCX_OCR
+QPDF_PATH
 CORS_ORIGIN
 ```
 
@@ -758,7 +765,7 @@ Before launch:
 - Add upload file size limits.
 - Validate file type and extension.
 - Delete temporary files after processing.
-- Do not expose Aspose or other API secrets in frontend code.
+- Do not expose backend secrets or paid API fallback credentials in frontend code.
 - Add basic rate limiting if traffic grows.
 - Add error handling for failed conversions.
 - Add HTTPS for frontend and backend.

@@ -12,8 +12,8 @@ git@github.com:Spiderotech/Pdf_converter_web.git
 
 The project now includes production-oriented backend hosting files:
 
-- `Dockerfile` installs Node 22, LibreOffice, and qpdf for backend conversion features.
-- `nixpacks.toml` declares `nodejs_22`, `libreoffice`, and `qpdf` for Railway/Nixpacks deployments.
+- `Dockerfile` installs Node 22, LibreOffice, Tesseract, Python pdf2docx dependencies, and qpdf for backend conversion features.
+- `nixpacks.toml` declares Node, LibreOffice, Tesseract, Python, and qpdf packages for Railway/Nixpacks deployments.
 - `Client/src/Utils/axios.ts` reads `VITE_API_BASE_URL` and falls back to:
 
 ```text
@@ -58,9 +58,9 @@ Backend:
 - JWT
 - Bcrypt
 - Multer
-- Aspose PDF Cloud
-- Aspose Words Cloud
 - LibreOffice
+- Python `pdf2docx`
+- Tesseract OCR
 - qpdf
 - `pdf-lib`
 - Dotenv
@@ -120,9 +120,9 @@ PORT=3000
 MONGO_URI=<mongodb-connection-string>
 ACCESS_TOKEN_SECRET=<jwt-access-secret>
 REFRESH_TOKEN_SECRET=<jwt-refresh-secret>
-ASPOSE_CLIENT_ID=<aspose-client-id>
-ASPOSE_CLIENT_SECRET=<aspose-client-secret>
 LIBREOFFICE_PATH=libreoffice
+PYTHON_PDF_TOOLS_BIN=python3
+PDF_TO_DOCX_OCR=auto
 QPDF_PATH=qpdf
 CLIENT_URL=<frontend-url>
 ```
@@ -206,8 +206,8 @@ POST /compresspdf
 
 Server-backed tools:
 
-- PDF to Word: Aspose PDF Cloud
-- Word to PDF: Aspose Words Cloud
+- PDF to Word: Python `pdf2docx`; scanned PDFs are OCR-processed with Tesseract when needed
+- Word to PDF: LibreOffice headless
 - PPT/PPTX to PDF: LibreOffice headless
 - XLS/XLSX to PDF: LibreOffice headless
 - Protect PDF: qpdf
@@ -246,6 +246,6 @@ npm run dev
 - Restrict CORS to deployed frontend domains before public launch.
 - Add Multer file size and MIME/type validation.
 - Clean temporary files from `uploads/` and `downloads/`.
-- Keep `.env` files, JWT secrets, MongoDB URI, and Aspose credentials out of Git.
-- Confirm LibreOffice and qpdf exist in the hosted backend runtime.
+- Keep `.env` files, JWT secrets, and MongoDB URI out of Git.
+- Confirm LibreOffice, Python pdf2docx dependencies, Tesseract, and qpdf exist in the hosted backend runtime.
 - Verify all server-backed conversions from the deployed frontend after setting `VITE_API_BASE_URL`.

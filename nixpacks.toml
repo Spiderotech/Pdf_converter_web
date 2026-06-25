@@ -1,2 +1,11 @@
 [phases.setup]
-nixPkgs = ["nodejs_22", "libreoffice", "qpdf"]
+nixPkgs = ["nodejs_22", "libreoffice", "python311Full", "qpdf", "tesseract"]
+
+[phases.install]
+cmds = [
+  "cd Server && npm ci",
+  "python -m venv /app/.venv && /app/.venv/bin/pip install --no-cache-dir -r Server/requirements.txt"
+]
+
+[start]
+cmd = "cd Server && PYTHON_PDF_TOOLS_BIN=/app/.venv/bin/python npm start"

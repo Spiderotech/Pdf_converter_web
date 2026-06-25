@@ -20,8 +20,8 @@ Detailed app flow:
 10. For PDF protection, the user enters a new password that is sent to the backend only for that request.
 11. For PDF unlock, the user enters the current PDF password that is sent to the backend only for that request.
 12. For compression, the user may choose a lossless compression level that is sent with the file.
-13. PDF to Word and some Office conversion features may use Aspose Cloud services.
-14. Office-to-PDF conversion may use Aspose Cloud or LibreOffice; PDF utilities may use qpdf and `pdf-lib` depending on the selected tool.
+13. PDF to Word uses local Python `pdf2docx`; scanned PDFs may be OCR-processed with Tesseract before DOCX conversion.
+14. Word, PowerPoint, and Excel to PDF use LibreOffice headless; PDF utilities may use qpdf and `pdf-lib` depending on the selected tool.
 15. Browser-only tools use frontend libraries such as `pdf-lib`, `pdfjs-dist`, and `xlsx`.
 16. The current public tool flow does not intentionally request camera, microphone, location, contacts, notification, or payment permissions.
 17. The current public tool flow does not sell uploaded documents.
@@ -35,9 +35,9 @@ Screen/function summary:
 | Area | What it does | Data involved |
 | --- | --- | --- |
 | Homepage | Shows FileBrother tools and navigation. | Basic browser request data. |
-| PDF to Word | Converts uploaded PDF to DOCX. | Uploaded PDF, generated DOCX, Aspose processing where configured. |
-| Word to PDF | Converts uploaded DOC/DOCX to PDF. | Uploaded Word document, generated PDF, Aspose processing where configured. |
-| PowerPoint to PDF | Converts uploaded presentation to PDF. | Uploaded PPT/PPTX file, generated PDF, Aspose Slides Cloud where configured. |
+| PDF to Word | Converts uploaded PDF to DOCX. | Uploaded PDF, generated DOCX, local `pdf2docx` processing, and OCR processing for scanned PDFs where needed. |
+| Word to PDF | Converts uploaded DOC/DOCX to PDF. | Uploaded Word document, generated PDF, LibreOffice processing. |
+| PowerPoint to PDF | Converts uploaded presentation to PDF. | Uploaded PPT/PPTX file, generated PDF, LibreOffice processing. |
 | Excel to PDF | Converts uploaded spreadsheet to PDF. | Uploaded XLS/XLSX file, generated PDF, LibreOffice processing. |
 | Compress PDF | Reduces PDF file size. | Uploaded PDF, compression quality, generated compressed PDF. |
 | Protect PDF | Adds password protection. | Uploaded PDF, user-entered password for the request, generated protected PDF. |
@@ -71,12 +71,10 @@ Backend data may include:
 - Compression quality setting.
 - Standard server request logs.
 - Error logs needed for debugging.
-- Aspose API credentials in environment variables.
 - Service configuration and binary paths in environment variables.
 
 Third-party or infrastructure data may include:
 
-- Uploaded files sent to Aspose Cloud when Aspose-backed conversion is used.
 - Hosting provider logs and runtime metadata.
 - Static/frontend hosting request metadata.
 - Future ad provider request, impression, click, and measurement data if planned ads are enabled.
@@ -122,8 +120,9 @@ Current permissions/services to mention:
 - Browser file picker and drag-and-drop file selection.
 - Browser download/object URL creation.
 - Backend API for server-backed tools.
-- Aspose Cloud conversion services.
 - LibreOffice processing.
+- Python `pdf2docx` processing.
+- Tesseract processing for scanned PDF to DOCX.
 - qpdf processing.
 - `pdf-lib`, `pdfjs-dist`, and `xlsx` browser-side processing.
 - Hosting provider logs and runtime infrastructure.
@@ -151,8 +150,9 @@ Use this table to keep the Privacy Policy accurate. Some entries are browser cap
 | Browser file picker / drag-and-drop | Used. | Lets users choose documents for conversion, compression, protection, unlock, merge, split, sign, edit, or CSV export. | Users cannot select files for tool workflows. |
 | Browser downloads/object URLs | Used. | Creates downloadable output files in the browser after server-backed or browser-only processing. | Users may not be able to save converted files. |
 | Backend API | Used. | Handles server-backed file processing. | Server-backed tools will not work. |
-| Aspose Cloud services | Used for configured conversion flows. | Converts PDF/Word/presentation files where Aspose-backed processing is used. | Affected conversions may fail. |
-| LibreOffice | Used for Office-to-PDF processing. | Converts supported Office files to PDF on the backend. | Affected Office conversion tools may fail. |
+| LibreOffice | Used for Office-to-PDF processing. | Converts supported Word, PowerPoint, and spreadsheet files to PDF on the backend. | Affected Office conversion tools may fail. |
+| Python `pdf2docx` | Used for PDF-to-DOCX processing. | Converts text-based PDFs into editable DOCX files on the backend. | PDF to Word may fail. |
+| Tesseract OCR | Used when PDF-to-DOCX receives a scanned PDF with little or no readable text. | Adds an OCR text layer before DOCX conversion. | Scanned PDFs may convert with poor or missing editable text. |
 | qpdf | Used for PDF protection/unlock. | Encrypts and decrypts PDFs using the password supplied by the user. | Protect/unlock PDF tools may fail. |
 | qpdf and `pdf-lib` compression | Used for lossless PDF compression. | Optimizes PDF structures and returns the smallest candidate without image downsampling. | Compression may provide limited reduction for image-heavy PDFs. |
 | Browser PDF/spreadsheet libraries | Used. | Processes merge, split, sign, edit, and XLSX-to-CSV workflows locally in the browser. | Browser-only tools may not work. |
@@ -177,8 +177,7 @@ The Privacy Policy should describe the current FileBrother setup:
 - Generated files saved to `downloads/`.
 - PDF passwords sent for protect/unlock requests.
 - Lossless compression level submitted for compression requests.
-- Aspose Cloud processing for configured conversion flows.
-- LibreOffice, qpdf, and `pdf-lib` processing.
+- Local `pdf2docx`, Tesseract, LibreOffice, qpdf, and `pdf-lib` processing.
 - Hosting logs and operational records.
 - Planned ads on each public screen or tool page, including the fact that ads are not active until implemented.
 - Current absence of camera, microphone, location, contacts, notifications, payments, and active ads in the public tool flow.
@@ -194,7 +193,7 @@ Keep this documentation and the Privacy Policy aligned with the current app by r
 - Backend storage currently used for uploaded and generated files.
 - Uploaded file types currently accepted.
 - Generated file types currently returned.
-- Third-party conversion providers currently connected.
+- Local document conversion processors currently installed.
 - Hosting providers currently used.
 - Analytics SDKs currently installed.
 - Planned ad placements currently designed.
@@ -219,12 +218,12 @@ The current FileBrother policy should clearly state:
 | Data collection | Server-backed tools receive uploaded files and processing settings. Browser-only tools process selected files locally in the browser. |
 | File processing | Some tools upload files to the backend, while merge, split, sign, edit, and XLSX-to-CSV process files locally in the browser. |
 | File deletion | Current backend processing writes uploads and downloads to server folders, so automated or operational cleanup is required before promising immediate deletion. |
-| Third parties | Backend/frontend hosting and Aspose Cloud conversion services may process relevant data. |
+| Third parties | Backend/frontend hosting and infrastructure services may process relevant operational data. Current conversion tools are designed to run locally on the backend instead of sending uploaded documents to a cloud conversion API. |
 | Passwords | PDF protect/unlock passwords are submitted to the backend only for the processing request and should not be stored in logs or persistent records. |
 | Browser storage | Browser storage may hold temporary local tool state and generated object URLs while tools are in use. |
 | Other user visibility | Other users cannot see documents through the current inspected app unless the user shares downloaded files outside the app. |
 | Admin/operator access | Authorized operators may access logs, uploads, and downloads for support, security, operations, or legal compliance. |
-| Permissions | The app uses internet, file picker, downloads, backend API, Aspose, LibreOffice, qpdf, `pdf-lib`, and browser processing libraries. |
+| Permissions | The app uses internet, file picker, downloads, backend API, LibreOffice, Python `pdf2docx`, Tesseract, qpdf, `pdf-lib`, and browser processing libraries. |
 | Ads and payments | Current inspected app does not include active ads, billing, subscriptions, or payment card collection. Ads are planned for public screens and tool pages, so the ad provider and consent details should be added before launch. |
 
 ## Recommended Public Privacy Policy Sections

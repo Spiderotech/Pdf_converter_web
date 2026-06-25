@@ -1,7 +1,7 @@
 import { execFile } from 'child_process';
-import slidesCloud from 'asposeslidescloud';
 import fs from 'fs';
 import path from 'path';
+import { pathToFileURL } from 'url';
 import { promisify } from 'util';
 
 const execFileAsync = promisify(execFile);
@@ -13,32 +13,14 @@ const ensureDownloadsDir = () => {
 
 const getOfficeCommand = () => process.env.LIBREOFFICE_PATH || 'libreoffice';
 
-const presentationExtensions = new Set(['.ppt', '.pptx', '.pps', '.ppsx', '.pptm', '.ppsm']);
-
-const getSlidesApi = () => {
-    const clientId = process.env.ASPOSE_CLIENT_ID;
-    const clientSecret = process.env.ASPOSE_CLIENT_SECRET;
-
-    if (!clientId || !clientSecret) {
-        throw new Error('Aspose credentials are missing. Set ASPOSE_CLIENT_ID and ASPOSE_CLIENT_SECRET in Server/.env');
-    }
-
-    return new slidesCloud.SlidesApi(clientId, clientSecret);
-};
-
-const convertPresentationToPdf = async (filePath, convertedFilePath) => {
-    const slidesApi = getSlidesApi();
-    const response = await slidesApi.convert(fs.createReadStream(filePath), 'pdf');
-
-    if (!response.body || response.body.length === 0) {
-        throw new Error('Converted PDF was empty');
-    }
-
-    fs.writeFileSync(convertedFilePath, response.body);
+const sanitizeBaseName = (fileName) => {
+    const parsedName = path.basename(fileName, path.extname(fileName));
+    return parsedName.replace(/[^a-zA-Z0-9-_]/g, '-').replace(/-+/g, '-') || 'converted';
 };
 
 const Office_to_pdfconverter = async (file) => {
     let conversionInputPath;
+    let libreOfficeProfileDir;
 
     try {
         const { path: filePath, originalname: fileName } = file;
@@ -50,29 +32,29 @@ const Office_to_pdfconverter = async (file) => {
         ensureDownloadsDir();
 
         const originalExtension = path.extname(fileName);
-        const outputName = `${path.basename(fileName, path.extname(fileName))}.pdf`;
+        const outputName = `${sanitizeBaseName(fileName)}.pdf`;
         const convertedFilePath = path.join(downloadsDir, outputName);
+        const inputBaseName = `${sanitizeBaseName(fileName)}-${Date.now()}`;
 
-        if (presentationExtensions.has(originalExtension.toLowerCase())) {
-            console.log('Converting presentation to PDF with Aspose Slides...');
-            await convertPresentationToPdf(filePath, convertedFilePath);
-            return { convertedFilePath, url: `/downloads/${outputName}` };
-        }
+        conversionInputPath = path.join(path.dirname(filePath), `${inputBaseName}${originalExtension}`);
+        libreOfficeProfileDir = path.join(path.dirname(filePath), `lo-profile-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
-        const inputBaseName = path.basename(fileName, originalExtension).replace(/[^a-zA-Z0-9-_]/g, '-');
-        conversionInputPath = path.join(path.dirname(filePath), `${inputBaseName}-${Date.now()}${originalExtension}`);
         fs.copyFileSync(filePath, conversionInputPath);
 
         const { stdout, stderr } = await execFileAsync(getOfficeCommand(), [
             '--headless',
+            '--nologo',
+            '--nofirststartwizard',
+            `-env:UserInstallation=${pathToFileURL(libreOfficeProfileDir).href}`,
             '--convert-to',
             'pdf',
             '--outdir',
             downloadsDir,
             conversionInputPath,
-        ], { timeout: 120000 });
-
-        const generatedOutputPath = path.join(downloadsDir, `${path.basename(conversionInputPath, path.extname(conversionInputPath))}.pdf`);
+        ], {
+            timeout: Number(process.env.OFFICE_TO_PDF_TIMEOUT_MS || 120000),
+            maxBuffer: 1024 * 1024 * 10,
+        });
 
         if (stdout) {
             console.log('LibreOffice stdout:', stdout);
@@ -81,6 +63,8 @@ const Office_to_pdfconverter = async (file) => {
         if (stderr) {
             console.warn('LibreOffice stderr:', stderr);
         }
+
+        const generatedOutputPath = path.join(downloadsDir, `${inputBaseName}.pdf`);
 
         if (!fs.existsSync(generatedOutputPath)) {
             throw new Error('Converted PDF was not created');
@@ -97,6 +81,10 @@ const Office_to_pdfconverter = async (file) => {
     } finally {
         if (conversionInputPath && fs.existsSync(conversionInputPath)) {
             fs.unlinkSync(conversionInputPath);
+        }
+
+        if (libreOfficeProfileDir && fs.existsSync(libreOfficeProfileDir)) {
+            fs.rmSync(libreOfficeProfileDir, { recursive: true, force: true });
         }
     }
 };
