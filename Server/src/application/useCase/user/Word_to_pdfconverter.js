@@ -33,7 +33,7 @@ const convertWithLibreOffice = async (filePath, originalName, outputName) => {
             '--nofirststartwizard',
             `-env:UserInstallation=${pathToFileURL(libreOfficeProfileDir).href}`,
             '--convert-to',
-            'pdf',
+            'pdf:writer_pdf_Export',
             '--outdir',
             downloadsDir,
             conversionInputPath,

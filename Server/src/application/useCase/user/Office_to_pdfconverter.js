@@ -13,6 +13,28 @@ const ensureDownloadsDir = () => {
 
 const getOfficeCommand = () => process.env.LIBREOFFICE_PATH || 'libreoffice';
 
+const presentationExtensions = new Set(['.ppt', '.pptx', '.pps', '.ppsx', '.pptm', '.ppsm']);
+const spreadsheetExtensions = new Set(['.xls', '.xlsx', '.ods', '.csv']);
+const documentExtensions = new Set(['.doc', '.docx', '.odt', '.rtf']);
+
+const getLibreOfficePdfFilter = (extension) => {
+    const normalizedExtension = extension.toLowerCase();
+
+    if (presentationExtensions.has(normalizedExtension)) {
+        return 'pdf:impress_pdf_Export';
+    }
+
+    if (spreadsheetExtensions.has(normalizedExtension)) {
+        return 'pdf:calc_pdf_Export';
+    }
+
+    if (documentExtensions.has(normalizedExtension)) {
+        return 'pdf:writer_pdf_Export';
+    }
+
+    return 'pdf';
+};
+
 const sanitizeBaseName = (fileName) => {
     const parsedName = path.basename(fileName, path.extname(fileName));
     return parsedName.replace(/[^a-zA-Z0-9-_]/g, '-').replace(/-+/g, '-') || 'converted';
@@ -47,7 +69,7 @@ const Office_to_pdfconverter = async (file) => {
             '--nofirststartwizard',
             `-env:UserInstallation=${pathToFileURL(libreOfficeProfileDir).href}`,
             '--convert-to',
-            'pdf',
+            getLibreOfficePdfFilter(originalExtension),
             '--outdir',
             downloadsDir,
             conversionInputPath,

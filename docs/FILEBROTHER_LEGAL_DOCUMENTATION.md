@@ -21,7 +21,7 @@ Detailed app flow:
 11. For PDF unlock, the user enters the current PDF password that is sent to the backend only for that request.
 12. For compression, the user may choose a lossless compression level that is sent with the file.
 13. PDF to Word uses local Python `pdf2docx`; scanned PDFs may be OCR-processed with Tesseract before DOCX conversion.
-14. Word, PowerPoint, and Excel to PDF use LibreOffice headless; PDF utilities may use qpdf and `pdf-lib` depending on the selected tool.
+14. Word, PowerPoint, and Excel to PDF use LibreOffice headless with type-specific PDF export filters and common Office-compatible fonts; PDF utilities may use qpdf and `pdf-lib` depending on the selected tool.
 15. Browser-only tools use frontend libraries such as `pdf-lib`, `pdfjs-dist`, and `xlsx`.
 16. The current public tool flow does not intentionally request camera, microphone, location, contacts, notification, or payment permissions.
 17. The current public tool flow does not sell uploaded documents.
@@ -120,7 +120,7 @@ Current permissions/services to mention:
 - Browser file picker and drag-and-drop file selection.
 - Browser download/object URL creation.
 - Backend API for server-backed tools.
-- LibreOffice processing.
+- LibreOffice processing with common Office-compatible fonts.
 - Python `pdf2docx` processing.
 - Tesseract processing for scanned PDF to DOCX.
 - qpdf processing.
@@ -150,7 +150,7 @@ Use this table to keep the Privacy Policy accurate. Some entries are browser cap
 | Browser file picker / drag-and-drop | Used. | Lets users choose documents for conversion, compression, protection, unlock, merge, split, sign, edit, or CSV export. | Users cannot select files for tool workflows. |
 | Browser downloads/object URLs | Used. | Creates downloadable output files in the browser after server-backed or browser-only processing. | Users may not be able to save converted files. |
 | Backend API | Used. | Handles server-backed file processing. | Server-backed tools will not work. |
-| LibreOffice | Used for Office-to-PDF processing. | Converts supported Word, PowerPoint, and spreadsheet files to PDF on the backend. | Affected Office conversion tools may fail. |
+| LibreOffice and fallback fonts | Used for Office-to-PDF processing. | Converts supported Word, PowerPoint, and spreadsheet files to PDF on the backend with common Linux font substitutes for Office documents. | Affected Office conversion tools may fail or render with font/layout differences. |
 | Python `pdf2docx` | Used for PDF-to-DOCX processing. | Converts text-based PDFs into editable DOCX files on the backend. | PDF to Word may fail. |
 | Tesseract OCR | Used when PDF-to-DOCX receives a scanned PDF with little or no readable text. | Adds an OCR text layer before DOCX conversion. | Scanned PDFs may convert with poor or missing editable text. |
 | qpdf | Used for PDF protection/unlock. | Encrypts and decrypts PDFs using the password supplied by the user. | Protect/unlock PDF tools may fail. |

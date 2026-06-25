@@ -2,11 +2,18 @@ FROM node:22-bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        fontconfig \
+        fonts-crosextra-caladea \
+        fonts-crosextra-carlito \
+        fonts-dejavu \
+        fonts-liberation \
+        fonts-noto-core \
         libreoffice \
         python3 \
         python3-venv \
         qpdf \
         tesseract-ocr \
+    && fc-cache -f \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

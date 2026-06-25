@@ -12,8 +12,8 @@ git@github.com:Spiderotech/Pdf_converter_web.git
 
 The project now includes production-oriented backend hosting files:
 
-- `Dockerfile` installs Node 22, LibreOffice, Tesseract, Python pdf2docx dependencies, and qpdf for backend conversion features.
-- `nixpacks.toml` declares Node, LibreOffice, Tesseract, Python, and qpdf packages for Railway/Nixpacks deployments.
+- `Dockerfile` installs Node 22, LibreOffice, common Office-compatible fonts, Tesseract, Python pdf2docx dependencies, and qpdf for backend conversion features.
+- `nixpacks.toml` declares Node, LibreOffice, common fonts, Tesseract, Python, and qpdf packages for Railway/Nixpacks deployments.
 - `Client/src/Utils/axios.ts` reads `VITE_API_BASE_URL` and falls back to:
 
 ```text
@@ -59,6 +59,7 @@ Backend:
 - Bcrypt
 - Multer
 - LibreOffice
+- Office-compatible Linux fonts
 - Python `pdf2docx`
 - Tesseract OCR
 - qpdf
@@ -207,9 +208,9 @@ POST /compresspdf
 Server-backed tools:
 
 - PDF to Word: Python `pdf2docx`; scanned PDFs are OCR-processed with Tesseract when needed
-- Word to PDF: LibreOffice headless
-- PPT/PPTX to PDF: LibreOffice headless
-- XLS/XLSX to PDF: LibreOffice headless
+- Word to PDF: LibreOffice headless with `writer_pdf_Export`
+- PPT/PPTX to PDF: LibreOffice headless with `impress_pdf_Export`
+- XLS/XLSX to PDF: LibreOffice headless with `calc_pdf_Export`
 - Protect PDF: qpdf
 - Unlock PDF: qpdf
 - Compress PDF: qpdf with `pdf-lib` fallback
@@ -247,5 +248,5 @@ npm run dev
 - Add Multer file size and MIME/type validation.
 - Clean temporary files from `uploads/` and `downloads/`.
 - Keep `.env` files, JWT secrets, and MongoDB URI out of Git.
-- Confirm LibreOffice, Python pdf2docx dependencies, Tesseract, and qpdf exist in the hosted backend runtime.
+- Confirm LibreOffice, Office-compatible fonts, Python pdf2docx dependencies, Tesseract, and qpdf exist in the hosted backend runtime.
 - Verify all server-backed conversions from the deployed frontend after setting `VITE_API_BASE_URL`.

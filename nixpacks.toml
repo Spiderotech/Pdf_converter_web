@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs_22", "libreoffice", "python311Full", "qpdf", "tesseract"]
+nixPkgs = ["nodejs_22", "fontconfig", "caladea", "carlito", "dejavu_fonts", "liberation_ttf", "noto-fonts", "libreoffice", "python311Full", "qpdf", "tesseract"]
 
 [phases.install]
 cmds = [
