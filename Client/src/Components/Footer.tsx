@@ -4,11 +4,12 @@ import {
   FiGrid,
 } from 'react-icons/fi';
 import AdBanner from './AdBanner';
+import RelatedRecommendations from './RelatedRecommendations';
 import fileBrotherLogo from '../assets/filebrother-logo.png';
 
 const tools = [
-  { label: 'PDF to Word', href: '/pdf-to-word', icon: FiFileText, color: 'border-stone-200 bg-stone-50 text-slate-700' },
-  { label: 'Word to PDF', href: '/word-to-pdf', icon: FiFileText, color: 'border-amber-200 bg-amber-50 text-[#9a6514]' },
+  { label: 'PDF to Word', href: '/tools/pdf-to-word', icon: FiFileText, color: 'border-stone-200 bg-stone-50 text-slate-700' },
+  { label: 'Word to PDF', href: '/tools/word-to-pdf', icon: FiFileText, color: 'border-amber-200 bg-amber-50 text-[#9a6514]' },
   { label: 'All Tools', href: '#tools', icon: FiGrid, color: 'border-stone-200 bg-stone-50 text-slate-700' },
 ];
 
@@ -23,7 +24,9 @@ const sectionTitle = (title: string) => (
 
 const Footer = () => {
   return (
-    <footer className="relative overflow-hidden bg-slate-950 pt-10 text-white sm:pt-12">
+    <>
+      <RelatedRecommendations />
+      <footer className="relative overflow-hidden bg-slate-950 pt-10 text-white sm:pt-12">
       <div className="absolute inset-x-0 top-0 h-2/3 bg-[#f8f6f0]" />
       <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-r from-slate-950 via-slate-900 to-[#7c4f12]" />
 
@@ -34,7 +37,7 @@ const Footer = () => {
           <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.05fr_1fr_0.72fr_1.05fr] lg:gap-12">
             <div>
               <a href="/" className="inline-flex items-center gap-4" aria-label="FileBrother home">
-                <img
+                <img decoding="async" loading="lazy"
                   src={fileBrotherLogo}
                   alt=""
                   aria-hidden="true"
@@ -111,7 +114,8 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 

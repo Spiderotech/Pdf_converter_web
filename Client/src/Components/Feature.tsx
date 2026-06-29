@@ -72,7 +72,7 @@ const Feature = () => {
                 <div className={`absolute -bottom-16 -right-14 h-52 w-52 rounded-full blur-2xl ${feature.glowClass}`} />
                 <div className="relative flex items-start justify-between">
                   <span className={`flex h-16 w-16 items-center justify-center rounded-lg border shadow-sm sm:h-20 sm:w-20 ${feature.iconClass}`}>
-                    <img
+                    <img decoding="async" loading="lazy"
                       src={feature.icon}
                       alt=""
                       aria-hidden="true"

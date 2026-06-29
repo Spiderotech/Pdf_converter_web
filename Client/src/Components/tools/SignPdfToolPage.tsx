@@ -1,7 +1,6 @@
 import { ChangeEvent, DragEvent, MouseEvent, PointerEvent, useEffect, useRef, useState } from 'react';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheck,
   FiChevronLeft,
@@ -21,6 +20,7 @@ import signPdfPrivateLockIcon from '../../assets/converter-icons/sign-pdf-privat
 import signPdfReviewSignIcon from '../../assets/converter-icons/sign-pdf-review-sign.webp';
 import signPdfUploadPdfIcon from '../../assets/converter-icons/sign-pdf-upload-pdf.webp';
 import signPdfUploadSignatureIcon from '../../assets/converter-icons/sign-pdf-upload-signature.webp';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -404,7 +404,7 @@ const SignPdfToolPage = () => {
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
               <p className="inline-flex items-center gap-2 text-sm font-extrabold uppercase text-red-500">
-                <img src={signPdfHeroIcon} alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
+                <img decoding="async" loading="lazy" src={signPdfHeroIcon} alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
                 PDF Signature
               </p>
               <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">
@@ -439,7 +439,7 @@ const SignPdfToolPage = () => {
               >
                 <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handlePdfChange} className="hidden" />
                 <span className="flex h-20 w-20 items-center justify-center rounded-lg bg-red-50 sm:h-28 sm:w-28">
-                  <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-24 sm:w-24" />
+                  <img decoding="async" loading="lazy" src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-24 sm:w-24" />
                 </span>
                 <h2 className="mt-4 max-w-full break-words text-xl font-extrabold text-slate-950">
                   {file ? file.name : 'Upload your PDF file'}
@@ -473,7 +473,7 @@ const SignPdfToolPage = () => {
                   <div key={step.title} className="relative">
                     <article className="flex min-h-40 flex-col rounded-lg border border-red-100 bg-white p-4 shadow-[0_10px_24px_rgba(239,68,68,0.05)] sm:min-h-44 sm:p-5">
                       <span className={`flex h-14 w-14 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <span className={`mt-4 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>
                         {index + 1}
@@ -494,7 +494,7 @@ const SignPdfToolPage = () => {
 
           {file && (
             <div className="mt-6 flex items-start gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:items-center sm:p-5">
-              <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain" />
+              <img decoding="async" loading="lazy" src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain" />
               <div className="min-w-0 flex-1">
                 <strong className="block truncate text-sm text-slate-950">{file.name}</strong>
                 <span className="text-xs font-medium text-slate-500">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
@@ -551,9 +551,9 @@ const SignPdfToolPage = () => {
                     className="mt-4 flex min-h-36 w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 px-4 text-center hover:border-blue-400"
                   >
                     {signatureUrl ? (
-                      <img src={signatureUrl} alt="Uploaded signature" className="h-16 max-w-full object-contain" />
+                      <img decoding="async" loading="lazy" src={signatureUrl} alt="Uploaded signature" className="h-16 max-w-full object-contain" />
                     ) : (
-                      <img src={signPdfUploadSignatureIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
+                      <img decoding="async" loading="lazy" src={signPdfUploadSignatureIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
                     )}
                     <strong className="mt-2 text-sm text-slate-700">{signatureFile?.name || 'Upload signature image'}</strong>
                     <span className="mt-1 text-xs text-slate-500">PNG or JPG. Transparent background works best.</span>
@@ -576,7 +576,7 @@ const SignPdfToolPage = () => {
                 )}
 
                 <div className="mt-4 flex items-start gap-3 rounded-lg bg-blue-50 p-4 text-xs font-medium leading-5 text-slate-600">
-                  <img src={signPdfPlaceSignatureIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
+                  <img decoding="async" loading="lazy" src={signPdfPlaceSignatureIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
                   Click on the document preview to place your signature.
                 </div>
               </section>
@@ -623,7 +623,7 @@ const SignPdfToolPage = () => {
                   <h2 className="font-extrabold text-slate-950">Review and sign</h2>
                 </div>
                 <div className="mt-4 flex items-start gap-3 rounded-lg bg-green-50 p-4 text-xs font-medium text-green-700">
-                  <img src={signPdfReviewSignIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
+                  <img decoding="async" loading="lazy" src={signPdfReviewSignIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
                   Click on the preview to place your signature.
                 </div>
               </section>
@@ -641,7 +641,7 @@ const SignPdfToolPage = () => {
               <div className="relative mt-5 min-h-[320px] overflow-auto rounded-lg bg-slate-100 p-3 sm:min-h-[520px] sm:p-4">
                 {!file && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <img src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain opacity-70" />
+                    <img decoding="async" loading="lazy" src={signPdfUploadPdfIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain opacity-70" />
                     <p className="mt-3 text-sm font-bold text-slate-500">Choose a PDF to preview its first page.</p>
                   </div>
                 )}
@@ -669,7 +669,7 @@ const SignPdfToolPage = () => {
                           transform: 'translate(-50%, -50%)',
                         }}
                       >
-                        <img src={signatureUrl} alt="Signature placement" className="h-full w-full object-contain" />
+                        <img decoding="async" loading="lazy" src={signatureUrl} alt="Signature placement" className="h-full w-full object-contain" />
                       </div>
                     )}
                   </div>
@@ -742,7 +742,7 @@ const SignPdfToolPage = () => {
               return (
                 <div key={feature.title} className={`flex min-h-28 items-start gap-4 p-4 sm:items-center sm:p-5 ${index > 0 ? 'border-t border-red-100 md:border-l md:border-t-0' : ''}`}>
                   <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${feature.color}`}>
-                    <img src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                    <img decoding="async" loading="lazy" src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                   </span>
                   <span>
                     <strong className="block text-base font-extrabold text-slate-950">{feature.title}</strong>
@@ -784,10 +784,16 @@ const SignPdfToolPage = () => {
             </div>
           )}
           {error && (
-            <div className="mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-              {error}
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={file ? signPdf : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Edit PDF', href: '/tools/edit-pdf' },
+                { label: 'Try Merge PDF', href: '/tools/merge-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
         </section>
       </main>

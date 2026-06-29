@@ -104,7 +104,7 @@ const About_page = () => (
 
           <div className="relative min-h-[260px] sm:min-h-[340px] lg:min-h-[420px]">
             <div className="absolute left-0 top-10 h-80 w-80 rounded-full border border-dashed border-[#c0841a]/30" />
-            <img
+            <img decoding="async" loading="lazy"
               src={aboutHeroImage}
               alt="Premium PDF tools interface illustration"
               className="relative z-10 mx-auto w-full max-w-3xl object-contain drop-shadow-[0_32px_70px_rgba(15,23,42,0.12)]"
@@ -116,7 +116,7 @@ const About_page = () => (
           {stats.map(({ icon, value, label, text }) => (
             <div key={label} className="flex items-center gap-4 border-stone-200 p-4 lg:border-r lg:last:border-r-0">
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-stone-50 to-white shadow-sm sm:h-16 sm:w-16">
-                <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+                <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
               </span>
               <span>
                 <strong className="block text-3xl font-black leading-none text-slate-950">{value}</strong>
@@ -143,7 +143,7 @@ const About_page = () => (
                 className="flex min-h-[250px] flex-col rounded-lg border border-white/70 bg-white/90 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur sm:min-h-[286px] sm:p-6"
               >
                 <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-gradient-to-br from-white to-stone-50 shadow-sm sm:h-20 sm:w-20">
-                  <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]" />
+                  <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]" />
                 </span>
                 <h3 className="mt-8 text-xl font-black text-slate-950">{title}</h3>
                 <p className="mt-4 text-sm font-semibold leading-7 text-slate-600">{text}</p>
@@ -156,7 +156,7 @@ const About_page = () => (
         <section className="relative mt-12 grid items-start gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="relative overflow-hidden rounded-lg border border-white/70 bg-white/92 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.06)] backdrop-blur sm:p-10">
             <span className="absolute right-5 top-5 hidden h-16 w-16 items-center justify-center rounded-lg bg-white/80 shadow-sm sm:flex">
-              <img src={professionalSecureIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+              <img decoding="async" loading="lazy" src={professionalSecureIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
             </span>
             <p className="text-sm font-black uppercase tracking-[0.2em] text-[#9a6514]">Why Users Trust Us</p>
             <h2 className="mt-5 max-w-lg text-3xl font-black leading-tight tracking-[-0.035em] text-slate-950 sm:text-4xl">
@@ -182,7 +182,7 @@ const About_page = () => (
                 className="relative flex min-h-32 items-start gap-4 overflow-hidden rounded-lg border border-white/70 bg-white/92 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur sm:items-center sm:gap-6 sm:p-6"
               >
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white/75 shadow-sm sm:h-16 sm:w-16">
-                  <img src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+                  <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
                 </span>
                 <span className={`h-14 w-px ${lineTone}`} />
                 <span>

@@ -17,7 +17,7 @@ import signPdfIcon from '../assets/hero-icons/sign-pdf.webp';
 import lockPdfIcon from '../assets/hero-icons/lock-pdf.webp';
 
 const HeroIconImage = ({ src, className }: { src: string; className: string }) => (
-  <img src={src} alt="" aria-hidden="true" className={`${className} object-contain`} />
+  <img src={src} alt="" aria-hidden="true" loading="lazy" decoding="async" className={`${className} object-contain`} />
 );
 
 
@@ -30,14 +30,14 @@ const stats = [
 ];
 
 const popularTools = [
-  { title: 'Merge PDF', icon: mergePdfIcon, href: '/merge-pdf' },
-  { title: 'Split PDF', icon: splitPdfIcon, href: '/split-pdf' },
-  { title: 'Compress PDF', icon: compressPdfIcon, href: '/compress-pdf' },
-  { title: 'PDF to Word', icon: pdfWordIcon, href: '/pdf-to-word' },
-  { title: 'Word to PDF', icon: wordPdfIcon, href: '/word-to-pdf' },
-  { title: 'XLSX to CSV', icon: xlsxCsvIcon, href: '/xlsx-to-csv' },
-  { title: 'Sign PDF', icon: signPdfIcon, href: '/sign-pdf' },
-  { title: 'Lock PDF', icon: lockPdfIcon, href: '/protect-pdf' },
+  { title: 'Merge PDF', icon: mergePdfIcon, href: '/tools/merge-pdf' },
+  { title: 'Split PDF', icon: splitPdfIcon, href: '/tools/split-pdf' },
+  { title: 'Compress PDF', icon: compressPdfIcon, href: '/tools/compress-pdf' },
+  { title: 'PDF to Word', icon: pdfWordIcon, href: '/tools/pdf-to-word' },
+  { title: 'Word to PDF', icon: wordPdfIcon, href: '/tools/word-to-pdf' },
+  { title: 'XLSX to CSV', icon: xlsxCsvIcon, href: '/tools/xlsx-to-csv' },
+  { title: 'Sign PDF', icon: signPdfIcon, href: '/tools/sign-pdf' },
+  { title: 'Lock PDF', icon: lockPdfIcon, href: '/tools/protect-pdf' },
 ];
 
 const trustItems = [
@@ -91,9 +91,13 @@ const Herosection = () => {
 
           <div className="relative lg:-mr-4 xl:-mr-8">
             <div className="mx-auto max-w-3xl">
-                  <img
+                  <img loading="lazy"
                     src={heroToolsImage}
                     alt="FileBrother document upload illustration"
+                    width="1400"
+                    height="900"
+                    fetchPriority="high"
+                    decoding="async"
                     className="mx-auto h-52 w-full object-contain drop-shadow-3xl sm:h-72 lg:h-[23rem] xl:h-[27rem] 2xl:h-[30rem]"
                   />
                 </div>

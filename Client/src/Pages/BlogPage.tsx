@@ -33,7 +33,9 @@ const BlogPage = () => {
           <header className="max-w-2xl">
             <p className="flex items-center gap-2 text-sm font-bold text-[#9a6514]"><FiBookOpen aria-hidden="true" /> File guides</p>
             <h1 className="mt-3 text-4xl font-black text-slate-950 sm:text-5xl">FileBrother Blog</h1>
-            <p className="mt-4 text-base leading-7 text-slate-600">Choose a category and explore simple guides about common file formats.</p>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Choose a category and explore simple guides about common file formats.
+            </p>
           </header>
 
           <section className="mt-10" aria-labelledby="category-title">

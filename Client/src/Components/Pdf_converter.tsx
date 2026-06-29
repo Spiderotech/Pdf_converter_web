@@ -1,7 +1,6 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import axios from '../Utils/axios';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiChevronRight,
@@ -19,6 +18,8 @@ import uploadPdfIcon from '../assets/converter-icons/upload-pdf.webp';
 import convertDocumentIcon from '../assets/converter-icons/convert-document.webp';
 import downloadWordIcon from '../assets/converter-icons/download-word.webp';
 import ConversionLoadingOverlay from './ConversionLoadingOverlay';
+import ConversionFailureRecovery from './ConversionFailureRecovery';
+import { getFileSizeRange, trackEvent } from '../analytics';
 
 const features = [
   {
@@ -96,12 +97,22 @@ const PdfConverter = () => {
     setError('');
     setIsConverted(false);
     setDownloadUrl('');
+    trackEvent('upload_selected', {
+      tool: 'pdf_to_word',
+      file_type: 'pdf',
+      size_range: getFileSizeRange(file),
+    });
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
       setIsLoading(true);
+      trackEvent('conversion_started', {
+        tool: 'pdf_to_word',
+        file_type: 'pdf',
+        size_range: getFileSizeRange(file),
+      });
       const response = await axios.post('/pdfconverter', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         responseType: 'blob',
@@ -112,9 +123,19 @@ const PdfConverter = () => {
       });
       setDownloadUrl(window.URL.createObjectURL(blob));
       setIsConverted(true);
+      trackEvent('conversion_completed', {
+        tool: 'pdf_to_word',
+        file_type: 'pdf',
+        size_range: getFileSizeRange(file),
+      });
     } catch (conversionError) {
       console.error('Error uploading file:', conversionError);
       setError('We could not convert this PDF. Please check the file and try again.');
+      trackEvent('conversion_failed', {
+        tool: 'pdf_to_word',
+        file_type: 'pdf',
+        size_range: getFileSizeRange(file),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -208,6 +229,7 @@ const PdfConverter = () => {
                       <a
                         href={downloadUrl}
                         download="converted.docx"
+                        onClick={() => trackEvent('download_clicked', { tool: 'pdf_to_word', output_type: 'docx' })}
                         className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 text-sm font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-700"
                       >
                         <FiDownload className="h-5 w-5" />
@@ -225,9 +247,9 @@ const PdfConverter = () => {
                 ) : (
                   <>
                     <div className="flex items-center gap-3">
-                      <img src={pdfIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
+                      <img decoding="async" loading="lazy" src={pdfIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
                       <FiArrowRight className="h-7 w-7 text-blue-600 sm:h-8 sm:w-8" />
-                      <img src={wordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
+                      <img decoding="async" loading="lazy" src={wordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
                     </div>
                     <h2 className="mt-3 text-xl font-extrabold text-slate-950">
                       {isLoading ? 'Converting your PDF...' : selectedFile ? selectedFile.name : 'Drop your PDF here'}
@@ -245,6 +267,7 @@ const PdfConverter = () => {
                       {isLoading ? 'Converting...' : 'Choose PDF file'}
                     </button>
                     <p className="mt-4 text-xs font-medium text-slate-500">Max file size: 25 MB</p>
+                    <p className="mt-1 text-xs font-semibold text-slate-500">Supported format: PDF only. Output: editable DOCX.</p>
                   </>
                 )}
               </div>
@@ -252,10 +275,16 @@ const PdfConverter = () => {
           </div>
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-              <p>{error}</p>
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={selectedFile ? () => convertFile(selectedFile) : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Word to PDF', href: '/tools/word-to-pdf' },
+                { label: 'Compress PDF first', href: '/tools/compress-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
 
           <div className="mt-5 grid overflow-hidden rounded-lg border border-blue-100 bg-white shadow-[0_10px_24px_rgba(37,99,235,0.05)] sm:grid-cols-2 xl:grid-cols-4">
@@ -263,7 +292,7 @@ const PdfConverter = () => {
               return (
                 <div key={feature.title} className={`flex min-h-28 items-start gap-4 p-4 sm:items-center sm:p-5 ${index > 0 ? 'border-t border-blue-100 sm:border-l sm:border-t-0' : ''}`}>
                   <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${feature.color}`}>
-                    <img src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                    <img decoding="async" loading="lazy" src={feature.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                   </span>
                   <span>
                     <strong className="block text-base font-extrabold text-slate-950">{feature.title}</strong>
@@ -289,7 +318,7 @@ const PdfConverter = () => {
                   <div key={step.title} className="relative">
                     <article className="flex min-h-36 items-start gap-4 rounded-lg border border-blue-100 bg-white p-5 shadow-[0_10px_24px_rgba(37,99,235,0.05)] sm:min-h-40 sm:items-center sm:gap-5 sm:p-6">
                       <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <div>
                         <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>

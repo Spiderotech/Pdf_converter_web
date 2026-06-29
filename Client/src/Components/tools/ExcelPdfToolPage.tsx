@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiDownload,
@@ -16,9 +15,11 @@ import excelPdfUploadExcelIcon from '../../assets/converter-icons/excel-pdf-uplo
 import excelPdfConvertProcessIcon from '../../assets/converter-icons/excel-pdf-convert-process.webp';
 import excelPdfDownloadPdfIcon from '../../assets/converter-icons/excel-pdf-download-pdf.webp';
 import excelPdfPrivateLockIcon from '../../assets/converter-icons/excel-pdf-private-lock.webp';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
+import { getFileSizeRange, trackEvent } from '../../analytics';
 
 const trustItems = [
   { title: 'Secure & Private', text: 'Your files are protected and automatically deleted.', icon: excelPdfSecurePrivateIcon },
@@ -50,6 +51,11 @@ const ExcelPdfToolPage = () => {
     setFile(selectedFile);
     setDownloadUrl('');
     setError('');
+    trackEvent('upload_selected', {
+      tool: 'excel_to_pdf',
+      file_type: extension,
+      size_range: getFileSizeRange(selectedFile),
+    });
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +88,11 @@ const ExcelPdfToolPage = () => {
     setIsProcessing(true);
     setDownloadUrl('');
     setError('');
+    trackEvent('conversion_started', {
+      tool: 'excel_to_pdf',
+      file_type: file.name.toLowerCase().split('.').pop(),
+      size_range: getFileSizeRange(file),
+    });
 
     try {
       const response = await axios.post('/exceltopdf', formData, {
@@ -89,9 +100,19 @@ const ExcelPdfToolPage = () => {
         responseType: 'blob',
       });
       setDownloadUrl(URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+      trackEvent('conversion_completed', {
+        tool: 'excel_to_pdf',
+        file_type: file.name.toLowerCase().split('.').pop(),
+        size_range: getFileSizeRange(file),
+      });
     } catch (conversionError) {
       console.error(conversionError);
       setError('This workbook could not be converted. Check the file or backend converter setup.');
+      trackEvent('conversion_failed', {
+        tool: 'excel_to_pdf',
+        file_type: file.name.toLowerCase().split('.').pop(),
+        size_range: getFileSizeRange(file),
+      });
     } finally {
       setIsProcessing(false);
     }
@@ -120,7 +141,7 @@ const ExcelPdfToolPage = () => {
               {trustItems.map(({ title, text, icon }) => (
                 <div key={title} className="flex items-center gap-4 rounded-lg border border-green-100 bg-white p-4 text-left shadow-[0_10px_25px_rgba(22,163,74,0.05)]">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50">
-                    <img src={icon} alt="" aria-hidden="true" className="h-10 w-10 object-contain drop-shadow-sm" />
+                    <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-10 w-10 object-contain drop-shadow-sm" />
                   </span>
                   <span>
                     <strong className="block text-sm font-extrabold text-slate-950">{title}</strong>
@@ -153,7 +174,7 @@ const ExcelPdfToolPage = () => {
 
                 <div className="relative">
                   <span className="absolute -inset-5 rounded-full bg-green-100/70 blur-2xl" />
-                  <img src={excelPdfHeroIcon} alt="" aria-hidden="true" className="relative h-28 w-full max-w-md object-contain drop-shadow-2xl sm:h-44" />
+                  <img decoding="async" loading="lazy" src={excelPdfHeroIcon} alt="" aria-hidden="true" className="relative h-28 w-full max-w-md object-contain drop-shadow-2xl sm:h-44" />
                 </div>
                 <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
                   {isProcessing ? 'Converting your workbook...' : file ? file.name : 'Drag & drop your Excel file here'}
@@ -172,7 +193,7 @@ const ExcelPdfToolPage = () => {
               </div>
 
               <div className="mt-5 flex items-start gap-4 rounded-lg border border-green-100 bg-green-50/70 px-6 py-4">
-                <img src={excelPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-11 w-11 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={excelPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-11 w-11 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-slate-900">Your privacy matters</strong>
                   <p className="mt-1 text-sm font-medium text-slate-600">We do not store or share your files. Your data remains protected.</p>
@@ -194,6 +215,7 @@ const ExcelPdfToolPage = () => {
                   <a
                     href={downloadUrl}
                     download="spreadsheet.pdf"
+                    onClick={() => trackEvent('download_clicked', { tool: 'excel_to_pdf', output_type: 'pdf' })}
                     className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 text-sm font-extrabold text-white hover:bg-blue-700"
                   >
                     <FiDownload className="h-5 w-5" />
@@ -201,7 +223,7 @@ const ExcelPdfToolPage = () => {
                   </a>
                 )}
                 <span className="inline-flex items-center gap-2 text-xs font-medium text-slate-500">
-                  <img src={excelPdfSecurePrivateIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
+                  <img decoding="async" loading="lazy" src={excelPdfSecurePrivateIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
                   We do not store or share your files.
                 </span>
               </div>
@@ -214,10 +236,16 @@ const ExcelPdfToolPage = () => {
               )}
 
               {error && (
-                <div className="mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-                  <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                  {error}
-                </div>
+                <ConversionFailureRecovery
+                  message={error}
+                  onRetry={file ? convertWorkbook : undefined}
+                  onChooseAnother={() => fileInputRef.current?.click()}
+                  alternatives={[
+                    { label: 'Try XLSX to CSV', href: '/tools/xlsx-to-csv' },
+                    { label: 'Try Word to PDF', href: '/tools/word-to-pdf' },
+                    { label: 'Browse all tools', href: '/tools' },
+                  ]}
+                />
               )}
             </div>
 
@@ -228,7 +256,7 @@ const ExcelPdfToolPage = () => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
                       <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-green-50 sm:h-16 sm:w-16">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">

@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useEffect, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArchive,
   FiArrowRight,
   FiCheckCircle,
@@ -16,9 +15,11 @@ import compressPdfQualityIcon from '../../assets/converter-icons/compress-pdf-qu
 import compressPdfSecurePrivateIcon from '../../assets/converter-icons/compress-pdf-secure-private.webp';
 import compressPdfSmallerSizeIcon from '../../assets/converter-icons/compress-pdf-smaller-size.webp';
 import compressPdfUploadIcon from '../../assets/converter-icons/compress-pdf-upload.webp';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
+import { getFileSizeRange, trackEvent } from '../../analytics';
 
 type CompressionQuality = 'printer' | 'ebook' | 'screen';
 
@@ -93,6 +94,11 @@ const CompressPdfToolPage = () => {
     setFile(selectedFile);
     setDownloadUrl('');
     setError('');
+    trackEvent('upload_selected', {
+      tool: 'compress_pdf',
+      file_type: 'pdf',
+      size_range: getFileSizeRange(selectedFile),
+    });
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +132,12 @@ const CompressPdfToolPage = () => {
     setIsProcessing(true);
     setDownloadUrl('');
     setError('');
+    trackEvent('conversion_started', {
+      tool: 'compress_pdf',
+      file_type: 'pdf',
+      size_range: getFileSizeRange(file),
+      quality,
+    });
 
     try {
       const response = await axios.post('/compresspdf', formData, {
@@ -133,9 +145,21 @@ const CompressPdfToolPage = () => {
         responseType: 'blob',
       });
       setDownloadUrl(URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+      trackEvent('conversion_completed', {
+        tool: 'compress_pdf',
+        file_type: 'pdf',
+        size_range: getFileSizeRange(file),
+        quality,
+      });
     } catch (compressionError) {
       console.error(compressionError);
       setError('This PDF could not be compressed. Check the file or backend compression setup.');
+      trackEvent('conversion_failed', {
+        tool: 'compress_pdf',
+        file_type: 'pdf',
+        size_range: getFileSizeRange(file),
+        quality,
+      });
     } finally {
       setIsProcessing(false);
     }
@@ -151,7 +175,7 @@ const CompressPdfToolPage = () => {
         <section className="relative mx-auto max-w-5xl px-4 sm:px-8">
           <header className="text-center">
             <p className="inline-flex items-center gap-3 text-sm font-extrabold uppercase text-blue-600 sm:text-base">
-              <img src={compressPdfHeroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
+              <img decoding="async" loading="lazy" src={compressPdfHeroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
               PDF Compression
             </p>
             <h1 className="mt-4 text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Compress PDF</h1>
@@ -167,7 +191,7 @@ const CompressPdfToolPage = () => {
                 className="flex min-h-28 items-start gap-4 rounded-lg border border-blue-100 bg-white p-5 shadow-[0_12px_35px_rgba(30,64,175,0.06)]"
               >
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-blue-50">
-                  <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
+                  <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
                 </span>
                 <span>
                   <strong className="block text-sm font-extrabold text-slate-950">{title}</strong>
@@ -195,7 +219,7 @@ const CompressPdfToolPage = () => {
           >
             <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handleFileChange} className="hidden" />
 
-            <img src={compressPdfUploadIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain sm:h-36 sm:w-36" />
+            <img decoding="async" loading="lazy" src={compressPdfUploadIcon} alt="" aria-hidden="true" className="h-24 w-24 object-contain sm:h-36 sm:w-36" />
 
             <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:mt-7 sm:text-2xl">
               {isProcessing ? 'Compressing your PDF...' : file ? file.name : 'Drag & drop your PDF file here'}
@@ -268,7 +292,7 @@ const CompressPdfToolPage = () => {
             </div>
 
             <div className="mt-5 flex items-start gap-3 rounded-lg bg-blue-50 px-5 py-4 text-sm font-medium text-slate-700">
-              <img src={compressPdfQualityIcon} alt="" aria-hidden="true" className="h-8 w-8 shrink-0 object-contain" />
+              <img decoding="async" loading="lazy" src={compressPdfQualityIcon} alt="" aria-hidden="true" className="h-8 w-8 shrink-0 object-contain" />
               <p><span className="font-extrabold text-blue-600">Lossless compression</span> preserves image quality and returns a file no larger than the original.</p>
             </div>
           </section>
@@ -289,6 +313,7 @@ const CompressPdfToolPage = () => {
               <a
                 href={downloadUrl}
                 download="compressed.pdf"
+                onClick={() => trackEvent('download_clicked', { tool: 'compress_pdf', output_type: 'pdf' })}
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-lg bg-green-600 px-6 text-sm font-extrabold text-white hover:bg-green-700 sm:h-16 sm:px-8 sm:text-base"
               >
                 <FiDownload className="h-5 w-5" />
@@ -297,7 +322,7 @@ const CompressPdfToolPage = () => {
             )}
 
             <span className="inline-flex items-center gap-3 text-sm font-medium leading-6 text-slate-600">
-              <img src={compressPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
+              <img decoding="async" loading="lazy" src={compressPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
               Your files are processed securely and deleted automatically.
             </span>
           </div>
@@ -310,10 +335,16 @@ const CompressPdfToolPage = () => {
           )}
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-              {error}
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={file ? compressPdf : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Merge PDF', href: '/tools/merge-pdf' },
+                { label: 'Try Split PDF', href: '/tools/split-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
         </section>
       </main>

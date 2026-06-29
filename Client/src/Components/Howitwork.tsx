@@ -56,7 +56,7 @@ const Howitwork = () => {
                     <p className="mt-3 text-sm font-medium leading-6 text-slate-600">{step.description}</p>
                   </div>
                   <div className="flex h-40 items-center justify-center sm:h-[180px]">
-                    <img
+                    <img decoding="async" loading="lazy"
                       src={illustration.src}
                       alt={illustration.alt}
                       className="h-full w-full object-contain drop-shadow-[0_18px_18px_rgba(15,23,42,0.14)]"

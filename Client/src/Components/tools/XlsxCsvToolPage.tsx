@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiDownload,
@@ -8,6 +7,7 @@ import {
   FiRefreshCw,
   FiUpload,
 } from 'react-icons/fi';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -171,7 +171,7 @@ const XlsxCsvToolPage = () => {
             <div className="flex items-center justify-center">
               <div className="relative">
                 <span className="absolute -inset-6 rounded-full bg-green-100/70 blur-2xl" />
-                <img
+                <img decoding="async" loading="lazy"
                   src={xlsxCsvHeroIcon}
                   alt=""
                   aria-hidden="true"
@@ -205,7 +205,7 @@ const XlsxCsvToolPage = () => {
                     {isProcessing && !download ? (
                       <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={xlsxUploadSpreadsheetIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
+                      <img decoding="async" loading="lazy" src={xlsxUploadSpreadsheetIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
                   <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950">
@@ -248,7 +248,7 @@ const XlsxCsvToolPage = () => {
                 <div className="mt-4 grid gap-px overflow-hidden rounded-lg bg-green-100 sm:grid-cols-3">
                   {trustItems.map(({ title, text, icon }) => (
                     <div key={title} className="flex items-center gap-4 bg-green-50/70 p-5">
-                      <img src={icon} alt="" aria-hidden="true" className="h-11 w-11 shrink-0 object-contain drop-shadow-sm" />
+                      <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-11 w-11 shrink-0 object-contain drop-shadow-sm" />
                       <span>
                         <strong className="block text-xs font-extrabold text-slate-950">{title}</strong>
                         <span className="mt-1 block text-xs font-medium leading-5 text-slate-600">{text}</span>
@@ -280,7 +280,7 @@ const XlsxCsvToolPage = () => {
                   </a>
                 )}
                 <span className="inline-flex items-center gap-2 text-xs font-medium text-slate-500">
-                  <img src={xlsxPrivateLockIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
+                  <img decoding="async" loading="lazy" src={xlsxPrivateLockIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
                   Safe, secure and easy to use
                 </span>
               </div>
@@ -293,10 +293,16 @@ const XlsxCsvToolPage = () => {
               )}
 
               {error && (
-                <div className="mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-                  <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                  {error}
-                </div>
+                <ConversionFailureRecovery
+                  message={error}
+                  onRetry={file ? handleConvert : undefined}
+                  onChooseAnother={() => fileInputRef.current?.click()}
+                  alternatives={[
+                    { label: 'Try Excel to PDF', href: '/tools/excel-to-pdf' },
+                    { label: 'Try Word to PDF', href: '/tools/word-to-pdf' },
+                    { label: 'Browse all tools', href: '/tools' },
+                  ]}
+                />
               )}
             </div>
 
@@ -307,7 +313,7 @@ const XlsxCsvToolPage = () => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
                       <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-green-50 sm:h-16 sm:w-16">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">
@@ -320,7 +326,7 @@ const XlsxCsvToolPage = () => {
               </div>
 
               <div className="mt-10 flex items-start gap-3 rounded-lg border border-green-100 bg-green-50 p-5">
-                <img src={xlsxDataPrivacyIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={xlsxDataPrivacyIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-green-700">Your data is private</strong>
                   <p className="mt-2 text-sm font-medium leading-6 text-slate-600">Files are processed locally in your browser and are never uploaded.</p>

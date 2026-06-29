@@ -92,7 +92,7 @@ const Register = () => {
             <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-50 px-4 py-10 sm:px-6">
                 <div className="w-full max-w-md space-y-6 text-gray-600">
                     <div className="text-center">
-                        {/* <img src="https://floatui.com/logo.svg" width={150} className="mx-auto" alt="Logo" /> */}
+                        {/* <img decoding="async" loading="lazy" src="https://floatui.com/logo.svg" width={150} className="mx-auto" alt="Logo" /> */}
                         <div className="mt-5 space-y-2">
                             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Create an account</h3>
                             <p>Already have an account? <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Log in</a></p>

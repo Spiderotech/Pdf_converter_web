@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BlogPost, getBlogPost } from '../data/blogPosts';
+import type { BlogPost } from '../data/blogPosts';
 
 const SITE_NAME = 'FileBrother';
 const SITE_URL = 'https://filebrother.com';
@@ -19,73 +19,83 @@ const pages: Record<string, SeoPage> = {
     description: 'Convert, merge, split, compress, edit, sign, protect and unlock PDF files online with FileBrother’s fast, simple document tools.',
     keywords: ['free PDF converter', 'online PDF tools', 'PDF editor online', 'convert PDF online', 'FileBrother'],
   },
-  '/pdf-to-word': {
+  '/search': {
+    title: 'Search FileBrother Tools, File Guides & Blog Articles',
+    description: 'Search FileBrother tools, file extension guides, blog articles, and format help with instant results, filters, and typo-friendly matching.',
+    keywords: ['FileBrother search', 'search PDF tools', 'file guide search', 'document tool search'],
+  },
+  '/tools': {
+    title: 'All Online PDF & Document Tools | FileBrother',
+    description: 'Browse all FileBrother PDF and document tools including PDF to Word, Word to PDF, merge, split, compress, sign, protect, and unlock PDF.',
+    keywords: ['PDF tools directory', 'online document tools', 'all FileBrother tools', 'free PDF tools'],
+  },
+  '/tools/pdf-to-word': {
     title: 'PDF to Word Converter Online Free | FileBrother',
     description: 'Convert PDF files to editable Word documents online. Use FileBrother’s fast PDF to DOCX converter with a simple upload and download workflow.',
     keywords: ['PDF to Word', 'PDF to DOCX', 'convert PDF to Word', 'free PDF to Word converter', 'PDF converter online'],
     type: 'tool',
   },
-  '/word-to-pdf': {
+  '/tools/word-to-pdf': {
     title: 'Word to PDF Converter Online Free | FileBrother',
     description: 'Convert Word DOC and DOCX documents to PDF online with FileBrother. Create an easy-to-share PDF from your Word file in a few steps.',
     keywords: ['Word to PDF', 'DOCX to PDF', 'DOC to PDF', 'convert Word to PDF', 'free Word to PDF converter'],
     type: 'tool',
   },
-  '/compress-pdf': {
+  '/tools/compress-pdf': {
     title: 'Compress PDF Online Free – Reduce PDF Size | FileBrother',
     description: 'Compress PDF files online to reduce file size for email, upload and sharing while keeping your document practical and readable.',
     keywords: ['compress PDF', 'reduce PDF size', 'PDF compressor online', 'shrink PDF file', 'compress PDF free'],
     type: 'tool',
   },
-  '/merge-pdf': {
+  '/tools/merge-pdf': {
     title: 'Merge PDF Online Free – Combine PDF Files | FileBrother',
     description: 'Merge multiple PDF files into one document online. Arrange your files in the preferred order and download one combined PDF.',
     keywords: ['merge PDF', 'combine PDF files', 'join PDF online', 'PDF merger free', 'merge multiple PDFs'],
     type: 'tool',
   },
-  '/split-pdf': {
+  '/tools/split-pdf': {
     title: 'Split PDF Online Free – Extract PDF Pages | FileBrother',
     description: 'Split a PDF online and extract the pages you need. Select PDF pages and create a separate document quickly with FileBrother.',
     keywords: ['split PDF', 'extract PDF pages', 'separate PDF pages', 'PDF splitter online', 'split PDF free'],
     type: 'tool',
   },
-  '/sign-pdf': {
+  '/tools/sign-pdf': {
     title: 'Sign PDF Online Free – Add a Signature | FileBrother',
     description: 'Add a visual signature to PDF documents online. Place your signature on selected pages, preview the result and download the signed PDF.',
     keywords: ['sign PDF online', 'add signature to PDF', 'electronic PDF signature', 'eSign PDF', 'sign PDF free'],
     type: 'tool',
   },
-  '/edit-pdf': {
+  '/tools/edit-pdf': {
     title: 'Edit PDF Online Free – Add Text and Images | FileBrother',
     description: 'Edit PDF files online by adding text, images, shapes and drawings. Preview your changes and download the updated PDF document.',
     keywords: ['edit PDF online', 'PDF editor free', 'add text to PDF', 'annotate PDF', 'online PDF editor'],
     type: 'tool',
   },
-  '/pptx-to-pdf': {
+  '/tools/pptx-to-pdf': {
     title: 'PowerPoint to PDF Converter Online | FileBrother',
     description: 'Convert PowerPoint PPT and PPTX presentations to PDF online for convenient viewing, printing and sharing across devices.',
     keywords: ['PowerPoint to PDF', 'PPTX to PDF', 'PPT to PDF', 'convert presentation to PDF', 'PowerPoint converter'],
     type: 'tool',
   },
-  '/xlsx-to-csv': {
+  '/tools/xlsx-to-csv': {
     title: 'XLSX to CSV Converter Online Free | FileBrother',
     description: 'Convert Excel XLS and XLSX spreadsheets to CSV online in your browser. Choose a worksheet and download clean CSV data quickly.',
     keywords: ['XLSX to CSV', 'Excel to CSV', 'XLS to CSV', 'spreadsheet converter', 'convert XLSX online'],
     type: 'tool',
   },
-  '/excel-to-pdf': {
+  '/tools/excel-to-pdf': {
     title: 'Excel to PDF Converter Online Free | FileBrother',
     description: 'Convert Excel XLS and XLSX spreadsheets to PDF online. Turn worksheets into convenient PDF documents for sharing and printing.',
     keywords: ['Excel to PDF', 'XLSX to PDF', 'XLS to PDF', 'convert spreadsheet to PDF', 'Excel PDF converter'],
     type: 'tool',
   },
-  '/unlock-pdf': {
+  '/tools/unlock-pdf': {
     title: 'Unlock PDF Online – Remove PDF Password | FileBrother',
     description: 'Unlock a PDF you are authorized to access by removing its password protection, then download the unlocked document.',
     keywords: ['unlock PDF', 'remove PDF password', 'PDF password remover', 'decrypt PDF', 'unlock protected PDF'],
     type: 'tool',
   },
-  '/protect-pdf': {
+  '/tools/protect-pdf': {
     title: 'Protect PDF Online – Add a PDF Password | FileBrother',
     description: 'Password-protect PDF files online to help prevent unauthorized access. Add encryption and download your secured PDF document.',
     keywords: ['protect PDF', 'password protect PDF', 'lock PDF', 'encrypt PDF online', 'secure PDF file'],
@@ -123,6 +133,21 @@ const pages: Record<string, SeoPage> = {
   },
 };
 
+const legacyToolRedirects: Record<string, string> = {
+  '/pdf-to-word': '/tools/pdf-to-word',
+  '/word-to-pdf': '/tools/word-to-pdf',
+  '/compress-pdf': '/tools/compress-pdf',
+  '/merge-pdf': '/tools/merge-pdf',
+  '/split-pdf': '/tools/split-pdf',
+  '/sign-pdf': '/tools/sign-pdf',
+  '/edit-pdf': '/tools/edit-pdf',
+  '/pptx-to-pdf': '/tools/pptx-to-pdf',
+  '/xlsx-to-csv': '/tools/xlsx-to-csv',
+  '/excel-to-pdf': '/tools/excel-to-pdf',
+  '/unlock-pdf': '/tools/unlock-pdf',
+  '/protect-pdf': '/tools/protect-pdf',
+};
+
 function setMeta(selector: string, attribute: string, value: string) {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
   if (!element) {
@@ -147,6 +172,24 @@ function setCanonical(url: string) {
 function createStructuredData(pathname: string, page: SeoPage, article?: BlogPost) {
   const url = `${SITE_URL}${pathname === '/' ? '/' : pathname}`;
   const graph: Record<string, unknown>[] = [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: DEFAULT_IMAGE,
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      inLanguage: 'en',
+    },
     {
       '@type': 'WebPage',
       '@id': `${url}#webpage`,
@@ -223,10 +266,18 @@ const SeoManager = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    let isCurrent = true;
+
+    const updateSeo = async () => {
     const normalizedPath = pathname !== '/' ? pathname.replace(/\/$/, '') : '/';
-    const articleSlug = normalizedPath.startsWith('/blog/') ? normalizedPath.slice('/blog/'.length) : '';
-    const article = articleSlug ? getBlogPost(articleSlug) : undefined;
-    const staticPage = pages[normalizedPath];
+    const canonicalPath = legacyToolRedirects[normalizedPath] ?? normalizedPath;
+    const articleSlug = canonicalPath.startsWith('/blog/') ? canonicalPath.slice('/blog/'.length) : '';
+    const article = articleSlug
+      ? (await import('../data/blogPosts')).getBlogPost(articleSlug)
+      : undefined;
+    if (!isCurrent) return;
+
+    const staticPage = pages[canonicalPath];
     const page: SeoPage = article ? {
       title: article.title,
       description: article.description,
@@ -237,7 +288,7 @@ const SeoManager = () => {
       description: 'The requested FileBrother page could not be found.',
       keywords: [],
     };
-    const canonicalUrl = `${SITE_URL}${normalizedPath === '/' ? '/' : normalizedPath}`;
+    const canonicalUrl = `${SITE_URL}${canonicalPath === '/' ? '/' : canonicalPath}`;
     const shouldIndex = Boolean(staticPage || article?.seoReady);
 
     document.title = page.title;
@@ -265,9 +316,16 @@ const SeoManager = () => {
       const structuredData = document.createElement('script');
       structuredData.id = 'route-structured-data';
       structuredData.type = 'application/ld+json';
-      structuredData.text = JSON.stringify(createStructuredData(normalizedPath, page, article));
+      structuredData.text = JSON.stringify(createStructuredData(canonicalPath, page, article));
       document.head.appendChild(structuredData);
     }
+    };
+
+    updateSeo();
+
+    return () => {
+      isCurrent = false;
+    };
   }, [pathname]);
 
   return null;

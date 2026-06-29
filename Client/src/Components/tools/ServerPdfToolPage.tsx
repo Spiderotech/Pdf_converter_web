@@ -1,7 +1,8 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
-import { FiAlertCircle, FiCheckCircle, FiDownload, FiRefreshCw, FiUploadCloud } from 'react-icons/fi';
+import { FiCheckCircle, FiDownload, FiRefreshCw, FiUploadCloud } from 'react-icons/fi';
 import axios from '../../Utils/axios';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 
@@ -38,6 +39,12 @@ const ServerPdfToolPage = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const supportedFormats = accept
+    .split(',')
+    .map((item) => item.trim())
+    .filter((item) => item.startsWith('.'))
+    .map((item) => item.replace('.', '').toUpperCase())
+    .join(', ');
 
   const setFile = (file: File) => {
     setSelectedFile(file);
@@ -135,7 +142,9 @@ const ServerPdfToolPage = ({
               {isProcessing ? <FiRefreshCw className="h-7 w-7 animate-spin" /> : <Icon className="h-7 w-7" />}
             </div>
             <h2 className="mt-5 text-lg font-semibold text-slate-950">{selectedFile ? selectedFile.name : 'Choose a file'}</h2>
-            <p className="mt-2 text-sm text-slate-500">Recommended maximum size: 25 MB.</p>
+            <p className="mt-2 text-sm text-slate-500">
+              Supports {supportedFormats || 'selected'} files. Recommended maximum size: 25 MB.
+            </p>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
@@ -208,10 +217,11 @@ const ServerPdfToolPage = ({
           )}
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 flex-none" />
-              <p>{error}</p>
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={selectedFile ? handleProcess : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+            />
           )}
         </section>
       </main>

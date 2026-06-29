@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useEffect, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiDownload,
@@ -22,6 +21,7 @@ import securityPdfSecureProcessIcon from '../../assets/converter-icons/security-
 import securityPdfUnlockHeroIcon from '../../assets/converter-icons/security-pdf-unlock-hero.webp';
 import securityPdfUnlockIcon from '../../assets/converter-icons/security-pdf-unlock.webp';
 import securityPdfUploadIcon from '../../assets/converter-icons/security-pdf-upload.webp';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -247,7 +247,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
               <p className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-extrabold uppercase ${theme.eyebrow}`}>
-                <img src={heroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
+                <img decoding="async" loading="lazy" src={heroIcon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                 PDF {isProtect ? 'Protection' : 'Unlock'}
               </p>
               <h1 className="mt-6 text-4xl font-black leading-tight text-slate-950 sm:mt-7 sm:text-6xl">
@@ -263,7 +263,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                 {featureItems.map(({ icon, text }) => (
                   <span key={text} className="inline-flex items-center gap-3 text-sm font-bold text-slate-700">
                     <span className={`flex h-12 w-12 items-center justify-center rounded-lg ${theme.iconBox}`}>
-                      <img src={icon} alt="" aria-hidden="true" className="h-10 w-10 object-contain" />
+                      <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-10 w-10 object-contain" />
                     </span>
                     {text}
                   </span>
@@ -273,7 +273,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
 
             <div className="relative flex min-h-56 items-center justify-center sm:min-h-72">
               <div className={`absolute h-52 w-52 rounded-full opacity-80 sm:h-64 sm:w-64 ${isProtect ? 'bg-rose-100' : 'bg-emerald-100'}`} />
-              <img
+              <img decoding="async" loading="lazy"
                 src={heroIcon}
                 alt=""
                 aria-hidden="true"
@@ -301,7 +301,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                   <div key={step.title} className="relative">
                     <article className="flex min-h-40 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-[0_10px_24px_rgba(15,23,42,0.05)] sm:min-h-44 sm:p-5">
                       <span className={`flex h-14 w-14 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${step.color}`}>
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                       </span>
                       <span className={`mt-4 flex h-6 w-6 items-center justify-center rounded-full text-xs font-extrabold text-white ${step.badge}`}>
                         {index + 1}
@@ -339,7 +339,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
             >
               <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={handleFileChange} className="hidden" />
               <span className={`flex h-20 w-20 items-center justify-center rounded-lg sm:h-24 sm:w-24 ${theme.iconBox}`}>
-                <img src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
+                <img decoding="async" loading="lazy" src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
               </span>
               <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
                 {file ? file.name : isProtect ? 'Upload your PDF' : 'Drop your PDF here'}
@@ -356,14 +356,14 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
                 <FiUpload className="h-5 w-5" />
                 {file ? 'Change file' : 'Choose file'}
               </button>
-              <p className="mt-5 text-sm font-medium text-slate-500">Recommended maximum size: 25 MB.</p>
+              <p className="mt-5 text-sm font-medium text-slate-500">Supports PDF files. Recommended maximum size: 25 MB.</p>
             </div>
           </section>
 
           {file && (
             <div className="mt-6 flex items-start gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:items-center sm:p-5">
               <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg ${theme.iconBox}`}>
-                <img src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
+                <img decoding="async" loading="lazy" src={securityPdfUploadIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
               </span>
               <div className="min-w-0 flex-1">
                 <strong className="block truncate text-sm text-slate-950">{file.name}</strong>
@@ -386,7 +386,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           <section className="mt-7 grid gap-5 rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[minmax(250px,0.8fr)_minmax(0,1.2fr)] md:items-center">
             <div className="flex items-start gap-4">
               <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg sm:h-16 sm:w-16 ${theme.iconBox}`}>
-                <img src={securityPdfPasswordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+                <img decoding="async" loading="lazy" src={securityPdfPasswordIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
               </span>
               <div>
                 <h2 className="text-lg font-extrabold text-slate-950">
@@ -451,7 +451,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
             <div className="grid items-center gap-6 md:grid-cols-[1.3fr_1fr]">
               <div className="flex items-start gap-4">
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white sm:h-16 sm:w-16">
-                  <img src={actionIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
+                  <img decoding="async" loading="lazy" src={actionIcon} alt="" aria-hidden="true" className="h-14 w-14 object-contain" />
                 </span>
                 <div>
                   <h2 className={`text-base font-extrabold ${theme.accent}`}>
@@ -465,7 +465,7 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
               <div className="grid grid-cols-3 gap-3 text-center">
                 {securityStats.map(({ icon, label }) => (
                   <span key={label} className="flex flex-col items-center gap-2 text-xs font-bold text-slate-600">
-                    <img src={icon} alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
+                    <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
                     {label}
                   </span>
                 ))}
@@ -502,14 +502,20 @@ const SecurityPdfToolPage = ({ mode }: SecurityPdfToolPageProps) => {
           )}
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-              {error}
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={file ? processPdf : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Unlock PDF', href: '/tools/unlock-pdf' },
+                { label: 'Try Protect PDF', href: '/tools/protect-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
 
           <p className="mt-6 flex items-center justify-center gap-2 text-center text-xs font-medium text-slate-500">
-            <img src={securityPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
+            <img decoding="async" loading="lazy" src={securityPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
             Your file and password are never shared with anyone.
           </p>
         </section>

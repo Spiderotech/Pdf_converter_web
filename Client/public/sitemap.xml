@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://filebrother.com/</loc></url>
-  <url><loc>https://filebrother.com/pdf-to-word</loc></url>
-  <url><loc>https://filebrother.com/word-to-pdf</loc></url>
-  <url><loc>https://filebrother.com/compress-pdf</loc></url>
-  <url><loc>https://filebrother.com/merge-pdf</loc></url>
-  <url><loc>https://filebrother.com/split-pdf</loc></url>
-  <url><loc>https://filebrother.com/sign-pdf</loc></url>
-  <url><loc>https://filebrother.com/edit-pdf</loc></url>
-  <url><loc>https://filebrother.com/pptx-to-pdf</loc></url>
-  <url><loc>https://filebrother.com/xlsx-to-csv</loc></url>
-  <url><loc>https://filebrother.com/excel-to-pdf</loc></url>
-  <url><loc>https://filebrother.com/unlock-pdf</loc></url>
-  <url><loc>https://filebrother.com/protect-pdf</loc></url>
+  <url><loc>https://filebrother.com/search</loc></url>
+  <url><loc>https://filebrother.com/tools</loc></url>
+  <url><loc>https://filebrother.com/tools/pdf-to-word</loc></url>
+  <url><loc>https://filebrother.com/tools/word-to-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/compress-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/merge-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/split-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/sign-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/edit-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/pptx-to-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/xlsx-to-csv</loc></url>
+  <url><loc>https://filebrother.com/tools/excel-to-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/unlock-pdf</loc></url>
+  <url><loc>https://filebrother.com/tools/protect-pdf</loc></url>
   <url><loc>https://filebrother.com/about</loc></url>
   <url><loc>https://filebrother.com/contact</loc></url>
   <url><loc>https://filebrother.com/faq</loc></url>

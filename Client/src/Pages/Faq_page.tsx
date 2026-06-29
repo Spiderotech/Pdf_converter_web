@@ -73,7 +73,7 @@ const Faq_page = () => {
           <section className="mt-10 grid gap-4 rounded-lg border border-stone-200 bg-white p-5 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
             {featuredCategories.map(({ icon, text, category: nextCategory }) => (
               <button key={text} type="button" onClick={() => { setSearch(''); setCategory(nextCategory); }} className="flex min-h-20 items-center justify-start gap-4 rounded-lg border border-stone-100 p-3 text-left text-sm font-bold text-slate-700 hover:border-amber-200 hover:text-[#9a6514] lg:min-h-24 lg:justify-center lg:border-0 lg:border-r lg:last:border-r-0">
-                <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain sm:h-16 sm:w-16" />
+                <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain sm:h-16 sm:w-16" />
                 {text}
               </button>
             ))}
@@ -84,12 +84,12 @@ const Faq_page = () => {
               <h2 className="px-3 py-3 font-extrabold text-slate-950">Categories</h2>
               {categories.map(({ name, icon }) => (
                 <button key={name} type="button" onClick={() => { setCategory(name); setSearch(''); setOpenQuestion(0); }} className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-bold ${category === name && !search ? 'bg-stone-100 text-[#9a6514]' : 'text-slate-600 hover:bg-slate-50'}`}>
-                  <img src={icon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
+                  <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" />
                   <span className="flex-1">{name}</span>
                 </button>
               ))}
               <div className="mt-4 rounded-lg bg-stone-50 p-5">
-                <img src={helpIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
+                <img decoding="async" loading="lazy" src={helpIcon} alt="" aria-hidden="true" className="h-16 w-16 object-contain" />
                 <h3 className="mt-3 font-extrabold text-slate-950">Still need help?</h3>
                 <p className="mt-2 text-xs leading-5 text-slate-600">Our support team is ready to help.</p>
                 <a href="/contact" className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-slate-950 text-sm font-bold text-white hover:bg-slate-800">Contact Support <FiArrowRight /></a>

@@ -27,10 +27,10 @@ const AccountPage = () => {
     <>
       <Header />
       <section className="relative pb-16 pt-28 sm:pb-24 sm:pt-36">
-        <img src="https://pagedone.io/asset/uploads/1705471739.png" alt="cover-image" className="absolute left-0 top-0 z-0 h-52 w-full object-cover sm:h-60" />
+        <img decoding="async" loading="lazy" src="https://pagedone.io/asset/uploads/1705471739.png" alt="cover-image" className="absolute left-0 top-0 z-0 h-52 w-full object-cover sm:h-60" />
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           <div className="flex items-center justify-center relative z-10 mb-2.5">
-            <img src={profile} alt="user avatar" className="w-32 rounded-full border-4 border-solid border-white sm:w-40" />
+            <img decoding="async" loading="lazy" src={profile} alt="user avatar" className="w-32 rounded-full border-4 border-solid border-white sm:w-40" />
           </div>
           <div className="mb-5 flex flex-col items-center justify-center gap-4">
             <ul className="flex flex-wrap items-center justify-center gap-3 text-sm sm:text-base">

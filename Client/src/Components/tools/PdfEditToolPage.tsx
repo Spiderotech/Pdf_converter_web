@@ -1,7 +1,6 @@
 import { ChangeEvent, PointerEvent, useEffect, useRef, useState } from 'react';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import {
-  FiAlertCircle,
   FiBold,
   FiCircle,
   FiCopy,
@@ -24,6 +23,7 @@ import {
   FiUpload,
   FiUploadCloud,
 } from 'react-icons/fi';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -783,7 +783,7 @@ const PdfEditToolPage = () => {
         className={`${commonClass} bg-white/50 p-1`}
         style={{ left: `${element.xPercent * 100}%`, top: `${element.yPercent * 100}%`, width: imageWidth }}
       >
-        <img src={element.src} alt="PDF overlay" className="w-full object-contain" />
+        <img decoding="async" loading="lazy" src={element.src} alt="PDF overlay" className="w-full object-contain" />
       </div>
       );
     }
@@ -816,6 +816,9 @@ const PdfEditToolPage = () => {
             <h1 className="mt-2 text-4xl font-black sm:text-5xl">Edit PDF</h1>
             <p className="mx-auto mt-3 max-w-2xl text-sm font-medium leading-6 text-slate-600 sm:text-base">
               Add text, shapes, drawings, and images to the first page of a PDF, then download the edited file.
+            </p>
+            <p className="mx-auto mt-2 max-w-2xl text-xs font-bold text-slate-500">
+              Supports PDF files up to 25 MB. Image overlays support PNG, JPG, and JPEG.
             </p>
           </div>
 
@@ -1252,10 +1255,16 @@ const PdfEditToolPage = () => {
           </div>
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 flex-none" />
-              <p>{error}</p>
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={file ? exportPdf : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Sign PDF', href: '/tools/sign-pdf' },
+                { label: 'Try Merge PDF', href: '/tools/merge-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
         </div>
         </section>

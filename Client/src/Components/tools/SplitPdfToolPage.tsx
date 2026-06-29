@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiDownload,
@@ -10,6 +9,7 @@ import {
   FiScissors,
   FiUpload,
 } from 'react-icons/fi';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
@@ -208,7 +208,7 @@ const SplitPdfToolPage = () => {
               <div className="mt-7 grid gap-4 sm:grid-cols-3">
                 {trustItems.map(({ title, text, icon }) => (
                   <div key={title} className="flex items-center gap-3">
-                    <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-md" />
+                    <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-md" />
                     <span>
                       <strong className="block text-sm font-extrabold text-slate-950">{title}</strong>
                       <span className="text-xs font-medium text-slate-500">{text}</span>
@@ -221,7 +221,7 @@ const SplitPdfToolPage = () => {
             <div className="flex items-center justify-center">
               <div className="relative">
                 <span className="absolute -inset-6 rounded-full bg-red-100/70 blur-2xl" />
-                <img
+                <img decoding="async" loading="lazy"
                   src={splitHeroPagesIcon}
                   alt=""
                   aria-hidden="true"
@@ -255,7 +255,7 @@ const SplitPdfToolPage = () => {
                     {isReading ? (
                       <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={splitUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
+                      <img decoding="async" loading="lazy" src={splitUploadPdfIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
                   <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950">
@@ -275,14 +275,14 @@ const SplitPdfToolPage = () => {
                 </div>
 
                 <div className="mt-4 flex items-start gap-4 rounded-lg border border-red-100 bg-red-50/70 px-5 py-4 text-sm font-medium text-slate-700">
-                  <img src={splitPrivateLockIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain drop-shadow-sm" />
+                  <img decoding="async" loading="lazy" src={splitPrivateLockIcon} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain drop-shadow-sm" />
                   <p>Your files are processed locally in your browser. They are never uploaded to our servers.</p>
                 </div>
               </div>
 
               <section className="mt-4 rounded-lg border border-slate-200 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.05)]">
                 <h2 className="inline-flex items-center gap-3 text-lg font-extrabold text-slate-950">
-                  <img src={splitSelectPagesIcon} alt="" aria-hidden="true" className="h-10 w-10 object-contain drop-shadow-sm" />
+                  <img decoding="async" loading="lazy" src={splitSelectPagesIcon} alt="" aria-hidden="true" className="h-10 w-10 object-contain drop-shadow-sm" />
                   Pages to extract
                 </h2>
                 <label htmlFor="splitPageRange" className="mt-4 block text-sm font-semibold text-slate-600">
@@ -352,7 +352,7 @@ const SplitPdfToolPage = () => {
                   </a>
                 )}
                 <span className="inline-flex items-center gap-2 text-xs font-medium text-slate-500">
-                  <img src={splitSecureShieldIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
+                  <img decoding="async" loading="lazy" src={splitSecureShieldIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
                   We do not store your files.
                 </span>
               </div>
@@ -365,10 +365,16 @@ const SplitPdfToolPage = () => {
               )}
 
               {error && (
-                <div className="mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-                  <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                  {error}
-                </div>
+                <ConversionFailureRecovery
+                  message={error}
+                  onRetry={file ? splitPdf : undefined}
+                  onChooseAnother={() => fileInputRef.current?.click()}
+                  alternatives={[
+                    { label: 'Try Merge PDF', href: '/tools/merge-pdf' },
+                    { label: 'Compress PDF first', href: '/tools/compress-pdf' },
+                    { label: 'Browse all tools', href: '/tools' },
+                  ]}
+                />
               )}
             </div>
 
@@ -380,7 +386,7 @@ const SplitPdfToolPage = () => {
                     <div key={step.title} className="flex gap-4">
                       <div className="relative">
                         <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-red-50 sm:h-16 sm:w-16">
-                          <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                          <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         </span>
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </div>
@@ -394,7 +400,7 @@ const SplitPdfToolPage = () => {
               </div>
 
               <div className="mt-9 flex items-start gap-3 rounded-lg border border-red-100 bg-red-50 p-5">
-                <img src={splitSecureShieldIcon} alt="" aria-hidden="true" className="h-10 w-10 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={splitSecureShieldIcon} alt="" aria-hidden="true" className="h-10 w-10 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-red-600">Safe & Private</strong>
                   <p className="mt-2 text-sm font-medium leading-6 text-slate-600">All processing happens in your browser. Your files never leave your device.</p>
@@ -402,7 +408,7 @@ const SplitPdfToolPage = () => {
               </div>
 
               <div className="mt-4 flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-5">
-                <img src={splitPreviewPagesIcon} alt="" aria-hidden="true" className="h-10 w-10 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={splitPreviewPagesIcon} alt="" aria-hidden="true" className="h-10 w-10 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-slate-900">Tips</strong>
                   <p className="mt-2 text-sm font-medium leading-6 text-slate-600">Preview the pages before splitting to make sure you selected the right ones.</p>

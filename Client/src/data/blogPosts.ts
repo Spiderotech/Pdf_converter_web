@@ -61,9 +61,9 @@ const featuredBlogPosts: BlogPost[] = [
     openInstructions: 'On most devices, double-clicking a PDF opens it in the default browser or PDF reader. You can also drag the file into a browser window. Only open attachments from sources you trust.',
     conversionIntro: 'You can convert a PDF when you need editable text, a smaller file, or a different document workflow. Choose a conversion below, upload the PDF, review the result, and keep the original file until you confirm that the formatting is correct.',
     conversions: [
-      { label: 'Convert PDF to Word', href: '/pdf-to-word' },
-      { label: 'Compress PDF', href: '/compress-pdf' },
-      { label: 'Edit PDF', href: '/edit-pdf' },
+      { label: 'Convert PDF to Word', href: '/tools/pdf-to-word' },
+      { label: 'Compress PDF', href: '/tools/compress-pdf' },
+      { label: 'Edit PDF', href: '/tools/edit-pdf' },
     ],
     faqs: [
       { question: 'What is a PDF file used for?', answer: 'PDF files are used to share, archive, and print documents while preserving their original layout and formatting.' },
@@ -103,8 +103,8 @@ const featuredBlogPosts: BlogPost[] = [
     openInstructions: 'Open DOCX files with a word processor such as Microsoft Word. You can also upload a trusted document to Google Docs or Word for the web when desktop software is unavailable.',
     conversionIntro: 'Convert a DOCX file to PDF when you want to preserve its final layout for printing or sharing. Upload the Word document, create the PDF, and compare the output with the original before distributing it.',
     conversions: [
-      { label: 'Convert DOCX to PDF', href: '/word-to-pdf' },
-      { label: 'Convert PDF to Word', href: '/pdf-to-word' },
+      { label: 'Convert DOCX to PDF', href: '/tools/word-to-pdf' },
+      { label: 'Convert PDF to Word', href: '/tools/pdf-to-word' },
     ],
     faqs: [
       { question: 'What is a DOCX file used for?', answer: 'DOCX files are used to create and edit formatted documents such as letters, resumes, reports, assignments, and templates.' },
@@ -1710,8 +1710,8 @@ const formatIcon = (category: FormatCategory) => {
 };
 
 const conversionLinks = (category: FormatCategory) => {
-  if (category === 'Spreadsheet') return [{ label: 'Convert Excel to PDF', href: '/excel-to-pdf' }, { label: 'Convert XLSX to CSV', href: '/xlsx-to-csv' }];
-  if (category === 'Presentation') return [{ label: 'Convert PPTX to PDF', href: '/pptx-to-pdf' }];
+  if (category === 'Spreadsheet') return [{ label: 'Convert Excel to PDF', href: '/tools/excel-to-pdf' }, { label: 'Convert XLSX to CSV', href: '/tools/xlsx-to-csv' }];
+  if (category === 'Presentation') return [{ label: 'Convert PPTX to PDF', href: '/tools/pptx-to-pdf' }];
   return [{ label: 'Browse FileBrother tools', href: '/#tools' }];
 };
 
@@ -1813,3 +1813,17 @@ export const blogPosts: BlogPost[] = orderedBlogPosts.map((post, _index, allPost
 });
 
 export const getBlogPost = (slug: string) => blogPosts.find((post) => post.slug === slug);
+
+export const getBlogPostByFileSlug = (fileSlug: string) => {
+  const normalizedFileSlug = fileSlug.toLowerCase();
+
+  return blogPosts.find((post) => {
+    const extension = post.fileDetails
+      .find((detail) => detail.property === 'Extension')
+      ?.value
+      .replace(/^\./, '')
+      .toLowerCase();
+
+    return extension === normalizedFileSlug;
+  });
+};

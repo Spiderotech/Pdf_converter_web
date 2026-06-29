@@ -13,93 +13,24 @@ import splitPdfIcon from '../assets/hero-icons/split-pdf.webp';
 import unlockPdfIcon from '../assets/hero-icons/unlock-pdf.webp';
 import wordPdfIcon from '../assets/hero-icons/word-pdf.webp';
 import xlsxCsvIcon from '../assets/hero-icons/xlsx-csv.webp';
+import { toolCatalog } from '../data/toolCatalog';
 
-const tools = [
-  {
-    name: 'Merge PDF',
-    description: 'Combine multiple PDF files into a single PDF',
-    path: '/merge-pdf',
-    icon: mergePdfIcon,
-    category: 'Edit',
-  },
-  {
-    name: 'Split PDF',
-    description: 'Extract pages or split PDF files into multiple PDFs',
-    path: '/split-pdf',
-    icon: splitPdfIcon,
-    category: 'Edit',
-  },
-  {
-    name: 'PDF to Word',
-    description: 'Convert PDF files to editable Word documents',
-    path: '/pdf-to-word',
-    icon: pdfWordIcon,
-    category: 'Convert',
-  },
-  {
-    name: 'XLSX to CSV',
-    description: 'Convert PDF tables to Excel spreadsheets',
-    path: '/xlsx-to-csv',
-    icon: xlsxCsvIcon,
-    category: 'Convert',
-  },
-  {
-    name: 'Word to PDF',
-    description: 'Convert Word documents to PDF files',
-    path: '/word-to-pdf',
-    icon: wordPdfIcon,
-    category: 'Convert',
-  },
-  {
-    name: 'Excel to PDF',
-    description: 'Convert Excel spreadsheets to PDF files',
-    path: '/excel-to-pdf',
-    icon: excelPdfIcon,
-    category: 'Convert',
-  },
-  {
-    name: 'PPT to PDF',
-    description: 'Convert PowerPoint presentations to PDF files',
-    path: '/pptx-to-pdf',
-    icon: pptPdfIcon,
-    category: 'Convert',
-  },
-  {
-    name: 'Compress PDF',
-    description: 'Reduce PDF file size without losing quality',
-    path: '/compress-pdf',
-    icon: compressPdfIcon,
-    category: 'Other',
-  },
-  {
-    name: 'Edit PDF',
-    description: 'Add text, images, shapes or freehand annotations',
-    path: '/edit-pdf',
-    icon: editPdfIcon,
-    category: 'Edit',
-  },
-  {
-    name: 'Sign PDF',
-    description: 'Add your signature to PDF documents',
-    path: '/sign-pdf',
-    icon: signPdfIcon,
-    category: 'Edit',
-  },
-  {
-    name: 'Lock PDF',
-    description: 'Password protect your PDF files',
-    path: '/protect-pdf',
-    icon: secureIcon,
-    category: 'Security',
-  },
-  {
-    name: 'Unlock PDF',
-    description: 'Remove password protection from PDF files',
-    path: '/unlock-pdf',
-    icon: unlockPdfIcon,
-    category: 'Security',
-  },
-];
+const toolIcons: Record<string, string> = {
+  '/tools/merge-pdf': mergePdfIcon,
+  '/tools/split-pdf': splitPdfIcon,
+  '/tools/pdf-to-word': pdfWordIcon,
+  '/tools/xlsx-to-csv': xlsxCsvIcon,
+  '/tools/word-to-pdf': wordPdfIcon,
+  '/tools/excel-to-pdf': excelPdfIcon,
+  '/tools/pptx-to-pdf': pptPdfIcon,
+  '/tools/compress-pdf': compressPdfIcon,
+  '/tools/edit-pdf': editPdfIcon,
+  '/tools/sign-pdf': signPdfIcon,
+  '/tools/protect-pdf': secureIcon,
+  '/tools/unlock-pdf': unlockPdfIcon,
+};
+
+const tools = toolCatalog.map((tool) => ({ ...tool, icon: toolIcons[tool.path] }));
 
 const categories = ['All', 'Convert', 'Edit', 'Security', 'Other'];
 
@@ -194,7 +125,7 @@ const Tools = () => {
                 to={tool.path}
                 className="group flex min-h-[118px] items-start gap-4 rounded-lg border border-stone-200 bg-white/95 p-4 text-left shadow-sm shadow-slate-200/60 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-xl hover:shadow-slate-200 sm:items-center sm:gap-5 sm:p-5"
               >
-                <img src={tool.icon} alt="" aria-hidden="true" className="h-16 w-16 shrink-0 object-contain drop-shadow-lg sm:h-20 sm:w-20" />
+                <img src={tool.icon} alt="" aria-hidden="true" loading="lazy" decoding="async" className="h-16 w-16 shrink-0 object-contain drop-shadow-lg sm:h-20 sm:w-20" />
                 <span className="min-w-0 flex-1">
                   <span className="block text-lg font-black text-slate-950 sm:text-xl">{tool.name}</span>
                   <span className="mt-2 block text-sm font-medium leading-6 text-slate-600">{tool.description}</span>

@@ -21,18 +21,20 @@ const blogSlugs = [...new Set([...featuredSlugs, ...reviewedGeneratedSlugs])];
 
 const staticPaths = [
   '/',
-  '/pdf-to-word',
-  '/word-to-pdf',
-  '/compress-pdf',
-  '/merge-pdf',
-  '/split-pdf',
-  '/sign-pdf',
-  '/edit-pdf',
-  '/pptx-to-pdf',
-  '/xlsx-to-csv',
-  '/excel-to-pdf',
-  '/unlock-pdf',
-  '/protect-pdf',
+  '/search',
+  '/tools',
+  '/tools/pdf-to-word',
+  '/tools/word-to-pdf',
+  '/tools/compress-pdf',
+  '/tools/merge-pdf',
+  '/tools/split-pdf',
+  '/tools/sign-pdf',
+  '/tools/edit-pdf',
+  '/tools/pptx-to-pdf',
+  '/tools/xlsx-to-csv',
+  '/tools/excel-to-pdf',
+  '/tools/unlock-pdf',
+  '/tools/protect-pdf',
   '/about',
   '/contact',
   '/faq',
@@ -42,7 +44,7 @@ const staticPaths = [
 ];
 
 const blogPaths = blogSlugs.map((slug) => `/blog/${slug}`);
-const urls = [...staticPaths, ...blogPaths];
+const urls = [...new Set([...staticPaths, ...blogPaths])];
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

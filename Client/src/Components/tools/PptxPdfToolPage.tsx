@@ -1,6 +1,5 @@
 import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import {
-  FiAlertCircle,
   FiArrowRight,
   FiCheckCircle,
   FiDownload,
@@ -17,9 +16,11 @@ import pptxPdfConvertProcessIcon from '../../assets/converter-icons/pptx-pdf-con
 import pptxPdfDownloadPdfIcon from '../../assets/converter-icons/pptx-pdf-download-pdf.webp';
 import pptxPdfPrivateLockIcon from '../../assets/converter-icons/pptx-pdf-private-lock.webp';
 import pptxPdfProtectedFilesIcon from '../../assets/converter-icons/pptx-pdf-protected-files.webp';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 import ConversionLoadingOverlay from '../ConversionLoadingOverlay';
+import { getFileSizeRange, trackEvent } from '../../analytics';
 
 const trustItems = [
   { title: 'Secure & Private', text: 'Your files are processed securely and never stored.', icon: pptxPdfSecurePrivateIcon },
@@ -51,6 +52,11 @@ const PptxPdfToolPage = () => {
     setFile(selectedFile);
     setDownloadUrl('');
     setError('');
+    trackEvent('upload_selected', {
+      tool: 'pptx_to_pdf',
+      file_type: extension,
+      size_range: getFileSizeRange(selectedFile),
+    });
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +89,11 @@ const PptxPdfToolPage = () => {
     setIsProcessing(true);
     setDownloadUrl('');
     setError('');
+    trackEvent('conversion_started', {
+      tool: 'pptx_to_pdf',
+      file_type: file.name.toLowerCase().split('.').pop(),
+      size_range: getFileSizeRange(file),
+    });
 
     try {
       const response = await axios.post('/pptxtopdf', formData, {
@@ -90,9 +101,19 @@ const PptxPdfToolPage = () => {
         responseType: 'blob',
       });
       setDownloadUrl(URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+      trackEvent('conversion_completed', {
+        tool: 'pptx_to_pdf',
+        file_type: file.name.toLowerCase().split('.').pop(),
+        size_range: getFileSizeRange(file),
+      });
     } catch (conversionError) {
       console.error(conversionError);
       setError('This presentation could not be converted. Check the file or backend converter setup.');
+      trackEvent('conversion_failed', {
+        tool: 'pptx_to_pdf',
+        file_type: file.name.toLowerCase().split('.').pop(),
+        size_range: getFileSizeRange(file),
+      });
     } finally {
       setIsProcessing(false);
     }
@@ -120,7 +141,7 @@ const PptxPdfToolPage = () => {
                 {trustItems.map(({ title, text, icon }) => (
                   <div key={title} className="flex gap-4">
                     <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-blue-50">
-                      <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-sm" />
+                      <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-sm" />
                     </span>
                     <span>
                       <strong className="block text-sm font-extrabold text-slate-950">{title}</strong>
@@ -134,7 +155,7 @@ const PptxPdfToolPage = () => {
             <div className="flex items-center justify-center">
               <div className="relative">
                 <span className="absolute -inset-10 rounded-full bg-blue-100/70 blur-3xl" />
-                <img src={pptxPdfHeroIcon} alt="" aria-hidden="true" className="relative h-56 w-full max-w-md object-contain drop-shadow-2xl sm:h-64" />
+                <img decoding="async" loading="lazy" src={pptxPdfHeroIcon} alt="" aria-hidden="true" className="relative h-56 w-full max-w-md object-contain drop-shadow-2xl sm:h-64" />
               </div>
             </div>
           </div>
@@ -163,7 +184,7 @@ const PptxPdfToolPage = () => {
                     {isProcessing ? (
                       <FiRefreshCw className="h-8 w-8 animate-spin sm:h-10 sm:w-10" />
                     ) : (
-                      <img src={pptxPdfUploadPptxIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
+                      <img decoding="async" loading="lazy" src={pptxPdfUploadPptxIcon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-16 sm:w-16" />
                     )}
                   </span>
                   <h2 className="mt-5 max-w-full break-words text-xl font-extrabold text-slate-950 sm:text-2xl">
@@ -184,7 +205,7 @@ const PptxPdfToolPage = () => {
               </div>
 
               <div className="mt-5 flex items-start gap-4 rounded-lg border border-blue-100 bg-blue-50/70 px-6 py-4">
-                <img src={pptxPdfProtectedFilesIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={pptxPdfProtectedFilesIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-slate-800">Only presentation files are processed.</strong>
                   <p className="mt-1 text-sm font-medium text-slate-600">Your files are automatically deleted after conversion is complete.</p>
@@ -206,6 +227,7 @@ const PptxPdfToolPage = () => {
                   <a
                     href={downloadUrl}
                     download="presentation.pdf"
+                    onClick={() => trackEvent('download_clicked', { tool: 'pptx_to_pdf', output_type: 'pdf' })}
                     className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-emerald-500 px-8 text-sm font-extrabold text-white hover:bg-emerald-600"
                   >
                     <FiDownload className="h-5 w-5" />
@@ -213,7 +235,7 @@ const PptxPdfToolPage = () => {
                   </a>
                 )}
                 <span className="inline-flex items-center gap-2 text-xs font-medium text-slate-500">
-                  <img src={pptxPdfSecurePrivateIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
+                  <img decoding="async" loading="lazy" src={pptxPdfSecurePrivateIcon} alt="" aria-hidden="true" className="h-6 w-6 object-contain" />
                   We do not store or share your files.
                 </span>
               </div>
@@ -226,10 +248,16 @@ const PptxPdfToolPage = () => {
               )}
 
               {error && (
-                <div className="mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
-                  <FiAlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
-                  {error}
-                </div>
+                <ConversionFailureRecovery
+                  message={error}
+                  onRetry={file ? convertPresentation : undefined}
+                  onChooseAnother={() => fileInputRef.current?.click()}
+                  alternatives={[
+                    { label: 'Try Word to PDF', href: '/tools/word-to-pdf' },
+                    { label: 'Try Excel to PDF', href: '/tools/excel-to-pdf' },
+                    { label: 'Browse all tools', href: '/tools' },
+                  ]}
+                />
               )}
             </div>
 
@@ -240,7 +268,7 @@ const PptxPdfToolPage = () => {
                   return (
                     <div key={step.title} className="relative flex gap-5">
                       <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-blue-50 sm:h-16 sm:w-16">
-                        <img src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={step.icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain drop-shadow-md sm:h-14 sm:w-14" />
                         <span className="absolute -left-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-extrabold text-white">{index + 1}</span>
                       </span>
                       <div className="pt-1">
@@ -253,7 +281,7 @@ const PptxPdfToolPage = () => {
               </div>
 
               <div className="mt-10 flex items-start gap-3 rounded-lg bg-blue-50 p-5">
-                <img src={pptxPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
+                <img decoding="async" loading="lazy" src={pptxPdfPrivateLockIcon} alt="" aria-hidden="true" className="h-12 w-12 shrink-0 object-contain drop-shadow-sm" />
                 <div>
                   <strong className="block text-sm font-extrabold text-blue-700">Your privacy matters</strong>
                   <p className="mt-2 text-sm font-medium leading-6 text-slate-600">We do not store or share your files. Your data remains protected.</p>

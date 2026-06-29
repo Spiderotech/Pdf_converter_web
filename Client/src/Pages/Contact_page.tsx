@@ -88,7 +88,7 @@ const Contact_page = () => {
               <div className="absolute -bottom-16 left-8 h-40 w-40 rounded-full bg-amber-100/70" />
               <div className="relative">
                 <span className="flex h-20 w-20 items-center justify-center rounded-lg bg-stone-50 shadow-sm sm:h-24 sm:w-24">
-                  <img src={emailIcon} alt="" aria-hidden="true" className="h-20 w-20 object-contain sm:h-24 sm:w-24" />
+                  <img decoding="async" loading="lazy" src={emailIcon} alt="" aria-hidden="true" className="h-20 w-20 object-contain sm:h-24 sm:w-24" />
                 </span>
                 <h2 className="mt-6 text-3xl font-black text-slate-950">Get in touch</h2>
                 <p className="mt-3 max-w-lg text-sm font-medium leading-7 text-slate-600">
@@ -103,7 +103,7 @@ const Contact_page = () => {
                       className="group flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50/70 p-3 hover:border-amber-200 hover:bg-stone-50 sm:items-center sm:gap-4 sm:p-4"
                     >
                       <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm sm:h-16 sm:w-16">
-                        <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain sm:h-14 sm:w-14" />
+                        <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain sm:h-14 sm:w-14" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <strong className="block text-sm font-black text-slate-950">{title}</strong>
@@ -143,7 +143,7 @@ const Contact_page = () => {
                 {supportDetails.map(({ icon, title, text }) => (
                   <div key={title} className="flex gap-4 py-4">
                     <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-stone-50">
-                      <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
+                      <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
                     </span>
                     <span>
                       <strong className="block text-sm font-black text-slate-950">{title}</strong>
@@ -159,7 +159,7 @@ const Contact_page = () => {
             {supportLinks.map(({ icon, title, href }) => (
               <a key={title} href={href} className="flex items-center gap-4 p-3 text-sm font-bold text-slate-800 hover:text-[#9a6514]">
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-stone-50">
-                  <img src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
+                  <img decoding="async" loading="lazy" src={icon} alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
                 </span>
                 {title}
                 <FiArrowRight className="ml-auto" />

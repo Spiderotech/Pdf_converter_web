@@ -133,11 +133,16 @@ const BlogArticlePage = () => {
               <section>
                 <h2 className="text-3xl font-black text-slate-950">Related files</h2>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  {relatedPosts.map((related) => related && (
-                    <Link key={related.slug} to={`/blog/${related.slug}`} className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:border-amber-300">
-                      {related.shortTitle}
-                    </Link>
-                  ))}
+                  {relatedPosts.map((related) => {
+                    if (!related) return null;
+                    const relatedHref = `/blog/${related.slug}`;
+
+                    return (
+                      <Link key={related.slug} to={relatedHref} className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:border-amber-300">
+                        {related.shortTitle}
+                      </Link>
+                    );
+                  })}
                 </div>
               </section>
             )}

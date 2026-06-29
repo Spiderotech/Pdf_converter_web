@@ -12,8 +12,8 @@ import {
   FiGrid,
   FiMenu,
   FiRefreshCw,
+  FiSearch,
   FiShield,
-  FiUploadCloud,
   FiX,
 } from 'react-icons/fi';
 import compressPdfIcon from '../assets/hero-icons/compress-pdf.webp';
@@ -50,42 +50,42 @@ const dropdownGroups: DropdownGroup[] = [
     icon: FiBriefcase,
     href: '#tools',
     items: [
-      { name: 'Merge PDF', description: 'Combine multiple PDFs into one file.', href: '/merge-pdf', icon: mergePdfIcon },
-      { name: 'Split PDF', description: 'Extract pages or split a PDF.', href: '/split-pdf', icon: splitPdfIcon },
-      { name: 'Compress PDF', description: 'Reduce PDF file size quickly.', href: '/compress-pdf', icon: compressPdfIcon },
-      { name: 'Sign PDF', description: 'Place a visual signature on a PDF.', href: '/sign-pdf', icon: signPdfIcon },
+      { name: 'Merge PDF', description: 'Combine multiple PDFs into one file.', href: '/tools/merge-pdf', icon: mergePdfIcon },
+      { name: 'Split PDF', description: 'Extract pages or split a PDF.', href: '/tools/split-pdf', icon: splitPdfIcon },
+      { name: 'Compress PDF', description: 'Reduce PDF file size quickly.', href: '/tools/compress-pdf', icon: compressPdfIcon },
+      { name: 'Sign PDF', description: 'Place a visual signature on a PDF.', href: '/tools/sign-pdf', icon: signPdfIcon },
     ],
   },
   {
     name: 'Convert',
     icon: FiRefreshCw,
-    href: '/pdf-to-word',
+    href: '/tools/pdf-to-word',
     items: [
-      { name: 'PDF to Word', description: 'Turn PDF files into editable DOCX.', href: '/pdf-to-word', icon: pdfWordIcon },
-      { name: 'Word to PDF', description: 'Convert DOCX documents to PDF.', href: '/word-to-pdf', icon: wordPdfIcon },
-      { name: 'Excel to PDF', description: 'Export spreadsheets as PDF files.', href: '/excel-to-pdf', icon: excelPdfIcon },
-      { name: 'PPTX to PDF', description: 'Convert presentations to PDF.', href: '/pptx-to-pdf', icon: pptPdfIcon },
-      { name: 'XLSX to CSV', description: 'Export spreadsheet data as CSV.', href: '/xlsx-to-csv', icon: xlsxCsvIcon },
+      { name: 'PDF to Word', description: 'Turn PDF files into editable DOCX.', href: '/tools/pdf-to-word', icon: pdfWordIcon },
+      { name: 'Word to PDF', description: 'Convert DOCX documents to PDF.', href: '/tools/word-to-pdf', icon: wordPdfIcon },
+      { name: 'Excel to PDF', description: 'Export spreadsheets as PDF files.', href: '/tools/excel-to-pdf', icon: excelPdfIcon },
+      { name: 'PPTX to PDF', description: 'Convert presentations to PDF.', href: '/tools/pptx-to-pdf', icon: pptPdfIcon },
+      { name: 'XLSX to CSV', description: 'Export spreadsheet data as CSV.', href: '/tools/xlsx-to-csv', icon: xlsxCsvIcon },
     ],
   },
   {
     name: 'Edit',
     icon: FiEdit3,
-    href: '/edit-pdf',
+    href: '/tools/edit-pdf',
     items: [
-      { name: 'Edit PDF', description: 'Add text, shapes, images, and drawings.', href: '/edit-pdf', icon: editPdfIcon },
-      { name: 'Sign PDF', description: 'Upload or draw a signature.', href: '/sign-pdf', icon: signPdfIcon },
-      { name: 'Merge PDF', description: 'Reorder and combine PDF files.', href: '/merge-pdf', icon: mergePdfIcon },
-      { name: 'Split PDF', description: 'Select pages and create new PDFs.', href: '/split-pdf', icon: splitPdfIcon },
+      { name: 'Edit PDF', description: 'Add text, shapes, images, and drawings.', href: '/tools/edit-pdf', icon: editPdfIcon },
+      { name: 'Sign PDF', description: 'Upload or draw a signature.', href: '/tools/sign-pdf', icon: signPdfIcon },
+      { name: 'Merge PDF', description: 'Reorder and combine PDF files.', href: '/tools/merge-pdf', icon: mergePdfIcon },
+      { name: 'Split PDF', description: 'Select pages and create new PDFs.', href: '/tools/split-pdf', icon: splitPdfIcon },
     ],
   },
   {
     name: 'Protection',
     icon: FiShield,
-    href: '/protect-pdf',
+    href: '/tools/protect-pdf',
     items: [
-      { name: 'Protect PDF', description: 'Add password protection to a PDF.', href: '/protect-pdf', icon: protectPdfIcon },
-      { name: 'Unlock PDF', description: 'Remove a known PDF password.', href: '/unlock-pdf', icon: unlockPdfIcon },
+      { name: 'Protect PDF', description: 'Add password protection to a PDF.', href: '/tools/protect-pdf', icon: protectPdfIcon },
+      { name: 'Unlock PDF', description: 'Remove a known PDF password.', href: '/tools/unlock-pdf', icon: unlockPdfIcon },
     ],
   },
 ];
@@ -128,10 +128,13 @@ const Header = () => {
                 className="group flex shrink-0 items-center gap-4 text-left"
                 aria-label="Go to FileBrother homepage"
               >
-                <img
+                <img loading="lazy"
                   src={fileBrotherLogo}
                   alt=""
                   aria-hidden="true"
+                  width="56"
+                  height="56"
+                  decoding="async"
                   className="h-12 w-12 shrink-0 object-contain drop-shadow-lg transition group-hover:-translate-y-0.5 sm:h-14 sm:w-14"
                 />
                 <span className="hidden sm:block">
@@ -171,6 +174,14 @@ const Header = () => {
               </div>
 
               <div className="hidden shrink-0 items-center gap-2 xl:flex">
+                <button
+                  type="button"
+                  onClick={() => handleNavigation('/search')}
+                  className="inline-flex h-10 items-center gap-2 rounded-full border border-stone-200 bg-white px-3 text-sm font-black text-slate-600 transition hover:bg-stone-50 hover:text-slate-950"
+                >
+                  <FiSearch className="h-4 w-4" />
+                  Search
+                </button>
                 {utilityLinks.map((item) => (
                   <button
                     key={item.href}
@@ -181,16 +192,6 @@ const Header = () => {
                     {item.name}
                   </button>
                 ))}
-                <button
-                  type="button"
-                  onClick={() => handleNavigation('/pdf-to-word')}
-                  className="group inline-flex h-12 items-center gap-3 rounded-full bg-gradient-to-r from-slate-950 via-slate-900 to-[#8a5a12] px-5 text-sm font-black text-white shadow-[0_18px_35px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_45px_rgba(120,83,27,0.24)]"
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/12 text-amber-100 transition group-hover:bg-white group-hover:text-slate-950">
-                    <FiUploadCloud className="h-4 w-4" />
-                  </span>
-                  Upload PDF
-                </button>
               </div>
 
               <DisclosureButton className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-stone-200 bg-white/80 text-slate-700 hover:bg-stone-50 hover:text-slate-950 xl:hidden">
@@ -214,7 +215,7 @@ const Header = () => {
                       className="group flex items-start gap-3 rounded-2xl border border-transparent p-3 text-left transition hover:border-stone-100 hover:bg-[#fbf7ef]"
                     >
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-stone-100">
-                        <img src={item.icon} alt="" aria-hidden="true" className="h-9 w-9 object-contain transition group-hover:scale-105" />
+                        <img src={item.icon} alt="" aria-hidden="true" loading="lazy" decoding="async" className="h-9 w-9 object-contain transition group-hover:scale-105" />
                       </span>
                       <span>
                         <span className="block text-[13px] font-black text-slate-950 group-hover:text-[#9a6514]">{item.name}</span>
@@ -252,7 +253,7 @@ const Header = () => {
                           className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left hover:bg-[#fbf7ef]"
                         >
                           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-stone-100">
-                            <img src={item.icon} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
+                            <img src={item.icon} alt="" aria-hidden="true" loading="lazy" decoding="async" className="h-8 w-8 object-contain" />
                           </span>
                           <span>
                             <span className="block text-[13px] font-extrabold text-slate-950">{item.name}</span>
@@ -276,17 +277,6 @@ const Header = () => {
                     {item.name}
                   </DisclosureButton>
                 ))}
-              </div>
-
-              <div>
-                <DisclosureButton
-                  as="button"
-                  onClick={() => handleNavigation('/pdf-to-word')}
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-slate-950 via-slate-900 to-[#8a5a12] px-4 text-sm font-black text-white"
-                >
-                  <FiUploadCloud className="h-5 w-5" />
-                  Upload PDF
-                </DisclosureButton>
               </div>
             </div>
           </DisclosurePanel>

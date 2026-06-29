@@ -2,7 +2,6 @@ import { ChangeEvent, DragEvent, MouseEvent, PointerEvent, useEffect, useRef, us
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { IconType } from 'react-icons';
 import {
-  FiAlertCircle,
   FiArrowDown,
   FiArrowUp,
   FiCheckCircle,
@@ -12,6 +11,7 @@ import {
   FiTrash2,
   FiUploadCloud,
 } from 'react-icons/fi';
+import ConversionFailureRecovery from '../ConversionFailureRecovery';
 import Footer from '../Footer';
 import Header from '../Header';
 
@@ -797,7 +797,7 @@ const BrowserPdfToolPage = ({ mode, title, eyebrow, description, icon: Icon }: B
                           }}
                         >
                           {signaturePreviewUrl ? (
-                            <img src={signaturePreviewUrl} alt="Signature preview" className="h-full max-w-full object-contain" />
+                            <img decoding="async" loading="lazy" src={signaturePreviewUrl} alt="Signature preview" className="h-full max-w-full object-contain" />
                           ) : (
                             'Signature'
                           )}
@@ -864,10 +864,16 @@ const BrowserPdfToolPage = ({ mode, title, eyebrow, description, icon: Icon }: B
           )}
 
           {error && (
-            <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-              <FiAlertCircle className="mt-0.5 h-5 w-5 flex-none" />
-              <p>{error}</p>
-            </div>
+            <ConversionFailureRecovery
+              message={error}
+              onRetry={files.length > 0 ? handleProcess : undefined}
+              onChooseAnother={() => fileInputRef.current?.click()}
+              alternatives={[
+                { label: 'Try Merge PDF', href: '/tools/merge-pdf' },
+                { label: 'Try Split PDF', href: '/tools/split-pdf' },
+                { label: 'Browse all tools', href: '/tools' },
+              ]}
+            />
           )}
         </section>
       </main>

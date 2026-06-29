@@ -4,18 +4,28 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
-
-import fitz
-from pdf2docx import Converter
+from xml.etree import ElementTree as ET
 
 
 MIN_TEXT_CHARS = int(os.environ.get("PDF_TEXT_MIN_CHARS", "40"))
 OCR_ENABLED = os.environ.get("PDF_TO_DOCX_OCR", "auto").lower() not in {"0", "false", "off", "no"}
 OCR_DPI = int(os.environ.get("OCR_RENDER_DPI", "220"))
+DOCX_OPTIMIZE_FOR_GOOGLE_DOCS = (
+    os.environ.get("PDF_TO_DOCX_GOOGLE_DOCS_COMPAT", "1").lower()
+    not in {"0", "false", "off", "no"}
+)
+
+W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+NS = {"w": W_NS}
+
+ET.register_namespace("w", W_NS)
 
 
 def extract_text_sample(pdf_path: Path) -> str:
+    import fitz
+
     text_parts = []
 
     with fitz.open(pdf_path) as document:
@@ -36,6 +46,8 @@ def has_readable_text(pdf_path: Path) -> bool:
 
 
 def run_tesseract_ocr(input_pdf: Path, output_pdf: Path, temp_dir: Path) -> bool:
+    import fitz
+
     tesseract_bin = shutil.which(os.environ.get("TESSERACT_BIN", "tesseract"))
 
     if not tesseract_bin:
@@ -87,6 +99,8 @@ def run_tesseract_ocr(input_pdf: Path, output_pdf: Path, temp_dir: Path) -> bool
 
 
 def convert_pdf_to_docx(input_pdf: Path, output_docx: Path) -> None:
+    from pdf2docx import Converter
+
     output_docx.parent.mkdir(parents=True, exist_ok=True)
 
     converter = Converter(str(input_pdf))
@@ -95,6 +109,104 @@ def convert_pdf_to_docx(input_pdf: Path, output_docx: Path) -> None:
         converter.convert(str(output_docx))
     finally:
         converter.close()
+
+    if DOCX_OPTIMIZE_FOR_GOOGLE_DOCS:
+        optimize_docx_for_google_docs(output_docx)
+
+
+def optimize_docx_for_google_docs(docx_path: Path) -> None:
+    """Make pdf2docx's fixed-layout tables less likely to reflow in Google Docs."""
+    with zipfile.ZipFile(docx_path, "r") as source_docx:
+        files = {item.filename: source_docx.read(item.filename) for item in source_docx.infolist()}
+
+    if "word/document.xml" in files:
+        files["word/document.xml"] = optimize_document_xml(files["word/document.xml"])
+
+    if "word/settings.xml" in files:
+        files["word/settings.xml"] = optimize_settings_xml(files["word/settings.xml"])
+
+    temp_docx = docx_path.with_suffix(f"{docx_path.suffix}.tmp")
+
+    with zipfile.ZipFile(temp_docx, "w", compression=zipfile.ZIP_DEFLATED) as target_docx:
+        for filename, content in files.items():
+            target_docx.writestr(filename, content)
+
+    temp_docx.replace(docx_path)
+
+
+def optimize_document_xml(document_xml: bytes) -> bytes:
+    root = ET.fromstring(document_xml)
+
+    for table in root.findall(".//w:tbl", NS):
+        table_grid = table.find("./w:tblGrid", NS)
+        table_properties = table.find("./w:tblPr", NS)
+
+        if table_grid is None or table_properties is None:
+            continue
+
+        grid_width = 0
+        for grid_column in table_grid.findall("./w:gridCol", NS):
+            width = grid_column.get(f"{{{W_NS}}}w")
+            if width and width.isdigit():
+                grid_width += int(width)
+
+        if grid_width <= 0:
+            continue
+
+        table_width = table_properties.find("./w:tblW", NS)
+        if table_width is None:
+            table_width = ET.Element(f"{{{W_NS}}}tblW")
+            table_properties.insert(0, table_width)
+
+        table_width.set(f"{{{W_NS}}}w", str(grid_width))
+        table_width.set(f"{{{W_NS}}}type", "dxa")
+
+        table_layout = table_properties.find("./w:tblLayout", NS)
+        if table_layout is None:
+            table_layout = ET.Element(f"{{{W_NS}}}tblLayout")
+            table_properties.append(table_layout)
+
+        table_layout.set(f"{{{W_NS}}}type", "fixed")
+
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def optimize_settings_xml(settings_xml: bytes) -> bytes:
+    root = ET.fromstring(settings_xml)
+    compatibility = root.find("./w:compat", NS)
+
+    if compatibility is None:
+        compatibility = ET.Element(f"{{{W_NS}}}compat")
+        root.append(compatibility)
+
+    ensure_compatibility_setting(
+        compatibility,
+        name="compatibilityMode",
+        uri="http://schemas.microsoft.com/office/word",
+        value="15",
+    )
+    ensure_compatibility_setting(
+        compatibility,
+        name="overrideTableStyleFontSizeAndJustification",
+        uri="http://schemas.microsoft.com/office/word",
+        value="1",
+    )
+
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def ensure_compatibility_setting(compatibility: ET.Element, name: str, uri: str, value: str) -> None:
+    for setting in compatibility.findall("./w:compatSetting", NS):
+        if setting.get(f"{{{W_NS}}}name") == name:
+            setting.set(f"{{{W_NS}}}uri", uri)
+            setting.set(f"{{{W_NS}}}val", value)
+            return
+
+    setting = ET.Element(f"{{{W_NS}}}compatSetting")
+    setting.set(f"{{{W_NS}}}name", name)
+    setting.set(f"{{{W_NS}}}uri", uri)
+    setting.set(f"{{{W_NS}}}val", value)
+    compatibility.append(setting)
 
 
 def main() -> int:
