@@ -17,15 +17,6 @@ const sanitizeBaseName = (fileName) => {
 };
 
 const getPythonCommand = () => process.env.PYTHON_PDF_TOOLS_BIN || process.env.PYTHON_BIN || 'python3';
-const getPdfToWordScript = () => {
-    const engine = (process.env.PDF_TO_WORD_ENGINE || 'pdf2docx').toLowerCase();
-
-    if (engine === 'structured' || engine === 'google-docs') {
-        return 'pdf_to_structured_docx.py';
-    }
-
-    return 'pdf_to_docx.py';
-};
 
 const Pdf_to_wordconverter = async (file) => {
     try {
@@ -39,10 +30,9 @@ const Pdf_to_wordconverter = async (file) => {
 
         const outputName = `${sanitizeBaseName(fileName)}.docx`;
         const convertedFilePath = path.join(downloadsDir, outputName);
-        const scriptName = getPdfToWordScript();
-        const scriptPath = path.join(scriptsDir, scriptName);
+        const scriptPath = path.join(scriptsDir, 'pdf_to_docx.py');
 
-        console.log(`Converting PDF to editable Word locally with ${scriptName}...`);
+        console.log('Converting PDF to editable Word locally...');
 
         const { stdout, stderr } = await execFileAsync(getPythonCommand(), [
             scriptPath,
